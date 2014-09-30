@@ -1,0 +1,34 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html -->
+    <dimen name="navigation_drawer_width">280dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_left">16dp</dimen>
+    <dimen name="line_dimen">1.5dp</dimen>
+    <dimen name="layout_height">48dp</dimen>
+
+    <dimen name="edit_text_height">56dp</dimen>
+    <dimen name="edit_text_padding_top">20dp</dimen>
+    <dimen name="edit_text_padding_botton">20dp</dimen>
+
+
+    <!-- Dimensiones del button bar para Atras - Siguiente -->
+    <dimen name="margin_btnbar">24dp</dimen>
+
+    <dimen name="standar_margin">10dp</dimen>
+
+    <!-- Dimensiones del button inferior derecho -->
+    <dimen name="margin_top_btn">10dp</dimen>
+    <dimen name="margin_bottom_btn">10dp</dimen>
+    <dimen name="margin_right_btn">10dp</dimen>
+
+    <!-- Dimensiones para el header de la seccion -->
+    <dimen name="margin_top_header">10dp</dimen>
+    <dimen name="margin_bottom_header">10dp</dimen>
+</resources>

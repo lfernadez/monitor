@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context="py.fpuna.tesis.qoetest.fragment.TestFragment">
+
+    <FrameLayout
+        android:id="@+id/rel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1.99"
+        android:gravity="top">
+
+        <TextView
+            style="@style/WelcomeTestFont"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/test_text_fragment"
+            android:gravity="fill_horizontal|fill_vertical"
+            android:padding="50dp"/>
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/rel_layout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.01">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"/>
+        <Button
+            android:id="@+id/startBtn"
+            style="@style/ItalicTextStyleBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_btn"
+            android:layout_marginBottom="@dimen/margin_bottom_btn"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="false"
+            android:layout_marginRight="@dimen/margin_right_btn"
+            android:layout_alignParentEnd="true"
+            android:text="@string/start_label"
+            android:layout_gravity="right"/>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    tools:context="py.fpuna.tesis.qoetest.activity.StreamingTestActivity">
+
+    <RelativeLayout
+        android:id="@+id/videoProgressBarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.8"
+        android:weightSum="1">
+
+            <VideoView
+                android:id="@+id/streamingView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#36000000"
+                >
+                <TextView
+                    android:id="@+id/duracionActualLabel"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_weight="0.1"
+                    android:textColor="#ffffffff"
+                    android:gravity="center_vertical|center_horizontal"
+                    />
+
+                <!-- Progress Bar/Seek bar -->
+                <SeekBar
+                    android:id="@+id/videoProgressBar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.80"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    />
+
+                <!-- Total Duration Label -->
+                <TextView
+                    android:id="@+id/duracionTotalLabel"
+                    android:layout_width="40dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.1"
+                    android:textColor="#ffffffff"
+                    android:textStyle="bold"/>
+
+                </LinearLayout>
+
+    </RelativeLayout>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/button_bar"/>
+
+</LinearLayout>

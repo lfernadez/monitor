@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="py.fpuna.tesis.qoetest.activity.PreTestActivty">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Header de Datos -->
+            <TextView
+                android:id="@+id/header_datos"
+                style="@style/HeaderTextView"
+                android:text="@string/datos_header_label"
+                android:layout_width="match_parent"/>
+
+            <!-- Campo Sexo -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/sexo_label"
+                android:text="@string/sexo_label"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_datos"
+                android:layout_width="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/spinner_sexo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@id/sexo_label"/>
+
+            <!-- Campo Edad -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/edad_label"
+                android:text="@string/edad_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner_sexo"
+                />
+
+            <EditText
+                android:id="@+id/edad_editText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@+id/edad_label"
+                android:textSize="16dp"
+                android:inputType="number" />
+
+            <!-- Campo Profesion -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/profesion_label"
+                android:text="@string/profesion_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edad_editText"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_profesion"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@id/profesion_label"/>
+
+            <View
+                android:id="@+id/view_separator"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider"
+                android:layout_below="@id/spinner_profesion"/>
+
+            <TextView
+                android:id="@+id/frecuencia_datos"
+                style="@style/HeaderTextView"
+                android:text="@string/frecuencia_header_label"
+                android:layout_width="match_parent"
+                android:layout_below="@id/view_separator"/>
+
+            <!-- Campo Frecuencia de utilización de redes -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/frecuencia_label"
+                android:text="@string/frecuencia_pregunta_text"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frecuencia_datos"
+                android:layout_width="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/spinner_frecuencua"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@id/frecuencia_label"/>
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/button_bar" />
+
+</LinearLayout>

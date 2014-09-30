@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="py.fpuna.tesis.qoetest.activity.QoEWebTestActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <RelativeLayout
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Header de Datos -->
+            <TextView
+                android:id="@+id/header_evaluacion"
+                style="@style/HeaderTextView"
+                android:text="@string/header_qoe_test"
+                android:layout_width="match_parent"/>
+
+            <!-- Campo Velocidad -->
+            <TextView
+                android:id="@+id/veloc_pregunta_label"
+                android:text="@string/pregunta_tiempo_carga"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_evaluacion"
+                android:layout_width="wrap_content"/>
+
+            <RatingBar
+                android:id="@+id/ratingBarVeloc"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:layout_below="@id/veloc_pregunta_label"/>
+
+            <TextView
+                android:id="@+id/ratingBarVeloc_label"
+                android:layout_height="wrap_content"
+                style="@style/normal_label_style"
+                android:layout_below="@id/ratingBarVeloc"
+                android:layout_width="wrap_content"/>
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="@dimen/standar_margin"
+                android:layout_marginBottom="@dimen/standar_margin"
+                android:layout_below="@id/ratingBarVeloc_label"/>
+
+            <!-- Campo Contenido -->
+            <TextView
+                android:id="@+id/calidadContenido_pregunta_label"
+                android:text="@string/pregunta_calidad_contenido"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator"
+                android:layout_width="wrap_content"/>
+
+            <RatingBar
+                android:id="@+id/ratingBarCalidad"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:layout_below="@id/calidadContenido_pregunta_label"/>
+
+            <TextView
+                android:id="@+id/ratingBarCalidad_label"
+                android:layout_height="wrap_content"
+                style="@style/normal_label_style"
+                android:layout_below="@id/ratingBarCalidad"
+                android:layout_width="wrap_content"/>
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/button_bar" />
+</LinearLayout>
