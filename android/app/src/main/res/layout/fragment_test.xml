@@ -14,7 +14,7 @@
         android:layout_weight="1.99"
         android:gravity="top">
 
-        <TextView
+        <py.fpuna.tesis.qoetest.ui.LightTextView
             style="@style/WelcomeTestFont"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

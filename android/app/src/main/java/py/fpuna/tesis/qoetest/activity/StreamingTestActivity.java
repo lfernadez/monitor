@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -94,6 +95,9 @@ public class StreamingTestActivity extends Activity
                 Intent intent = new Intent(StreamingTestActivity.this,
                         QoEStreamingTestActivity
                         .class);
+                /* Se agregan los extras anteriores */
+                intent.putExtras(getIntent().getExtras());
+                /* Nuevos extras */
                 intent.putExtra(QoEStreamingTestActivity.EXTRA_TIEMPO_CARGA,
                        tiempoCarga);
                 intent.putExtra(QoEStreamingTestActivity
@@ -169,6 +173,7 @@ public class StreamingTestActivity extends Activity
                     totalDuration));
             //Log.d("Progress", ""+progress);
             videoProgressBar.setProgress(progress);
+            Log.d(this.getClass().getName(), "percent played: " + progress);
 
             // Running this thread after 100 milliseconds
             mHandler.postDelayed(this, 100);
@@ -187,7 +192,7 @@ public class StreamingTestActivity extends Activity
         if(loadingProgress.isShowing()) {
             loadingProgress.dismiss();
         }
-        return false;
+        return true;
     }
 
     /**
@@ -199,6 +204,7 @@ public class StreamingTestActivity extends Activity
         duracionVideo = mediaPlayer.getDuration();
         finTotal = System.currentTimeMillis();
         siguienteBtn.setVisibility(View.VISIBLE);
+        mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
     /**

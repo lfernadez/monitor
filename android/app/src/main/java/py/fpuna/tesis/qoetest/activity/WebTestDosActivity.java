@@ -23,22 +23,15 @@ import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.utils.Constants;
 
 public class WebTestDosActivity extends Activity {
-
-    public static final String EXTRA_PERFIL_USUARIO = "EXTRA_PERFIL_USUARIO";
-    public static final String EXTRA_TCARGA_UNO = "EXTRA_TCARGA_UNO";
+    public static final String EXTRA_TCARGA_DOS = "EXTRA_TCARGA_DOS";
     private Button siguienteBtn;
     private Button atrasBtn;
-    private PerfilUsuario perfilUsuario;
-    private long tiempoCargaUno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_web_test_dos);
-
-        perfilUsuario = getIntent().getParcelableExtra(EXTRA_PERFIL_USUARIO);
-        tiempoCargaUno = getIntent().getLongExtra(EXTRA_TCARGA_UNO,0);
 
         WebView webView = (WebView) this.findViewById(R.id.webViewdos);
         webView.clearCache(true);
@@ -57,9 +50,8 @@ public class WebTestDosActivity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(),
                         QoEWebTestActivity.class);
-                intent.putExtra(EXTRA_PERFIL_USUARIO, perfilUsuario);
-                intent.putExtra(EXTRA_TCARGA_UNO, tiempoCargaUno);
-                intent.putExtra(QoEWebTestActivity.EXTRA_TCARGA_DOS,
+                intent.putExtras(getIntent().getExtras());
+                intent.putExtra(EXTRA_TCARGA_DOS,
                         webClient.getLoadTime());
                 startActivity(intent);
             }

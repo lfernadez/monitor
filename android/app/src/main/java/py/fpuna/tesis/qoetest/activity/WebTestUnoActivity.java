@@ -27,8 +27,7 @@ import py.fpuna.tesis.qoetest.utils.Constants;
  */
 public class WebTestUnoActivity extends Activity {
 
-    public static final String EXTRA_PERFIL_USUARIO = "EXTRA_PERFIL_USUARIO";
-    private PerfilUsuario perfilUsuario;
+    public static final String EXTRA_TCARGA_UNO = "EXTRA_TCARGA_UNO";
     private Button siguienteBtn;
     private Button atrasBtn;
 
@@ -37,9 +36,6 @@ public class WebTestUnoActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_web_test_uno);
-
-        perfilUsuario = getIntent().getParcelableExtra(EXTRA_PERFIL_USUARIO);
-
 
         WebView webView = (WebView) this.findViewById(R.id.webView);
         webView.clearCache(true);
@@ -58,8 +54,8 @@ public class WebTestUnoActivity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(),
                         WebTestDosActivity.class);
-                intent.putExtra(EXTRA_PERFIL_USUARIO, perfilUsuario);
-                intent.putExtra(WebTestDosActivity.EXTRA_TCARGA_UNO,
+                intent.putExtras(getIntent().getExtras());
+                intent.putExtra(EXTRA_TCARGA_UNO,
                         webClient.getLoadTime());
                 startActivity(intent);
             }

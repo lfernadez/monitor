@@ -77,7 +77,7 @@
            parent="android:Widget.Holo.Light.Button.Borderless.Small">
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">#0b8db3</item>
-        <item name="android:textSize">24dp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="normal_label_style" parent="android:Widget.TextView">
@@ -92,20 +92,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#0b8db3</item>
         <item name="android:textSize">32sp</item>
-        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="TextStyle">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#6f6f6f</item>
-        <item name="android:textSize">28sp</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <!-- Style para la letra de los nav items -->
     <style name="NavItemTextStyle">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 

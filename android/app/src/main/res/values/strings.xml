@@ -62,16 +62,19 @@
     <string name="title_activity_streaming_test_intro">Test de video streaming</string>
 
     <!-- Streaming Test -->
-    <string name="streaming_test_label">Test 2: Video Streaming</string>
+    <string name="streaming_test_label">Test 2: Multimedia Streaming</string>
     <string name="streaming_test_text">Este test pretende evaluar la calidad
         de la experiencia de la redes celulares durante su uso en la
-        tranmisión de video a través de internet</string>
+        tranmisión multimedia a través de internet</string>
     <string name="title_activity_streaming_test">Streaming Test</string>
     <string name="title_activity_qo_estreaming_test">"Evaluación "</string>
 
     <!-- QoE Streaming Test -->
     <string name="pregunta_tiempo_carga_video">El tiempo de carga inicial del video le pareció:</string>
     <string name="pregunta_buffering_video">Evalué el tiempo/cantidad de veces que la reproducción del video se pausó:</string>
+    <string name="title_activity_music_straming_test_intro">Music Streaming Test</string>
+
+    <!-- Music Streaming Test -->
 
 
 </resources>

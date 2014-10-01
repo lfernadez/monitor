@@ -8,7 +8,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context="py.fpuna.tesis.qoetest.activity.WebTestIntroActivity">
+    tools:context="py.fpuna.tesis.qoetest.activity.MusicStreamingTestIntro">
 
     <RelativeLayout
         android:id="@+id/rel_layout"
@@ -18,20 +18,20 @@
         android:layout_weight="1.99"
         android:gravity="top">
 
-        <py.fpuna.tesis.qoetest.ui.LightTextView
+        <TextView
             style="@style/WelcomeTestFont"
             android:id="@+id/header_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/web_test_label"
+            android:text="@string/streaming_test_label"
             android:gravity="top"
             android:padding="50dp"/>
 
-        <py.fpuna.tesis.qoetest.ui.RegularTextView
+        <TextView
             style="@style/TextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/web_test_text"
+            android:text="@string/streaming_test_text"
             android:layout_below="@id/header_text"/>
 
     </RelativeLayout>
@@ -52,7 +52,7 @@
             android:background="@color/grey"/>
 
         <Button
-            android:id="@+id/startWebTestBtn"
+            android:id="@+id/startStreamingTestBtn"
             style="@style/ItalicTextStyleBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

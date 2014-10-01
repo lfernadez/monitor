@@ -30,7 +30,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="#36000000"
+                android:background="@drawable/seekbar_gradient_back"
                 >
                 <TextView
                     android:id="@+id/duracionActualLabel"

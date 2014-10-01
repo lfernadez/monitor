@@ -18,7 +18,7 @@
         android:layout_weight="1.99"
         android:gravity="top">
 
-        <TextView
+        <py.fpuna.tesis.qoetest.ui.LightTextView
             style="@style/WelcomeTestFont"
             android:id="@+id/header_text"
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:gravity="top"
             android:padding="50dp"/>
 
-        <TextView
+        <py.fpuna.tesis.qoetest.ui.RegularTextView
             style="@style/TextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

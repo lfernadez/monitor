@@ -94,6 +94,10 @@
             android:name=".activity.QoEStreamingTestActivity"
             android:label="@string/title_activity_qo_estreaming_test" >
         </activity>
+        <activity
+            android:name=".activity.MusicStreamingTestIntro"
+            android:label="@string/title_activity_music_straming_test_intro" >
+        </activity>
     </application>
 
 </manifest>

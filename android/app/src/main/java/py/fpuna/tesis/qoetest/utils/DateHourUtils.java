@@ -160,4 +160,8 @@ public class DateHourUtils {
                 return null;
         }
     }
+
+    public static long toSeconds (long miliseconds){
+        return miliseconds / 1000;
+    }
 }

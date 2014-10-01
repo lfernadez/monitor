@@ -130,25 +130,15 @@ public class PreTestActivty extends Activity {
         });
     }
 
-
-    /*@Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        edadEditText.setText(savedInstanceState.getString(EDAD_STATE));
-        spinnerSexo.setSelection(savedInstanceState.getInt(SEXO_STATE));
-        spinnerFrecuencia.setSelection(savedInstanceState.getInt(FRECUENCIA_STATE));
-        spinnerProfesion.setSelection(savedInstanceState.getInt(PROFESION_STATE));
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SEXO_STATE, spinnerSexo.getSelectedItemPosition());
-        outState.putInt(PROFESION_STATE, spinnerProfesion.getSelectedItemPosition());
-        outState.putInt(FRECUENCIA_STATE, spinnerFrecuencia.getSelectedItemPosition());
-        outState.putString(EDAD_STATE, edadEditText.getText().toString());
-
-    }*/
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

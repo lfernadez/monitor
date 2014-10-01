@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.navigation.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.PreTestActivty">
+        <location        
+          id = "point0"        
+          x = "0"        
+          y = "0"/>
+      </key>
+      <value      
+        x = "480"      
+        y = "1440"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.MusicStreamingTestIntro">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "600"      
+        y = "1580"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.WebTestDosActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "480"      
+        y = "1600"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "principal">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2560"      
+        y = "160"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.QoEStreamingTestActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "640"      
+        y = "1600"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.StreamingTestIntroActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "640"      
+        y = "1760"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.PrincipalActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "100"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.QoEWebTestActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "750"      
+        y = "1730"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.WebTestIntroActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "800"      
+        y = "1760"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.StreamingTestActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2880"      
+        y = "1760"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "py.fpuna.tesis.qoetest.activity.WebTestUnoActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2240"      
+        y = "1920"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+  </locations>
+</navigationModel>

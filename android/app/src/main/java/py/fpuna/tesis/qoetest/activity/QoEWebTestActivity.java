@@ -13,12 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 
 public class QoEWebTestActivity extends Activity {
 
-    public static final String EXTRA_PERFIL_USUARIO = "EXTRA_PERFIL_USUARIO";
-    public static final String EXTRA_TCARGA_UNO = "EXTRA_TCARGA_UNO";
-    public static final String EXTRA_TCARGA_DOS = "EXTRA_TCARGA_DOS";
+    public static final String EXTRA_QOE_RATING_UNO = "EXTRA_QOE_RATING_UNO";
+    public static final String EXTRA_QOE_RATING_DOS = "EXTRA_QOE_RATING_DOS";
 
     private RatingBar velocQoERatingBar;
     private RatingBar calidadRatingBar;
@@ -94,8 +94,11 @@ public class QoEWebTestActivity extends Activity {
                 if(verificar()) {
                     Intent intent = new Intent(getBaseContext(),
                             StreamingTestIntroActivity.class);
-                    // TODO Enviar todos los datos al siguiente activity o en
-                    // todo caso guardar en la BD
+                    intent.putExtras(getIntent().getExtras());
+                    intent.putExtra(EXTRA_QOE_RATING_UNO,
+                            velocQoERatingBar.getRating());
+                    intent.putExtra(EXTRA_QOE_RATING_DOS,
+                            calidadRatingBar.getRating());
                     startActivity(intent);
                 }
             }

@@ -30,7 +30,8 @@ public class WebTestIntroActivity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(),
                         WebTestUnoActivity.class);
-                intent.putExtra(EXTRA_PERFIL_USUARIO, perfilUsuario);
+                Bundle extras = getIntent().getExtras();
+                intent.putExtras(extras);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
