@@ -6,7 +6,7 @@ package py.fpuna.tesis.qoetest.utils;
  */
 public class Constants {
     /** Representa el tiempo de actualizacion de los datos recogidos */
-    public static final Integer TIEMPO_ACTUALIZACION = 250;
+    public static final Integer TIEMPO_ACTUALIZACION = 15000;
 
     public static final String EXTRA_LOCALIZACION = "EXTRA_LOCALIZACION";
     public static final long MULTIPLO_MB = 1048576L;
@@ -15,6 +15,11 @@ public class Constants {
     public static final String GOOGLE_URL = "http://www.google.com";
     public static final String YOUTUBE_URL = "http://www.youtube.com";
     public static final String ABC_URL = "http://www.abc.com.py";
+
+    public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
+    public static final int FAST_CEILING_IN_SECONDS = 1;
+
+
 
 
 }

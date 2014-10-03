@@ -1,10 +1,16 @@
 package py.fpuna.tesis.qoetest.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.location.LocationUtils;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 
 public class PreTestActivty extends Activity {
@@ -24,7 +31,8 @@ public class PreTestActivty extends Activity {
     public static final String PROFESION_STATE = "profesion_state";
     public static final String EDAD_STATE = "edad_state";
     public static final String FRECUENCIA_STATE = "frecuencia_state";
-
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor mEditor;
     private Spinner spinnerSexo;
     private Spinner spinnerProfesion;
     private Spinner spinnerFrecuencia;
@@ -38,6 +46,11 @@ public class PreTestActivty extends Activity {
     private int profesionPos;
     private String frecuencia;
     private int frecuenciaPos;
+    private LocationUtils locationUtils;
+    private Location currentLocation;
+    private ProgressDialog progressDialog;
+
+    public static final String TAG = "PreTestActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +75,9 @@ public class PreTestActivty extends Activity {
 
             }
         });
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Obteniendo Localizacion...");
 
         /* Spinner para la seleccion de la Profesion */
         spinnerProfesion = (Spinner) findViewById(R.id.spinner_profesion);
@@ -114,6 +130,8 @@ public class PreTestActivty extends Activity {
                 if (edad == null || TextUtils.isEmpty(edad)) {
                     edadEditText.setError("Complete su edad");
                 } else {
+                    new ObtenerLocalizacionTask().execute();
+
                     PerfilUsuario perfilUsuario = new PerfilUsuario();
                     perfilUsuario.setSexo(sexo);
                     perfilUsuario.setEdad(Integer.valueOf(edad));
@@ -128,6 +146,16 @@ public class PreTestActivty extends Activity {
                 }
             }
         });
+
+        // Se abre el Shaerd Preferences
+        mPrefs = getSharedPreferences(LocationUtils.SAHRED_PREFERENCES,
+                Context.MODE_PRIVATE);
+        // Se Obtiene el editor del
+        mEditor = mPrefs.edit();
+
+        // Se crea el objeto LocationUtils
+        locationUtils = new LocationUtils(this);
+        locationUtils.connect();
     }
 
     @Override
@@ -195,6 +223,30 @@ public class PreTestActivty extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public class ObtenerLocalizacionTask extends AsyncTask<Void, Void,
+            Location>{
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
+        protected Location doInBackground(Void... voids) {
+            return locationUtils.getLastLocation();
+        }
+
+        @Override
+        protected void onPostExecute(Location location) {
+            progressDialog.dismiss();
+            currentLocation = location;
+            Log.d(TAG, "Longitud: " + String.valueOf(currentLocation
+                    .getLongitude()));
+            Log.d(TAG, "Latitud: " + String.valueOf(currentLocation
+                    .getLatitude()));
+        }
     }
 
 }

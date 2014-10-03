@@ -30,6 +30,7 @@ public class WebTestUnoActivity extends Activity {
     public static final String EXTRA_TCARGA_UNO = "EXTRA_TCARGA_UNO";
     private Button siguienteBtn;
     private Button atrasBtn;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class WebTestUnoActivity extends Activity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_web_test_uno);
 
-        WebView webView = (WebView) this.findViewById(R.id.webView);
+        webView = (WebView) this.findViewById(R.id.webView);
         webView.clearCache(true);
         final WebClientTest webClient = new WebClientTest();
         webView.setWebViewClient(webClient);
@@ -69,6 +70,11 @@ public class WebTestUnoActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     /**

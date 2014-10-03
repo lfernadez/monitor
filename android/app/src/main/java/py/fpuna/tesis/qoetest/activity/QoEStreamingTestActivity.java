@@ -9,8 +9,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.utils.VideoTestMessages;
 
 public class QoEStreamingTestActivity extends Activity {
+
     public static final String EXTRA_TIEMPO_CARGA = "extra_tiempo_carga";
     public static final String EXTRA_DURACION_VIDEO = "extra_duracion_video";
     public static final String EXTRA_TIEMPO_BUFFERING =
@@ -36,22 +38,16 @@ public class QoEStreamingTestActivity extends Activity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 if (v == 5) {
-                    tiempoCargaRBLabel.setText("Excelente \n Reproducción " +
-                            "instantanea");
+                    tiempoCargaRBLabel.setText(VideoTestMessages.EXCELENT_ITIME_QOE);
                 } else if (v == 4) {
-                    tiempoCargaRBLabel.setText("Muy Bueno \n Casi " +
-                            "imperceptible retardo en el incio de " +
-                            "reproducción");
+                    tiempoCargaRBLabel.setText(VideoTestMessages
+                            .VERY_GOOG_ITIME_QOE);
                 } else if (v == 3) {
-                    tiempoCargaRBLabel.setText("Bueno \n  Retardo perceptible" +
-                            " en el inicio de reproducción");
+                    tiempoCargaRBLabel.setText(VideoTestMessages.GOOD_ITIME_QOE);
                 } else if (v == 2) {
-                    tiempoCargaRBLabel.setText("Pobre \n Mucho retardo al " +
-                            "inicio de la reproducción");
+                    tiempoCargaRBLabel.setText(VideoTestMessages.POOR_ITIME_QOE);
                 } else {
-                    tiempoCargaRBLabel.setText("Malo \n Retardo inaceptable " +
-                            "en" +
-                            " el inicio de la reproducción");
+                    tiempoCargaRBLabel.setText(VideoTestMessages.BAD_ITIME_QOE);
                 }
             }
         });
@@ -62,22 +58,15 @@ public class QoEStreamingTestActivity extends Activity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 if (v == 5) {
-                    bufferingRBLabel.setText("Excelente \n Reproducción " +
-                            "fluida del video, como si fuera que se viera " +
-                            "desde el móvil");
+                    bufferingRBLabel.setText(VideoTestMessages.EXCELENT_DELAY_QOE);
                 } else if (v == 4) {
-                    bufferingRBLabel.setText("Muy Bueno \n Imperceptibles " +
-                            "atascos en la reproducción");
+                    bufferingRBLabel.setText(VideoTestMessages.VERY_GOOG_DELAY_QOE);
                 } else if (v == 3) {
-                    bufferingRBLabel.setText("Bueno \n Atascos aceptable en " +
-                            "la reproducción del video");
+                    bufferingRBLabel.setText(VideoTestMessages.GOOD_DELAY_QOE);
                 } else if (v == 2) {
-                    bufferingRBLabel.setText("Pobre \n Atascos de larga " +
-                            "duración o ráfagas de atascos. Reproducción no " +
-                            "muy fluida");
+                    bufferingRBLabel.setText(VideoTestMessages.POOR_DELAY_QOE);
                 } else {
-                    bufferingRBLabel.setText("Malo \n Atascos inaceptables de" +
-                            " larga duración o en grandes cantidades");
+                    bufferingRBLabel.setText(VideoTestMessages.BAD_DELAY_QOE);
                 }
             }
         });

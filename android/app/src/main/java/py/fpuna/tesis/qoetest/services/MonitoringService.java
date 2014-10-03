@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
@@ -30,10 +31,10 @@ import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 public class MonitoringService extends Service {
 
     public static final int NOTIF_ID = 101;
-    Thread backThread;
     private ConnectivityManager cm;
     private WifiManager wifiManager;
     private TelephonyManager telManager;
+    Thread mThread;
 
     public MonitoringService() {
     }
@@ -73,29 +74,30 @@ public class MonitoringService extends Service {
                     // Tipo de Red Mobile (3G, HSPA, HSPA+,...)
                     if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
                         long kbpsDOWN = (((bytesRXActual - bytesRXanterior) *
-                                8) /1000) / (timeActual - timeanterior);
-                        long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) /1000)/ (timeActual - timeanterior);
+                                8) / 1000) / (timeActual - timeanterior);
+                        long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) / 1000) / (timeActual - timeanterior);
                         updateNotification("UP: " + String.valueOf(kbpsUP) +
                                 "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
                                 "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                                + " MB CPU: " + String.valueOf(cpuLoad) + " %");
+                                + " MB CPU: " + String.valueOf(cpuLoad) + "%");
                         // Tipo de Red WiFi
                     } else if (cm.getActiveNetworkInfo().getType() ==
                             ConnectivityManager.TYPE_WIFI) {
                         long kbpsDOWNWiFi = (((bytesWiFiRXActual -
-                                bytesWiFiRXAnterior) * 8)/ 1000) / (timeActual - timeanterior);
+                                bytesWiFiRXAnterior) * 8) / 1000) / (timeActual - timeanterior);
                         long kbpsUPWiFi = (((bytesWiFiTXActual -
-                                bytesWiFiTXAnterior) * 8)/ 1000) / (timeActual - timeanterior);
+                                bytesWiFiTXAnterior) * 8) / 1000) / (timeActual - timeanterior);
                         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                         if (wifiInfo != null) {
                             Integer linkSpeed = wifiInfo.getLinkSpeed(); //measured using WifiInfo.LINK_SPEED_UNITS
                             updateNotification("Link speed " + String
-                                    .valueOf(linkSpeed)+ "Mbps UP: " + String
+                                    .valueOf(linkSpeed) + "Mbps UP: " + String
                                     .valueOf
-                                    (kbpsUPWiFi)
+                                            (kbpsUPWiFi)
                                     + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
                                     + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                                    + " MB CPU: " + String.valueOf(cpuLoad) + " %");
+                                    + " MB CPU: " + String.valueOf(cpuLoad) +
+                                    " %");
                         }
                     }
                     // No hay red disponible
@@ -174,7 +176,7 @@ public class MonitoringService extends Service {
         }
         reader.readLine();
         /* Parseo de las estadisticas */
-        String [] estadisticas = reader.readLine().split(", ");
+        String[] estadisticas = reader.readLine().split(", ");
         result.setPacketsSended(Integer.valueOf(estadisticas[0].substring(0, 1)));
         result.setPacketsReceived(Integer.valueOf(estadisticas[1].substring(0, 1)));
         result.setPacketloss(Double.valueOf(estadisticas[2].substring(0, 1)));
@@ -184,7 +186,7 @@ public class MonitoringService extends Service {
         line = reader.readLine();
         line = line.substring(line.lastIndexOf("=") + 2,
                 line.length() - 3);
-        String [] datosTiempos = line.split("/");
+        String[] datosTiempos = line.split("/");
         result.setRttMin(Double.valueOf(datosTiempos[0]));
         result.setRttAvg(Double.valueOf(datosTiempos[1]));
         result.setRttMax(Double.valueOf(datosTiempos[2]));
@@ -230,12 +232,14 @@ public class MonitoringService extends Service {
 
         telManager = (TelephonyManager)
                 getBaseContext().getSystemService(TELEPHONY_SERVICE);
-        backThread = new Thread(new Runnable() {
+
+        mThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 monitoring();
             }
-        });
+        }, "Monitoreo");
+
         Toast.makeText(this, "Service Foreground", Toast.LENGTH_SHORT).show();
     }
 
@@ -248,8 +252,8 @@ public class MonitoringService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(NOTIF_ID, getNotification());
-        if (!backThread.isAlive()) {
-            backThread.start();
+        if (!mThread.isAlive()) {
+            mThread.start();
         }
         return START_STICKY;
     }

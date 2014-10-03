@@ -1,4 +1,4 @@
-package py.fpuna.tesis.qoetest.component;
+package py.fpuna.tesis.qoetest.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
