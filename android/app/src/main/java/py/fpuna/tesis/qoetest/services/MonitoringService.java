@@ -15,6 +15,7 @@ import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -35,6 +36,7 @@ public class MonitoringService extends Service {
     private WifiManager wifiManager;
     private TelephonyManager telManager;
     Thread mThread;
+    public static final String TAG = "MonitoringServive";
 
     public MonitoringService() {
     }
@@ -52,7 +54,6 @@ public class MonitoringService extends Service {
         long bytesWiFiTXAnterior = TrafficStats.getTotalTxBytes() - bytesRXanterior;
         long packetsWiFiRXanterior = TrafficStats.getTotalRxPackets() - packetsRXanterior;
         long packetsWiFiTXanterior = TrafficStats.getTotalTxPackets() - packetsTXanterior;
-
         while (true) {
             try {
                 long timeActual = DateHourUtils.toSeconds(System.currentTimeMillis());
@@ -76,10 +77,14 @@ public class MonitoringService extends Service {
                         long kbpsDOWN = (((bytesRXActual - bytesRXanterior) *
                                 8) / 1000) / (timeActual - timeanterior);
                         long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) / 1000) / (timeActual - timeanterior);
-                        updateNotification("UP: " + String.valueOf(kbpsUP) +
+                        Log.d(TAG, "UP: " + String.valueOf(kbpsUP) +
                                 "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
                                 "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
                                 + " MB CPU: " + String.valueOf(cpuLoad) + "%");
+                    /*updateNotification("UP: " + String.valueOf(kbpsUP) +
+                            "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
+                            "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
+                            + " MB CPU: " + String.valueOf(cpuLoad) + "%");*/
                         // Tipo de Red WiFi
                     } else if (cm.getActiveNetworkInfo().getType() ==
                             ConnectivityManager.TYPE_WIFI) {
@@ -90,7 +95,7 @@ public class MonitoringService extends Service {
                         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                         if (wifiInfo != null) {
                             Integer linkSpeed = wifiInfo.getLinkSpeed(); //measured using WifiInfo.LINK_SPEED_UNITS
-                            updateNotification("Link speed " + String
+                            Log.d(TAG, "Link speed " + String
                                     .valueOf(linkSpeed) + "Mbps UP: " + String
                                     .valueOf
                                             (kbpsUPWiFi)
@@ -98,21 +103,32 @@ public class MonitoringService extends Service {
                                     + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
                                     + " MB CPU: " + String.valueOf(cpuLoad) +
                                     " %");
+                        /*updateNotification("Link speed " + String
+                                .valueOf(linkSpeed) + "Mbps UP: " + String
+                                .valueOf
+                                        (kbpsUPWiFi)
+                                + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
+                                + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
+                                + " MB CPU: " + String.valueOf(cpuLoad) +
+                                " %");*/
                         }
                     }
                     // No hay red disponible
                 } else {
-                    updateNotification("Red no disponible, Mem Free: "
+                    Log.d(TAG, "Red no disponible, Mem Free: "
                             + String.valueOf(megaBytesDisponibles) + " MB CPU: "
                             + String.valueOf(cpuLoad) + " %");
+                /*updateNotification("Red no disponible, Mem Free: "
+                        + String.valueOf(megaBytesDisponibles) + " MB CPU: "
+                        + String.valueOf(cpuLoad) + " %");*/
                 }
-                Thread.sleep(Constants.TIEMPO_ACTUALIZACION); // El hilo se duerme 250ms
                 // Actualizacion de los valores anteriores
                 timeanterior = timeActual;
                 bytesRXanterior = bytesRXActual;
                 bytesTXanterior = bytesTXActual;
                 bytesWiFiRXAnterior = bytesWiFiRXActual;
                 bytesWiFiTXAnterior = bytesWiFiTXActual;
+                mThread.sleep(Constants.TIEMPO_ACTUALIZACION);
             } catch (Exception e) {
 
             }

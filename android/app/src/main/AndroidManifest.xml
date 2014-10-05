@@ -100,12 +100,6 @@
             android:label="@string/title_activity_music_straming_test_intro" >
         </activity>
 
-        <receiver
-            android:name=".receiver.BootBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

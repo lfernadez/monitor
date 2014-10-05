@@ -50,7 +50,6 @@ public class PrincipalActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
         Intent intent = new Intent(getApplicationContext(), MonitoringService.class);
         startService(intent);
     }
