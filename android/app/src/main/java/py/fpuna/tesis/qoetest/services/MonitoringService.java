@@ -11,7 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
@@ -28,7 +28,6 @@ import py.fpuna.tesis.qoetest.model.PingResults;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 
-
 public class MonitoringService extends Service {
 
     public static final int NOTIF_ID = 101;
@@ -38,7 +37,20 @@ public class MonitoringService extends Service {
     Thread mThread;
     public static final String TAG = "MonitoringServive";
 
-    public MonitoringService() {
+    private long bpsDown;
+    private long bpsUP;
+    private long cpuLoad;
+    private long memLoad;
+
+    private final IBinder mBinder = new LocalBinder();
+    private BufferedReader reader;
+
+    public MonitoringService() {}
+
+    public class LocalBinder extends Binder {
+        public MonitoringService getService() {
+            return MonitoringService.this;
+        }
     }
 
     /**
@@ -76,11 +88,12 @@ public class MonitoringService extends Service {
                     if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
                         long kbpsDOWN = (((bytesRXActual - bytesRXanterior) *
                                 8) / 1000) / (timeActual - timeanterior);
+                        bpsDown = kbpsDOWN;
                         long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) / 1000) / (timeActual - timeanterior);
+                        bpsUP = kbpsUP;
                         Log.d(TAG, "UP: " + String.valueOf(kbpsUP) +
                                 "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
-                                "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                                + " MB CPU: " + String.valueOf(cpuLoad) + "%");
+                                "Kbps");
                     /*updateNotification("UP: " + String.valueOf(kbpsUP) +
                             "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
                             "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
@@ -90,8 +103,10 @@ public class MonitoringService extends Service {
                             ConnectivityManager.TYPE_WIFI) {
                         long kbpsDOWNWiFi = (((bytesWiFiRXActual -
                                 bytesWiFiRXAnterior) * 8) / 1000) / (timeActual - timeanterior);
+                        bpsDown = kbpsDOWNWiFi;
                         long kbpsUPWiFi = (((bytesWiFiTXActual -
                                 bytesWiFiTXAnterior) * 8) / 1000) / (timeActual - timeanterior);
+                        bpsUP = kbpsUPWiFi;
                         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                         if (wifiInfo != null) {
                             Integer linkSpeed = wifiInfo.getLinkSpeed(); //measured using WifiInfo.LINK_SPEED_UNITS
@@ -100,9 +115,7 @@ public class MonitoringService extends Service {
                                     .valueOf
                                             (kbpsUPWiFi)
                                     + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
-                                    + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                                    + " MB CPU: " + String.valueOf(cpuLoad) +
-                                    " %");
+                                    + "Kbps");
                         /*updateNotification("Link speed " + String
                                 .valueOf(linkSpeed) + "Mbps UP: " + String
                                 .valueOf
@@ -115,9 +128,9 @@ public class MonitoringService extends Service {
                     }
                     // No hay red disponible
                 } else {
-                    Log.d(TAG, "Red no disponible, Mem Free: "
-                            + String.valueOf(megaBytesDisponibles) + " MB CPU: "
-                            + String.valueOf(cpuLoad) + " %");
+                    bpsDown = 0;
+                    bpsUP = 0;
+                    Log.d(TAG, "Red no disponible");
                 /*updateNotification("Red no disponible, Mem Free: "
                         + String.valueOf(megaBytesDisponibles) + " MB CPU: "
                         + String.valueOf(cpuLoad) + " %");*/
@@ -141,7 +154,7 @@ public class MonitoringService extends Service {
      *
      * @return Memoria disponible en MB
      */
-    private Long getMemFree() {
+    public Long getMemFree() {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
@@ -156,12 +169,12 @@ public class MonitoringService extends Service {
      * @throws java.io.IOException
      * @throws InterruptedException
      */
-    private long getCpuLoad() throws IOException, InterruptedException {
+    public long getCpuLoad() throws IOException, InterruptedException {
         long carga = 0;
         // Llamada al comando top desde un proceso
         Process p = Runtime.getRuntime().exec("/system/bin/top  -m 1 -d 1 -n 1");
         p.waitFor();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
+        reader = new BufferedReader(new InputStreamReader(
                 p.getInputStream()));
         // Parseo del resultado de top
         String line = reader.readLine();
@@ -173,41 +186,45 @@ public class MonitoringService extends Service {
             carga += Long.valueOf(porcentaje[1].substring(0,
                     porcentaje[1].length() - 1));
         }
-        //reader.close();
+        reader.close();
         p.destroy();  // Se destruye el proceso creado
         return carga;
     }
 
-    private PingResults executePing() throws IOException, InterruptedException {
+    public PingResults executePing() throws IOException, InterruptedException {
         PingResults result = new PingResults();
         // Llamada al comando ping desde un proceso
         Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
                 "google.com");
         p.waitFor();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
+        reader = new BufferedReader(new InputStreamReader(
                 p.getInputStream()));
         // Parseo del resultado de ping
         String line = reader.readLine();
-        while (!(line = reader.readLine()).isEmpty()) {
+        if(line != null) {
+            while (!(line = reader.readLine()).isEmpty()) {
+            }
+            reader.readLine();
+            /* Parseo de las estadisticas */
+            line = reader.readLine();
+            String[] estadisticas = reader.readLine().split(", ");
+            result.setPacketsSended(Integer.valueOf(estadisticas[0].substring(0, 1)));
+            result.setPacketsReceived(Integer.valueOf(estadisticas[1].substring(0, 1)));
+            result.setPacketloss(Double.valueOf(estadisticas[2].substring(0, 1)));
+            result.setTime(Long.valueOf(estadisticas[3].substring(5,
+                    estadisticas[3].length() - 2)));
+            /* Parseo de los tiempo */
+            line = reader.readLine();
+            if (!line.isEmpty()) {
+                line = line.substring(line.lastIndexOf("=") + 2,
+                        line.length() - 3);
+                String[] datosTiempos = line.split("/");
+                result.setRttMin(Double.valueOf(datosTiempos[0]));
+                result.setRttAvg(Double.valueOf(datosTiempos[1]));
+                result.setRttMax(Double.valueOf(datosTiempos[2]));
+                result.setRttStdDev(Double.valueOf(datosTiempos[3]));
+            }
         }
-        reader.readLine();
-        /* Parseo de las estadisticas */
-        String[] estadisticas = reader.readLine().split(", ");
-        result.setPacketsSended(Integer.valueOf(estadisticas[0].substring(0, 1)));
-        result.setPacketsReceived(Integer.valueOf(estadisticas[1].substring(0, 1)));
-        result.setPacketloss(Double.valueOf(estadisticas[2].substring(0, 1)));
-        result.setTime(Long.valueOf(estadisticas[3].substring(5,
-                estadisticas[3].length() - 2)));
-        /* Parseo de los tiempo */
-        line = reader.readLine();
-        line = line.substring(line.lastIndexOf("=") + 2,
-                line.length() - 3);
-        String[] datosTiempos = line.split("/");
-        result.setRttMin(Double.valueOf(datosTiempos[0]));
-        result.setRttAvg(Double.valueOf(datosTiempos[1]));
-        result.setRttMax(Double.valueOf(datosTiempos[2]));
-        result.setRttStdDev(Double.valueOf(datosTiempos[3]));
-
         reader.close();
         return result;
     }
@@ -302,6 +319,21 @@ public class MonitoringService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
+
+    /**
+     * @return
+     */
+    public long getBpsDown() {
+        return this.bpsDown;
+    }
+
+    /**
+     * @return
+     */
+    public long getBpsUP() {
+        return this.bpsUP;
+    }
+
 }

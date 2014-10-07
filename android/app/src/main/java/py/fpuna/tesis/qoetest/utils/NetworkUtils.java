@@ -18,6 +18,10 @@ public class NetworkUtils {
     TelephonyManager telManager;
     ConnectivityManager cm;
 
+    /**
+     *
+     * @param context
+     */
     public NetworkUtils(Context context) {
         this.context = context;
         telManager =

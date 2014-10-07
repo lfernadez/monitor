@@ -14,8 +14,7 @@ public class LocationUtils {
 
     private Context mContext;
     private LocationClientHelper mLocationClientHelper;
-    public static final String SAHRED_PREFERENCES = "py.fpuna.tesis.qoetest" +
-            ".SHARED_PREFERENCES";
+
 
     public LocationUtils(Context mContext) {
         this.mContext = mContext;

@@ -1,10 +1,16 @@
 package py.fpuna.tesis.qoetest.activity;
 
 import android.app.ActionBar;
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +22,7 @@ import py.fpuna.tesis.qoetest.fragment.TestFragment;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
 
 
-public class PrincipalActivity extends Activity
+public class PrincipalActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         InfoFragment.OnFragmentInteractionListener,
         TestFragment.OnFragmentInteractionListener {
@@ -50,6 +56,22 @@ public class PrincipalActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        /* Verificacion de conexion */
+        /*ConnectivityManager manager = (ConnectivityManager)
+                getSystemService(CONNECTIVITY_SERVICE);
+
+        Boolean isWifi = manager.getNetworkInfo(
+                ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+
+        Boolean is3g = manager.getNetworkInfo(
+                ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
+        if(!isWifi && !is3g){
+            ConnectionErrorDialogFragment cedf = new
+                    ConnectionErrorDialogFragment();
+            cedf.show(getSupportFragmentManager(), "TAG");
+
+        }*/
         Intent intent = new Intent(getApplicationContext(), MonitoringService.class);
         startService(intent);
     }
@@ -134,4 +156,30 @@ public class PrincipalActivity extends Activity
                 break;
         }
     }
+
+
+    public class ConnectionErrorDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity
+                    ());
+            builder.setMessage("No posee conexión, actívela")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getActivity().finish();
+                        }
+                    });
+            return builder.create();
+
+        }
+    }
+
+
 }

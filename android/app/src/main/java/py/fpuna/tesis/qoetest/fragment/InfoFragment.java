@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
 import py.fpuna.tesis.qoetest.utils.NetworkUtils;
 
@@ -80,21 +80,21 @@ public class InfoFragment extends Fragment {
         networkInfoTextView = (TextView) view.findViewById(R.id.operator_info_text);
 
         /* Datos del telefono */
-        String model = DeviceInfoUtils.getDeviceModel();           //Modelo
-        String manufacturer = DeviceInfoUtils.getManufacturer();   //Vendedor
+        DeviceInfoUtils infoUtils = new DeviceInfoUtils(getActivity()
+                .getApplicationContext());
+        String model = infoUtils.getDeviceModel();           //Modelo
+        String manufacturer = infoUtils.getManufacturer();   //Vendedor
+        String osVersion = infoUtils.getOSVersion();         //OS Version
 
         /* Datos de la pantalla del telefono */
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        this.getActivity().getWindowManager().getDefaultDisplay().getMetrics
-                (displayMetrics);
-        String str_ScreenSize = "Tamaño de pantalla : " + displayMetrics.widthPixels
-                + " x " + displayMetrics.heightPixels;
+        String str_ScreenSize = "Tamaño de pantalla : " + infoUtils.getScreenSize();
 
         NetworkUtils nu = new NetworkUtils(context);
 
         /* Datos de red del operador */
         String networkOperator = nu.getOperatorName();   //Nombre del Operador
         String activeNetwork = nu.getActiveNetworkType();
+        PhoneInfo info = infoUtils.getPhoneInfo();
         String allNetwork = "";
         List<Map<String, String>> allNetworks = nu.getAllNetworkState();
         for (Map<String, String> networkItem : allNetworks) {
@@ -105,7 +105,9 @@ public class InfoFragment extends Fragment {
         }
 
         deviceInfoTextView.setText("Modelo: " + model + '\n'
-                + "Vendedor: " + manufacturer + '\n' + str_ScreenSize);
+                + "Vendedor: " + manufacturer + '\n' + str_ScreenSize + '\n'
+                + "Versión SO: " +  osVersion);
+
         networkInfoTextView.setText("Operador: " + networkOperator + '\n' + "Redes " +
                 "disponibles: "
                 + '\n' + allNetwork + '\n' + "Red Activa: " + activeNetwork);

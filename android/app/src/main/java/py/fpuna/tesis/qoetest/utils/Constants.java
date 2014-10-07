@@ -19,6 +19,10 @@ public class Constants {
     public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
     public static final int FAST_CEILING_IN_SECONDS = 1;
 
+    /* SharedPrefences */
+    public static final String SAHRED_PREFERENCES = "py.fpuna.tesis.qoetest" +
+            ".SHARED_PREFERENCES";
+
 
 
 

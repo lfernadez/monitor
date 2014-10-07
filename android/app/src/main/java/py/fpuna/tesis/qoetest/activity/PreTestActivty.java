@@ -2,16 +2,18 @@ package py.fpuna.tesis.qoetest.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,16 +23,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.IOException;
+
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.location.LocationUtils;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
+import py.fpuna.tesis.qoetest.model.PingResults;
+import py.fpuna.tesis.qoetest.services.MonitoringService;
+import py.fpuna.tesis.qoetest.utils.Constants;
 
 public class PreTestActivty extends Activity {
 
-    public static final String SEXO_STATE = "sexo_state";
-    public static final String PROFESION_STATE = "profesion_state";
-    public static final String EDAD_STATE = "edad_state";
-    public static final String FRECUENCIA_STATE = "frecuencia_state";
+    public static final String SPIN_SEXO_POS = "spinner_sexo_pos";
+    public static final String SPIN_PROF_POS = "spinner_prof_pos";
+    public static final String SPIN_FREC_POS = "spinner_frec_pos";
+    public static final String EDAD = "edad";
+
+
     SharedPreferences mPrefs;
     SharedPreferences.Editor mEditor;
     private Spinner spinnerSexo;
@@ -49,8 +58,28 @@ public class PreTestActivty extends Activity {
     private LocationUtils locationUtils;
     private Location currentLocation;
     private ProgressDialog progressDialog;
+    private PingResults pingResults;
+
+    MonitoringService mService;
+    private boolean mBound;
 
     public static final String TAG = "PreTestActivity";
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            MonitoringService.LocalBinder binder = (MonitoringService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +105,7 @@ public class PreTestActivty extends Activity {
             }
         });
 
+        /** Progress Dialog */
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Obteniendo Localizacion...");
 
@@ -130,25 +160,14 @@ public class PreTestActivty extends Activity {
                 if (edad == null || TextUtils.isEmpty(edad)) {
                     edadEditText.setError("Complete su edad");
                 } else {
-                    new ObtenerLocalizacionTask().execute();
+                    new ObtenerParametrosTask().execute();
 
-                    PerfilUsuario perfilUsuario = new PerfilUsuario();
-                    perfilUsuario.setSexo(sexo);
-                    perfilUsuario.setEdad(Integer.valueOf(edad));
-                    perfilUsuario.setProfesion(profesion);
-                    perfilUsuario.setFrecuenciaUso(frecuencia);
-                    Intent intent = new Intent(getApplicationContext(),
-                            WebTestIntroActivity.class);
-                    intent.putExtra(WebTestIntroActivity.EXTRA_PERFIL_USUARIO,
-                            perfilUsuario);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                 }
             }
         });
 
         // Se abre el Shaerd Preferences
-        mPrefs = getSharedPreferences(LocationUtils.SAHRED_PREFERENCES,
+        mPrefs = getSharedPreferences(Constants.SAHRED_PREFERENCES,
                 Context.MODE_PRIVATE);
         // Se Obtiene el editor del
         mEditor = mPrefs.edit();
@@ -161,18 +180,47 @@ public class PreTestActivty extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        mEditor.putInt(SPIN_SEXO_POS, spinnerSexo.getSelectedItemPosition());
+        mEditor.putInt(SPIN_PROF_POS, spinnerProfesion
+                .getSelectedItemPosition());
+        mEditor.putInt(SPIN_FREC_POS, spinnerFrecuencia
+                .getSelectedItemPosition());
+        mEditor.putString(EDAD, edad);
+        mEditor.commit();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (mPrefs.contains(SPIN_SEXO_POS)) {
+            spinnerSexo.setSelection(mPrefs.getInt(SPIN_SEXO_POS, 0));
+        }
+        if (mPrefs.contains(SPIN_PROF_POS)) {
+            spinnerProfesion.setSelection(mPrefs.getInt(SPIN_PROF_POS, 0));
+        }
+        if (mPrefs.contains(SPIN_FREC_POS)) {
+            spinnerFrecuencia.setSelection(mPrefs.getInt(SPIN_FREC_POS, 0));
+        }
+        if (mPrefs.contains(EDAD)) {
+            edadEditText.setText(mPrefs.getString(EDAD, "0"));
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.pre_test, menu);
-        return true;
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, MonitoringService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
     }
 
     /**
@@ -225,8 +273,30 @@ public class PreTestActivty extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class ObtenerLocalizacionTask extends AsyncTask<Void, Void,
-            Location>{
+    public class ObtenerParametrosTask extends AsyncTask<Void, Integer,
+            Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            currentLocation = locationUtils.getLastLocation();
+            publishProgress(0);
+            try{
+                pingResults = mService.executePing();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            if(values[0] == 0){
+                progressDialog.setMessage("Realizando test Ping");
+            }
+        }
 
         @Override
         protected void onPreExecute() {
@@ -234,19 +304,22 @@ public class PreTestActivty extends Activity {
         }
 
         @Override
-        protected Location doInBackground(Void... voids) {
-            return locationUtils.getLastLocation();
-        }
-
-        @Override
-        protected void onPostExecute(Location location) {
+        protected void onPostExecute(Void res) {
             progressDialog.dismiss();
-            currentLocation = location;
-            Log.d(TAG, "Longitud: " + String.valueOf(currentLocation
-                    .getLongitude()));
-            Log.d(TAG, "Latitud: " + String.valueOf(currentLocation
-                    .getLatitude()));
+            PerfilUsuario perfilUsuario = new PerfilUsuario();
+            perfilUsuario.setSexo(sexo);
+            perfilUsuario.setEdad(Integer.valueOf(edad));
+            perfilUsuario.setProfesion(profesion);
+            perfilUsuario.setFrecuenciaUso(frecuencia);
+            Intent intent = new Intent(getApplicationContext(),
+                    WebTestIntroActivity.class);
+            intent.putExtra(WebTestIntroActivity.EXTRA_PERFIL_USUARIO,
+                    perfilUsuario);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
+
+
 
 }

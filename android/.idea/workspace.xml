@@ -32,16 +32,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb4fc88b-e42b-4984-bee1-d347c2b7fa7b" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\LF\Documents\Tesis android\monitor\android\.idea\libraries\otto_1_3_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\LF\Documents\Tesis android\monitor\android\.idea\libraries\play_services_5_2_08.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\LF\Documents\Tesis android\monitor\android\.idea\libraries\support_annotations_20_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\LF\Documents\Tesis android\monitor\android\.idea\libraries\support_v4_20_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\LF\Documents\Tesis android\monitor\android\app\src\main\java\py\fpuna\tesis\qoetest\receiver\BootBroadcastReceiver.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/NetworkStat.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PhoneInfo.java" />
+      <change type="DELETED" beforePath="C:\Users\User\Documents\monitor\android\.idea\libraries\otto_1_3_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\User\Documents\monitor\android\.idea\libraries\support_annotations_20_0_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\User\Documents\monitor\android\.idea\libraries\support_v4_20_0_0.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/DeviceInfoUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/DeviceInfoUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/NetworkUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/NetworkUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
@@ -72,7 +77,49 @@
     <favorites_list name="QoE Test" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="MonitoringService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.7419355" vertical-offset="0" max-vertical-offset="5678">
+              <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrincipalActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="3247">
+              <caret line="73" column="11" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5976#6269#0" expanded="true" />
+                <element signature="e#6246#6247#0" expanded="true" />
+                <element signature="e#6322#6581#0" expanded="true" />
+                <element signature="e#6558#6559#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PreTestActivty.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4213" max-vertical-offset="5066">
+              <caret line="306" column="48" selection-start-line="306" selection-start-column="48" selection-end-line="306" selection-end-column="48" />
+              <folding>
+                <element signature="e#10278#10279#0" expanded="true" />
+                <element signature="e#10323#10324#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -421,9 +468,9 @@
                 <option name="name" value="prepareComAndroidSupportSupportV42000Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.google.android.gms:play-services:5.0.77" />
+                <option name="description" value="Prepare com.google.android.gms:play-services:5.2.08" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComGoogleAndroidGmsPlayServices5077Library" />
+                <option name="name" value="prepareComGoogleAndroidGmsPlayServices5208Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -513,7 +560,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4237609066787" />
+        <entry key="$PROJECT_DIR$" value="4233758253466" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -572,7 +619,7 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/4.0/67bd266cd17adcee486b76952ece4cc85fe248b8/asm-tree-4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-api/23.0.2/d757652f175aa0915531af75c4948a4d546610a7/lint-api-23.0.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-api/23.0.2/9660c0f32f9308dd2ac998f4928cebcd4095b27/lint-api-23.0.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/4.0/4a33d6206d6d442446a8edbd2b0798ecfaebc229/asm-analysis-4.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/4.0/c1f0845d031e9704a58a71790a97a3c033669fa2/asm-analysis-4.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/4.0/1c45d52b6f6c638db13cf3ac12adeb56b254cdd7/asm-analysis-4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-checks/23.0.2/9c99007fa60eac2651c6a73263e0f0f555ef0983/lint-checks-23.0.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-checks/23.0.2/e6fe7bac82c4845d3e69e0dd54b1801a91568ffd/lint-checks-23.0.2.jar" />
@@ -647,7 +694,7 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/4.0/67bd266cd17adcee486b76952ece4cc85fe248b8/asm-tree-4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-api/23.0.2/d757652f175aa0915531af75c4948a4d546610a7/lint-api-23.0.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-api/23.0.2/9660c0f32f9308dd2ac998f4928cebcd4095b27/lint-api-23.0.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/4.0/4a33d6206d6d442446a8edbd2b0798ecfaebc229/asm-analysis-4.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/4.0/c1f0845d031e9704a58a71790a97a3c033669fa2/asm-analysis-4.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/4.0/1c45d52b6f6c638db13cf3ac12adeb56b254cdd7/asm-analysis-4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-checks/23.0.2/9c99007fa60eac2651c6a73263e0f0f555ef0983/lint-checks-23.0.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-checks/23.0.2/e6fe7bac82c4845d3e69e0dd54b1801a91568ffd/lint-checks-23.0.2.jar" />
@@ -669,7 +716,7 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/0.12.2/3673e1c415b054caccc3231dcdff959cfcb315f6/builder-0.12.2.jar" />
                             <option value="$APPLICATION_HOME_DIR$/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
-                            <option value="$APPLICATION_HOME_DIR$/sdk/extras/google/m2repository/com/google/android/gms/play-services/5.0.77/play-services-5.0.77.aar" />
+                            <option value="$APPLICATION_HOME_DIR$/sdk/extras/google/m2repository/com/google/android/gms/play-services/5.2.08/play-services-5.2.08.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.5/e8c1db15ea9b400667f00f722b6571f124a1c24b/otto-1.3.5-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.5/7941cd2c2c8ec006800d75c35f8a9dacf892ab93/otto-1.3.5.jar" />
                             <option value="$APPLICATION_HOME_DIR$/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
@@ -778,8 +825,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_info.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/button_bar.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_web_test_into.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PerfilUsuario.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_pre_test_activty.xml" />
@@ -789,9 +834,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_web_test_dos.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_qo_eweb_test.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/VideoUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/NetworkUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/DeviceInfoUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_web_test.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/WebTestIntroActivity.java" />
@@ -815,8 +857,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PingResults.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/StreamingTestActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationClientHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/VideoTestMessages.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestActivity.java" />
@@ -826,9 +866,16 @@
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/receiver/StartMonitoringServices.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/receiver/SchedulerReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/NetworkStat.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/DeviceInfoUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/NetworkUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PhoneInfo.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java" />
       </list>
     </option>
   </component>
@@ -867,6 +914,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -885,43 +934,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -937,8 +952,8 @@
     <property name="options.searchVisible" value="true" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA950013RF" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="N5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="LF" />
+    <property name="last_opened_file_path" value="$APPLICATION_HOME_DIR$/sdk/samples/android-19/background/RepeatingAlarm" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -961,17 +976,17 @@
       <recent name="py.fpuna.tesis.qoetest.activity" />
       <recent name="py.fpuna.tesis.qoetest.fragment" />
     </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
-      <recent name="py.fpuna.tesis.qoetest.activity.PreTestActivty" />
-      <recent name="py.fpuna.tesis.qoetest.activity.PrincipalActivity" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\monitor\android\app\src\main\res\drawable" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="py.fpuna.tesis.qoetest.ui" />
       <recent name="py.fpuna.tesis.qoetest" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\monitor\android\app\src\main\res\drawable" />
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+      <recent name="py.fpuna.tesis.qoetest.activity.PreTestActivty" />
+      <recent name="py.fpuna.tesis.qoetest.activity.PrincipalActivity" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -1195,22 +1210,22 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56618464" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56666666" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39777777" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33481646" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41824248" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41777778" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22867803" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47654584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32222223" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1278,68 +1293,17 @@
           <properties />
           <option name="timeStamp" value="66" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java</url>
-          <line>298</line>
-          <properties class="py.fpuna.tesis.qoetest.services.MonitoringService" method="onDestroy" />
-          <option name="timeStamp" value="79" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java</url>
+          <line>96</line>
+          <properties />
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="80" />
+      <option name="time" value="103" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_web_test_intro.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6296296" vertical-offset="341" max-vertical-offset="1292">
-          <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/button_bar.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.333333" vertical-offset="119" max-vertical-offset="697">
-          <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_music_streaming_test_intro.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="25.333334" vertical-offset="752" max-vertical-offset="1292">
-          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/MusicStreamingTestIntro.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20987654" vertical-offset="0" max-vertical-offset="567">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.148148" vertical-offset="0" max-vertical-offset="1972">
-          <caret line="105" column="40" selection-start-line="105" selection-start-column="40" selection-end-line="105" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.208113" vertical-offset="1371" max-vertical-offset="2601">
-          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/gradient.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
@@ -1483,24 +1447,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/android/os/AsyncTask.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="952">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationClientHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5070707" vertical-offset="2191" max-vertical-offset="2686">
           <caret line="85" column="30" selection-start-line="85" selection-start-column="30" selection-end-line="85" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1525,20 +1475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/Localizacion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="2108">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PerfilUsuario.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1700">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PingResults.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.6484848" vertical-offset="0" max-vertical-offset="1054">
@@ -1550,27 +1486,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1885" max-vertical-offset="2380">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.004040404" vertical-offset="3891" max-vertical-offset="4386">
-          <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/DeviceInfoUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/NetworkUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="117" max-vertical-offset="1326">
-          <caret line="23" column="50" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -1607,7 +1522,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="697" max-vertical-offset="1989">
           <caret line="76" column="25" selection-start-line="76" selection-start-column="25" selection-end-line="76" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1626,19 +1540,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2210">
-          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="871">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1650,24 +1555,162 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/android/app/Service.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.13104838" vertical-offset="541" max-vertical-offset="1037">
+          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37701613" vertical-offset="0" max-vertical-offset="748">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#667#668#0" expanded="true" />
+            <element signature="e#719#720#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27474746" vertical-offset="0" max-vertical-offset="527">
-          <caret line="8" column="58" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.7197581" vertical-offset="0" max-vertical-offset="595">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PerfilUsuario.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23991935" vertical-offset="0" max-vertical-offset="1700">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/NetworkStat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41129032" vertical-offset="0" max-vertical-offset="496">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/NetworkUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20564516" vertical-offset="0" max-vertical-offset="1530">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="e#1747#1763#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PhoneInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.034274194" vertical-offset="0" max-vertical-offset="1292">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="e#442#443#0" expanded="false" />
+            <element signature="e#471#472#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/DeviceInfoUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23991935" vertical-offset="0" max-vertical-offset="2652">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#1424#1425#0" expanded="true" />
+            <element signature="e#1481#1482#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/fragment/InfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.701613" vertical-offset="0" max-vertical-offset="2635">
+          <caret line="108" column="31" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/Localizacion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65120965" vertical-offset="0" max-vertical-offset="2193">
+          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/java/lang/Override.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23991935" vertical-offset="0" max-vertical-offset="496">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/android/os/AsyncTask.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="952">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4213" max-vertical-offset="5066">
+          <caret line="306" column="48" selection-start-line="306" selection-start-column="48" selection-end-line="306" selection-end-column="48" />
+          <folding>
+            <element signature="e#10278#10279#0" expanded="true" />
+            <element signature="e#10323#10324#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="3247">
+          <caret line="73" column="11" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5976#6269#0" expanded="true" />
+            <element signature="e#6246#6247#0" expanded="true" />
+            <element signature="e#6322#6581#0" expanded="true" />
+            <element signature="e#6558#6559#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/java/io/BufferedReader.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_60/src.zip!/java/io/BufferedReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7197581" vertical-offset="0" max-vertical-offset="8483">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.371717" vertical-offset="0" max-vertical-offset="5287">
-          <caret line="302" column="13" selection-start-line="302" selection-start-column="13" selection-end-line="302" selection-end-column="13" />
+        <state vertical-scroll-proportion="2.7419355" vertical-offset="0" max-vertical-offset="5678">
+          <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#11475#11599#0" expanded="true" />
-            <element signature="e#11588#11589#0" expanded="true" />
-            <element signature="e#12767#12768#0" expanded="true" />
-            <element signature="e#12846#12847#0" expanded="true" />
           </folding>
         </state>
       </provider>
