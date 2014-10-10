@@ -6,7 +6,7 @@ package py.fpuna.tesis.qoetest.utils;
  */
 public class Constants {
     /** Representa el tiempo de actualizacion de los datos recogidos */
-    public static final Integer TIEMPO_ACTUALIZACION = 250;
+    public static final Integer TIEMPO_ACTUALIZACION = 1000;
 
     public static final String EXTRA_LOCALIZACION = "EXTRA_LOCALIZACION";
     public static final long MULTIPLO_MB = 1048576L;
@@ -22,6 +22,11 @@ public class Constants {
     /* SharedPrefences */
     public static final String SAHRED_PREFERENCES = "py.fpuna.tesis.qoetest" +
             ".SHARED_PREFERENCES";
+
+    /* bandwidth Test */
+    public static final String IMAGE_URL_DOWN = "http://carlook" +
+            ".net/data/db_photos/porsche/911_carrera_gts/997/porsche_911_carrera_gts_997_coupe2d-4477.jpg";
+    public static final long IMAGE_LENGTH = 1185228;
 
 
 

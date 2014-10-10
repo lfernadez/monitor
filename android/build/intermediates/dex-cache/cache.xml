@@ -2,6 +2,12 @@
 <pre-dex-items>
 
     <item
+        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\gson-2.3-8c34eb72c49a1cd9ed05e9707c31a0b40fb46ca6.jar"
+        jar="C:\Users\User\Documents\monitor\android\app\libs\gson-2.3.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce"/>
+    <item
         dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-84accd40b75c187181c5981bdc6d17677021f1fe.jar"
         jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.2.08\classes.jar"
         jumboMode="false"

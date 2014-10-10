@@ -11,16 +11,25 @@ import android.net.ConnectivityManager;
 import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Binder;
-import android.os.IBinder;
+import android.os.*;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.Process;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.activity.PrincipalActivity;
@@ -34,7 +43,7 @@ public class MonitoringService extends Service {
     private ConnectivityManager cm;
     private WifiManager wifiManager;
     private TelephonyManager telManager;
-    Thread mThread;
+    HandlerThread mHandlerThread;
     public static final String TAG = "MonitoringServive";
 
     private long bpsDown;
@@ -42,112 +51,136 @@ public class MonitoringService extends Service {
     private long cpuLoad;
     private long memLoad;
 
+    /* Mobile network stats */
+    private static long bytesRXanterior;
+    private static long bytesRXActual;
+    private static long packetsRXanterior;
+    private static long packetsTXanterior;
+    private static long packetsRXActual;
+    private static long bytesTXanterior;
+    private static long bytesTXActual;
+    private static long packetsTXActual;
+
+    /* WiFi network stats */
+    private static long bytesWiFiRXAnterior;
+    private static long bytesWiFiTXAnterior;
+    private static long packetsWiFiRXanterior;
+    private static long packetsWiFiTXanterior;
+    private static long bytesWiFiRXActual;
+    private static long bytesWiFiTXActual;
+    private static long packetsWiFiRXActual;
+    private static long packetsWiFiTXActual;
+
+    private boolean startMean = false;
+    private long timeAnterior;
+    private long timeActual;
+
+    /* Harmonic mean Down*/
+    private static float hMBpsDown;
+
+    /* Harmonic mean UP*/
+    private static float hMBpsUP;
+
     private final IBinder mBinder = new LocalBinder();
     private BufferedReader reader;
+    private Handler mHandler;
 
-    public MonitoringService() {}
+    public MonitoringService() {
+    }
 
+    /**
+     *
+     */
     public class LocalBinder extends Binder {
         public MonitoringService getService() {
             return MonitoringService.this;
         }
     }
 
+
     /**
-     * Network Speed Monitor
+     *
      */
-    private void monitoring() {
-        long timeanterior = DateHourUtils.toSeconds(System.currentTimeMillis());
-        long bytesRXanterior = TrafficStats.getMobileRxBytes();
-        long packetsRXanterior = TrafficStats.getMobileRxPackets();
-        long packetsTXanterior = TrafficStats.getMobileTxPackets();
-        long bytesWiFiRXAnterior = TrafficStats.getTotalRxBytes() - bytesRXanterior;
-        long bytesTXanterior = TrafficStats.getMobileTxBytes();
-        long bytesWiFiTXAnterior = TrafficStats.getTotalTxBytes() - bytesRXanterior;
-        long packetsWiFiRXanterior = TrafficStats.getTotalRxPackets() - packetsRXanterior;
-        long packetsWiFiTXanterior = TrafficStats.getTotalTxPackets() - packetsTXanterior;
-        while (true) {
-            try {
-                long timeActual = DateHourUtils.toSeconds(System.currentTimeMillis());
-                long bytesRXActual = TrafficStats.getMobileRxBytes();
-                long bytesTXActual = TrafficStats.getMobileTxBytes();
-                long bytesWiFiRXActual = TrafficStats.getTotalRxBytes() - bytesRXActual;
-                long bytesWiFiTXActual = TrafficStats.getTotalTxBytes() - bytesTXActual;
-                long packetsRXActual = TrafficStats.getMobileRxPackets();
-                long packetsTXActual = TrafficStats.getMobileTxPackets();
-                long packetsWiFiRXActual = TrafficStats.getTotalRxPackets() -
-                        packetsRXActual;
-                long packetsWiFiTXActual = TrafficStats.getTotalTxPackets() -
-                        packetsTXActual;
-                long megaBytesDisponibles = getMemFree();
-                long cpuLoad = getCpuLoad();
-                //PingResults pingResults = executePing();
-                /* Datos de la red activa */
-                if (cm.getActiveNetworkInfo() != null) {
-                    // Tipo de Red Mobile (3G, HSPA, HSPA+,...)
-                    if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
-                        long kbpsDOWN = (((bytesRXActual - bytesRXanterior) *
-                                8) / 1000) / (timeActual - timeanterior);
-                        bpsDown = kbpsDOWN;
-                        long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) / 1000) / (timeActual - timeanterior);
-                        bpsUP = kbpsUP;
-                        Log.d(TAG, "UP: " + String.valueOf(kbpsUP) +
-                                "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
-                                "Kbps");
-                    /*updateNotification("UP: " + String.valueOf(kbpsUP) +
+    private Runnable monitoring = new Runnable() {
+        @Override
+        public void run() {
+            timeActual = DateHourUtils.toSeconds(System.currentTimeMillis());
+            bytesRXActual = TrafficStats.getMobileRxBytes();
+            bytesTXActual = TrafficStats.getMobileTxBytes();
+            bytesWiFiRXActual = TrafficStats.getTotalRxBytes() - bytesRXActual;
+            bytesWiFiTXActual = TrafficStats.getTotalTxBytes() - bytesTXActual;
+            packetsRXActual = TrafficStats.getMobileRxPackets();
+            packetsTXActual = TrafficStats.getMobileTxPackets();
+            packetsWiFiRXActual = TrafficStats.getTotalRxPackets() -
+                    packetsRXActual;
+            packetsWiFiTXActual = TrafficStats.getTotalTxPackets() -
+                    packetsTXActual;
+            //memLoad = getMemFree();
+            //cpuLoad = getCpuLoad();
+            //PingResults pingResults = executePing();
+            /* Datos de la red activa */
+            if (cm.getActiveNetworkInfo() != null) {
+                // Tipo de Red Mobile (3G, HSPA, HSPA+,...)
+                if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
+                    long kbpsDOWN = (((bytesRXActual - bytesRXanterior) *
+                            8) / 1000) / (timeActual - timeAnterior);
+                    bpsDown = kbpsDOWN;
+                    long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) / 1000) / (timeActual - timeAnterior);
+                    bpsUP = kbpsUP;
+                    Log.d(TAG, "UP: " + String.valueOf(kbpsUP) +
                             "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
-                            "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                            + " MB CPU: " + String.valueOf(cpuLoad) + "%");*/
-                        // Tipo de Red WiFi
-                    } else if (cm.getActiveNetworkInfo().getType() ==
-                            ConnectivityManager.TYPE_WIFI) {
-                        long kbpsDOWNWiFi = (((bytesWiFiRXActual -
-                                bytesWiFiRXAnterior) * 8) / 1000) / (timeActual - timeanterior);
-                        bpsDown = kbpsDOWNWiFi;
-                        long kbpsUPWiFi = (((bytesWiFiTXActual -
-                                bytesWiFiTXAnterior) * 8) / 1000) / (timeActual - timeanterior);
-                        bpsUP = kbpsUPWiFi;
-                        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                        if (wifiInfo != null) {
-                            Integer linkSpeed = wifiInfo.getLinkSpeed(); //measured using WifiInfo.LINK_SPEED_UNITS
-                            Log.d(TAG, "Link speed " + String
-                                    .valueOf(linkSpeed) + "Mbps UP: " + String
-                                    .valueOf
-                                            (kbpsUPWiFi)
-                                    + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
-                                    + "Kbps");
-                        /*updateNotification("Link speed " + String
+                            "Kbps");
+                /*updateNotification("UP: " + String.valueOf(kbpsUP) +
+                        "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
+                        "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
+                        + " MB CPU: " + String.valueOf(cpuLoad) + "%");*/
+                    // Tipo de Red WiFi
+                } else if (cm.getActiveNetworkInfo().getType() ==
+                        ConnectivityManager.TYPE_WIFI) {
+                    long kbpsDOWNWiFi = (((bytesWiFiRXActual -
+                            bytesWiFiRXAnterior) * 8) / 1000) / (timeActual - timeAnterior);
+                    bpsDown = kbpsDOWNWiFi;
+                    long kbpsUPWiFi = (((bytesWiFiTXActual -
+                            bytesWiFiTXAnterior) * 8) / 1000) / (timeActual - timeAnterior);
+                    bpsUP = kbpsUPWiFi;
+                    WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                    if (wifiInfo != null) {
+                        Integer linkSpeed = wifiInfo.getLinkSpeed(); //measured using WifiInfo.LINK_SPEED_UNITS
+                        Log.d(TAG, "Link speed " + String
                                 .valueOf(linkSpeed) + "Mbps UP: " + String
                                 .valueOf
                                         (kbpsUPWiFi)
                                 + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
-                                + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                                + " MB CPU: " + String.valueOf(cpuLoad) +
-                                " %");*/
-                        }
+                                + "Kbps");
+                    /*updateNotification("Link speed " + String
+                            .valueOf(linkSpeed) + "Mbps UP: " + String
+                            .valueOf
+                                    (kbpsUPWiFi)
+                            + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
+                            + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
+                            + " MB CPU: " + String.valueOf(cpuLoad) +
+                            " %");*/
                     }
-                    // No hay red disponible
-                } else {
-                    bpsDown = 0;
-                    bpsUP = 0;
-                    Log.d(TAG, "Red no disponible");
-                /*updateNotification("Red no disponible, Mem Free: "
-                        + String.valueOf(megaBytesDisponibles) + " MB CPU: "
-                        + String.valueOf(cpuLoad) + " %");*/
                 }
-                // Actualizacion de los valores anteriores
-                timeanterior = timeActual;
-                bytesRXanterior = bytesRXActual;
-                bytesTXanterior = bytesTXActual;
-                bytesWiFiRXAnterior = bytesWiFiRXActual;
-                bytesWiFiTXAnterior = bytesWiFiTXActual;
-                mThread.sleep(Constants.TIEMPO_ACTUALIZACION);
-            } catch (Exception e) {
-
+                // No hay red disponible
+            } else {
+                bpsDown = 0;
+                bpsUP = 0;
+                Log.d(TAG, "Red no disponible");
+            /*updateNotification("Red no disponible, Mem Free: "
+                    + String.valueOf(megaBytesDisponibles) + " MB CPU: "
+                    + String.valueOf(cpuLoad) + " %");*/
             }
+            // Actualizacion de los valores anteriores
+            timeAnterior = timeActual;
+            bytesRXanterior = bytesRXActual;
+            bytesTXanterior = bytesTXActual;
+            bytesWiFiRXAnterior = bytesWiFiRXActual;
+            bytesWiFiTXAnterior = bytesWiFiTXActual;
+            mHandler.postDelayed(monitoring,
+                    Constants.TIEMPO_ACTUALIZACION);
         }
-    }
-
+    };
 
     /**
      * Obtiene la cantidad de memoria disponible en el sistema
@@ -160,6 +193,10 @@ public class MonitoringService extends Service {
         activityManager.getMemoryInfo(mi);
         long availableMegs = mi.availMem / Constants.MULTIPLO_MB;
         return availableMegs;
+    }
+
+    public void startMean() {
+        startMean = true;
     }
 
     /**
@@ -191,6 +228,12 @@ public class MonitoringService extends Service {
         return carga;
     }
 
+
+    /**
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public PingResults executePing() throws IOException, InterruptedException {
         PingResults result = new PingResults();
         // Llamada al comando ping desde un proceso
@@ -201,7 +244,7 @@ public class MonitoringService extends Service {
                 p.getInputStream()));
         // Parseo del resultado de ping
         String line = reader.readLine();
-        if(line != null) {
+        if (line != null) {
             while (!(line = reader.readLine()).isEmpty()) {
             }
             reader.readLine();
@@ -230,6 +273,38 @@ public class MonitoringService extends Service {
     }
 
     /**
+     *
+     * @return
+     */
+    public float getBandwidth() {
+        long startTime = System.currentTimeMillis();
+        float bandwidth = 0;
+        try {
+            HttpGet httpRequest = new HttpGet(new URL(Constants.IMAGE_URL_DOWN)
+                    .toURI());
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response = (HttpResponse) httpClient.execute(httpRequest);
+            long endTime = System.currentTimeMillis();
+
+            long contentLength = response.getEntity().getContentLength();
+            Log.d("Size", String.valueOf(contentLength));
+            bandwidth = Constants.IMAGE_LENGTH / ((endTime - startTime) *
+                    1000);
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bandwidth;
+    }
+
+
+    /**
      * Actualiza la notificacion mostrada en pantalla
      *
      * @param datos
@@ -242,8 +317,7 @@ public class MonitoringService extends Service {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(datos));
         Intent startIntent = new Intent(getApplicationContext(),
                 PrincipalActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 1,
-                startIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 1,startIntent, 0);
         builder.setContentIntent(contentIntent);
         Notification note = builder.build();
         NotificationManager mNotificationManager =
@@ -265,13 +339,12 @@ public class MonitoringService extends Service {
 
         telManager = (TelephonyManager)
                 getBaseContext().getSystemService(TELEPHONY_SERVICE);
-
-        mThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                monitoring();
-            }
-        }, "Monitoreo");
+        init();
+        mHandlerThread = new HandlerThread("MonitoringThread",
+                android.os.Process.THREAD_PRIORITY_BACKGROUND);
+        mHandlerThread.start();
+        mHandler = new Handler(mHandlerThread.getLooper());
+        mHandler.postDelayed(monitoring, 15000);
 
         Toast.makeText(this, "Service Foreground", Toast.LENGTH_SHORT).show();
     }
@@ -285,10 +358,22 @@ public class MonitoringService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(NOTIF_ID, getNotification());
-        if (!mThread.isAlive()) {
-            mThread.start();
-        }
         return START_STICKY;
+    }
+
+    /**
+     *
+     */
+    public void init(){
+        timeAnterior = DateHourUtils.toSeconds(System.currentTimeMillis());
+        bytesRXanterior = TrafficStats.getMobileRxBytes();
+        packetsRXanterior = TrafficStats.getMobileRxPackets();
+        packetsTXanterior = TrafficStats.getMobileTxPackets();
+        bytesWiFiRXAnterior = TrafficStats.getTotalRxBytes() - bytesRXanterior;
+        bytesTXanterior = TrafficStats.getMobileTxBytes();
+        bytesWiFiTXAnterior = TrafficStats.getTotalTxBytes() - bytesRXanterior;
+        packetsWiFiRXanterior = TrafficStats.getTotalRxPackets() - packetsRXanterior;
+        packetsWiFiTXanterior = TrafficStats.getTotalTxPackets() - packetsTXanterior;
     }
 
     /**
@@ -315,8 +400,14 @@ public class MonitoringService extends Service {
     @Override
     public void onDestroy() {
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+        mHandler.removeCallbacks(monitoring);
+        mHandler.getLooper().quitSafely();
     }
 
+    /**
+     * @param intent
+     * @return
+     */
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;

@@ -59,6 +59,7 @@ public class PreTestActivty extends Activity {
     private Location currentLocation;
     private ProgressDialog progressDialog;
     private PingResults pingResults;
+    private float bandwidth;
 
     MonitoringService mService;
     private boolean mBound;
@@ -280,21 +281,26 @@ public class PreTestActivty extends Activity {
         protected Void doInBackground(Void... voids) {
             currentLocation = locationUtils.getLastLocation();
             publishProgress(0);
-            try{
+            /*try {
                 pingResults = mService.executePing();
-            }catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
+            publishProgress(1);
+            bandwidth = mService.getBandwidth();
             return null;
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            if(values[0] == 0){
+            if (values[0] == 0) {
                 progressDialog.setMessage("Realizando test Ping");
+            }
+            if (values[0] == 1) {
+                progressDialog.setMessage("Realizando Speed Test");
             }
         }
 
@@ -306,6 +312,7 @@ public class PreTestActivty extends Activity {
         @Override
         protected void onPostExecute(Void res) {
             progressDialog.dismiss();
+            Log.d("Ancho de Banda", String.valueOf(bandwidth));
             PerfilUsuario perfilUsuario = new PerfilUsuario();
             perfilUsuario.setSexo(sexo);
             perfilUsuario.setEdad(Integer.valueOf(edad));
@@ -319,7 +326,6 @@ public class PreTestActivty extends Activity {
             startActivity(intent);
         }
     }
-
 
 
 }
