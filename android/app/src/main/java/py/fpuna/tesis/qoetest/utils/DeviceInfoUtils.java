@@ -1,7 +1,9 @@
 package py.fpuna.tesis.qoetest.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -60,6 +62,27 @@ public class DeviceInfoUtils {
      *
      * @return
      */
+    public String getIMEI(){
+        TelephonyManager telephonyManager =
+                (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getRAM(){
+        ActivityManager actManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        actManager.getMemoryInfo(memInfo);
+        return memInfo.totalMem / Constants.MULTIPLO_MB;
+    }
+
+    /**
+     *
+     * @return
+     */
     public String getOSVersion(){
         return "ANDROID " + Build.VERSION.RELEASE;
     }
@@ -77,6 +100,8 @@ public class DeviceInfoUtils {
         info.setProcesador(getProcessor());
         info.setPantalla(getScreenSize());
         info.setSoVersion(getOSVersion());
+        info.setImei(getIMEI());
+        info.setRam(String.valueOf(getRAM()) + " MB");
         return info;
     }
 
@@ -147,11 +172,14 @@ public class DeviceInfoUtils {
         return maxFreq;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getProcessor(){
         String processor = "Desconocido";
         try{
-            RandomAccessFile reader = new RandomAccessFile("/proc/cpuinfo",
-                    "r");
+            RandomAccessFile reader = new RandomAccessFile("/proc/cpuinfo","r");
             String line = reader.readLine();
             while(!line.contains("Hardware")){
                 line = reader.readLine();

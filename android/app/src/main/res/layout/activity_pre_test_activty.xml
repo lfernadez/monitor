@@ -105,7 +105,20 @@
                 android:layout_height="@dimen/layout_height"
                 android:layout_below="@id/frecuencia_label"/>
 
+            <!-- Campo Frecuencia de app utilizadas con frecuencia -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/frecuencia_app_label"
+                android:text="@string/frecuencia_pregunta_app_text"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner_frecuencua"
+                android:layout_width="wrap_content"/>
 
+            <py.fpuna.tesis.qoetest.ui.MultiSelectionSpinner
+                android:id="@+id/spinner_frecuencia_app"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@id/frecuencia_app_label"/>
 
         </RelativeLayout>
 

@@ -12,13 +12,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
+import py.fpuna.tesis.qoetest.model.PruebaTest;
+import py.fpuna.tesis.qoetest.utils.CalcUtils;
 
 public class QoEWebTestActivity extends Activity {
 
-    public static final String EXTRA_QOE_RATING_UNO = "EXTRA_QOE_RATING_UNO";
-    public static final String EXTRA_QOE_RATING_DOS = "EXTRA_QOE_RATING_DOS";
+    public static final String EXTRA_LISTA_PRUEBA = "EXTRA_LISTA_TEST";
 
     private RatingBar velocQoERatingBar;
     private RatingBar calidadRatingBar;
@@ -94,11 +98,14 @@ public class QoEWebTestActivity extends Activity {
                 if(verificar()) {
                     Intent intent = new Intent(getBaseContext(),
                             StreamingTestIntroActivity.class);
-                    intent.putExtras(getIntent().getExtras());
-                    intent.putExtra(EXTRA_QOE_RATING_UNO,
-                            velocQoERatingBar.getRating());
-                    intent.putExtra(EXTRA_QOE_RATING_DOS,
-                            calidadRatingBar.getRating());
+                    ArrayList<PruebaTest> pruebas = new ArrayList<PruebaTest>();
+                    PruebaTest pruebaWeb = new PruebaTest();
+                    pruebaWeb.setCodigoTest(1);
+                    pruebaWeb.setValorMos(
+                            CalcUtils.getPromedio(velocQoERatingBar.getRating(),
+                                    calidadRatingBar.getRating()));
+                    pruebas.add(pruebaWeb);
+                    intent.putParcelableArrayListExtra(EXTRA_LISTA_PRUEBA, pruebas);
                     startActivity(intent);
                 }
             }

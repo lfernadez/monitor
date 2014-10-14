@@ -16,17 +16,27 @@ public class PerfilUsuario implements Parcelable {
     private Integer edad;
     private String profesion;
     private String frecuenciaUso;
+    private String aplicacionesFrecuentes;
 
     public PerfilUsuario() {
     }
 
     public PerfilUsuario(long idPerfil, String sexo, Integer edad,
-                         String profesion, String frecuenciaUso) {
+                         String profesion, String frecuenciaUso, String appFrecuentes) {
         this.idPerfil = idPerfil;
         this.sexo = sexo;
         this.edad = edad;
         this.profesion = profesion;
         this.frecuenciaUso = frecuenciaUso;
+        this.aplicacionesFrecuentes = appFrecuentes;
+    }
+
+    public String getAplicacionesFrecuentes() {
+        return aplicacionesFrecuentes;
+    }
+
+    public void setAplicacionesFrecuentes(String aplicacionesFrecuentes) {
+        this.aplicacionesFrecuentes = aplicacionesFrecuentes;
     }
 
     public long getIdPerfil() {

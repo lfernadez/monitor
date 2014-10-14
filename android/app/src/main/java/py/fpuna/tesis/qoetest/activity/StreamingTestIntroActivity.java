@@ -25,7 +25,6 @@ public class StreamingTestIntroActivity extends Activity {
                         StreamingTestActivity.class);
                 intent.putExtras(getIntent().getExtras());
                 startActivity(intent);
-
             }
         });
     }

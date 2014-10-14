@@ -4,8 +4,10 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -20,6 +22,7 @@ import py.fpuna.tesis.qoetest.fragment.InfoFragment;
 import py.fpuna.tesis.qoetest.fragment.NavigationDrawerFragment;
 import py.fpuna.tesis.qoetest.fragment.TestFragment;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
+import py.fpuna.tesis.qoetest.utils.Constants;
 
 
 public class PrincipalActivity extends FragmentActivity
@@ -36,6 +39,7 @@ public class PrincipalActivity extends FragmentActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class PrincipalActivity extends FragmentActivity
             cedf.show(getSupportFragmentManager(), "TAG");
 
         }*/
+
         Intent intent = new Intent(getApplicationContext(), MonitoringService.class);
         startService(intent);
     }

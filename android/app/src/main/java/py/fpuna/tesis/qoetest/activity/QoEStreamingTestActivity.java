@@ -8,7 +8,11 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.model.PruebaTest;
+import py.fpuna.tesis.qoetest.utils.CalcUtils;
 import py.fpuna.tesis.qoetest.utils.VideoTestMessages;
 
 public class QoEStreamingTestActivity extends Activity {
@@ -19,12 +23,17 @@ public class QoEStreamingTestActivity extends Activity {
             "extra_tiempo_buffering";
     public static final String EXTRA_TIEMPO_TOTAL_REP =
             "extra_tiempo_total_rep";
+
+    public static final String EXTRA_LISTA_PRUEBA = "EXTRA_LISTA_TEST";
+
     private RatingBar tiempoCargaInicialRatingBar;
     private RatingBar bufferingRatingBar;
     private TextView tiempoCargaRBLabel;
     private TextView bufferingRBLabel;
     private Button siguienteBtn;
     private Button atrasBtn;
+
+    private ArrayList<PruebaTest> pruebas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,8 @@ public class QoEStreamingTestActivity extends Activity {
 
         tiempoCargaInicialRatingBar = (RatingBar) findViewById(R.id.ratingBar_tiempo_carga_video);
         tiempoCargaRBLabel = (TextView) findViewById(R.id.ratingBar_tiempo_carga_video_label);
+
+        pruebas = getIntent().getParcelableArrayListExtra(EXTRA_LISTA_PRUEBA);
 
         tiempoCargaInicialRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -81,7 +92,15 @@ public class QoEStreamingTestActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(),
-                        MusicStreamingTestIntro.class);
+                        EnviarTestActivity.class);
+                PruebaTest pruebaStreaming = new PruebaTest();
+                pruebaStreaming.setCodigoTest(2);
+                pruebaStreaming.setValorMos(
+                        CalcUtils.getPromedio(
+                                tiempoCargaInicialRatingBar.getRating(),
+                                bufferingRatingBar.getRating()));
+                pruebas.add(pruebaStreaming);
+                intent.putParcelableArrayListExtra(EXTRA_LISTA_PRUEBA, pruebas);
                 intent.putExtras(getIntent().getExtras());
                 startActivity(intent);
             }

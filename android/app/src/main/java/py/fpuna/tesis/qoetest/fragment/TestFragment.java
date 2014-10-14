@@ -1,7 +1,9 @@
 package py.fpuna.tesis.qoetest.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.activity.PreTestActivty;
+import py.fpuna.tesis.qoetest.activity.WebTestIntroActivity;
+import py.fpuna.tesis.qoetest.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,8 +33,12 @@ public class TestFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
 
     private int mParam1;
+    public static final String EXISTE_SHARED = "EXISTE_SHARED";
 
     private OnFragmentInteractionListener mListener;
+
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor mEditor;
 
     /**
      * Use this factory method to create a new instance of
@@ -57,6 +65,13 @@ public class TestFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
         }
+
+        // Se abre el Shaerd Preferences
+        mPrefs = getActivity().getSharedPreferences(Constants.SAHRED_PREFERENCES,
+                Context.MODE_PRIVATE);
+        // Se Obtiene el editor del
+        mEditor = mPrefs.edit();
+
     }
 
     @Override
@@ -70,8 +85,13 @@ public class TestFragment extends Fragment {
         comenzarTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PreTestActivty.class);
-                startActivity(intent);
+                if(mPrefs.contains(EXISTE_SHARED)) {
+                    Intent intent = new Intent(getActivity(), WebTestIntroActivity.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), PreTestActivty.class);
+                    startActivity(intent);
+                }
             }
         });
         return view;

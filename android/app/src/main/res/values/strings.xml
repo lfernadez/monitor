@@ -9,6 +9,13 @@
         <item>Acerda de</item>
     </string-array>
 
+    <string-array name="apps">
+        <item>Facebook</item>
+        <item>Whastapp</item>
+        <item>Youtube</item>
+        <item>Navegador Web</item>
+    </string-array>
+
     <array name="nav_drawer_icons">
         <item>@drawable/ic_action_view_as_list</item>
         <item>@drawable/ic_action_phone</item>
@@ -35,6 +42,7 @@
     <string name="sexo_label">Sexo:</string>
     <string name="frecuencia_pregunta_text">¿Con que frecuencia utiliza
         internet con paquete de datos móviles?</string>
+     <string name="frecuencia_pregunta_app_text">¿Qué aplicaciones utilizas con frecuencia?</string>
     <string name="edad_label">Edad:</string>
     <string name="profesion_label">Profesión:</string>
 
@@ -76,5 +84,9 @@
 
     <!-- Music Streaming Test -->
 
+    <!-- Test Finalizado -->
+    <string name="title_activity_enviar_test">Test Finalizado</string>
+    <string name="evalucion_finalizada">Evaluación Finalizada</string>
+    <string name="enviar_resultados_test">Enviar Resultados</string>
 
 </resources>

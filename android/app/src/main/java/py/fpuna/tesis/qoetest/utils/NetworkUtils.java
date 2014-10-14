@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,10 @@ public class NetworkUtils {
     private Context context;
     TelephonyManager telManager;
     ConnectivityManager cm;
+
+    public static long toKbits(long bytes){
+        return (bytes *8)/1000;
+    }
 
     /**
      *
@@ -81,5 +86,19 @@ public class NetworkUtils {
             }
         }
         return allNetworksState;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getCID(){
+        GsmCellLocation location = (GsmCellLocation)telManager.getCellLocation();
+        int locationCellid = location.getCid();
+        int cellId = -1;  //-1, desconocido por defecto
+        if(cellId > 0) { // known location
+            cellId = locationCellid & 0xffff; // get only valuable bytes
+        }
+        return cellId;
     }
 }

@@ -23,14 +23,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.location.LocationUtils;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
+import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.PingResults;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
+import py.fpuna.tesis.qoetest.ui.MultiSelectionSpinner;
 import py.fpuna.tesis.qoetest.utils.Constants;
+import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
 
 public class PreTestActivty extends Activity {
 
@@ -45,6 +52,7 @@ public class PreTestActivty extends Activity {
     private Spinner spinnerSexo;
     private Spinner spinnerProfesion;
     private Spinner spinnerFrecuencia;
+    private MultiSelectionSpinner spinnerApp;
     private EditText edadEditText;
     private Button atrasBtn;
     private Button siguienteBtn;
@@ -60,6 +68,12 @@ public class PreTestActivty extends Activity {
     private ProgressDialog progressDialog;
     private PingResults pingResults;
     private float bandwidth;
+    private PhoneInfo info;
+    private DeviceInfoUtils deviceInfo;
+    private long cpuLoad;
+    private long memLoad;
+    private String [] apps;
+    private String selectedApps;
 
     MonitoringService mService;
     private boolean mBound;
@@ -106,6 +120,9 @@ public class PreTestActivty extends Activity {
             }
         });
 
+        /** Device Info Utils */
+        deviceInfo = new DeviceInfoUtils(getApplicationContext());
+
         /** Progress Dialog */
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Obteniendo Localizacion...");
@@ -147,6 +164,11 @@ public class PreTestActivty extends Activity {
         });
 
         edadEditText = (EditText) findViewById(R.id.edad_editText);
+
+        /** Spinner para seleccion de apps */
+        spinnerApp = (MultiSelectionSpinner) findViewById(R.id.spinner_frecuencia_app);
+        apps = getResources().getStringArray(R.array.apps);
+        spinnerApp.setItems(apps);
 
         /* Boton Atras */
         atrasBtn = (Button) findViewById(R.id.leftButton);
@@ -279,17 +301,23 @@ public class PreTestActivty extends Activity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            currentLocation = locationUtils.getLastLocation();
-            publishProgress(0);
-            /*try {
-                pingResults = mService.executePing();
+            try {
+                currentLocation = locationUtils.getLastLocation();
+                publishProgress(0);
+                //pingResults = mService.executePing();
+                publishProgress(1);
+                bandwidth = mService.getBandwidth();
+                info = deviceInfo.getPhoneInfo();
+                cpuLoad = mService.getCpuLoad();
+                memLoad = mService.getMemFree();
+
+                savePerfilShared();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
-            publishProgress(1);
-            bandwidth = mService.getBandwidth();
+            }
             return null;
         }
 
@@ -312,12 +340,20 @@ public class PreTestActivty extends Activity {
         @Override
         protected void onPostExecute(Void res) {
             progressDialog.dismiss();
-            Log.d("Ancho de Banda", String.valueOf(bandwidth));
+
+            /* Perfil de Usuario */
             PerfilUsuario perfilUsuario = new PerfilUsuario();
             perfilUsuario.setSexo(sexo);
             perfilUsuario.setEdad(Integer.valueOf(edad));
             perfilUsuario.setProfesion(profesion);
             perfilUsuario.setFrecuenciaUso(frecuencia);
+            perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
+
+            //selectedApps = spinnerApp.getSelectedItemsAsString();
+
+            mEditor.putBoolean("EXISTE_SHARED", true);
+            mEditor.commit();
+
             Intent intent = new Intent(getApplicationContext(),
                     WebTestIntroActivity.class);
             intent.putExtra(WebTestIntroActivity.EXTRA_PERFIL_USUARIO,
@@ -325,6 +361,19 @@ public class PreTestActivty extends Activity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+    }
+
+    public void savePerfilShared(){
+        Gson gson = new Gson();
+        PerfilUsuario perfilUsuario = new PerfilUsuario();
+        perfilUsuario.setSexo(sexo);
+        perfilUsuario.setEdad(Integer.valueOf(edad));
+        perfilUsuario.setProfesion(profesion);
+        perfilUsuario.setFrecuenciaUso(frecuencia);
+        perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
+
+        mEditor.putString("PERFIL_USUARIO0", gson.toJson(perfilUsuario));
+        mEditor.commit();
     }
 
 

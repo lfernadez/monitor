@@ -36,6 +36,7 @@ import py.fpuna.tesis.qoetest.activity.PrincipalActivity;
 import py.fpuna.tesis.qoetest.model.PingResults;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
+import py.fpuna.tesis.qoetest.utils.NetworkUtils;
 
 public class MonitoringService extends Service {
 
@@ -286,11 +287,8 @@ public class MonitoringService extends Service {
             HttpResponse response = (HttpResponse) httpClient.execute(httpRequest);
             long endTime = System.currentTimeMillis();
 
-            long contentLength = response.getEntity().getContentLength();
-            Log.d("Size", String.valueOf(contentLength));
-            bandwidth = Constants.IMAGE_LENGTH / ((endTime - startTime) *
-                    1000);
-
+            bandwidth = (NetworkUtils.toKbits(Constants.IMAGE_LENGTH))
+                    / (DateHourUtils.toSeconds(endTime - startTime));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

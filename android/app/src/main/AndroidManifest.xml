@@ -108,6 +108,11 @@
             android:name=".services.MemoryMonitoringService"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".activity.EnviarTestActivity"
+            android:label="@string/title_activity_enviar_test" >
+        </activity>
     </application>
 
 </manifest>
