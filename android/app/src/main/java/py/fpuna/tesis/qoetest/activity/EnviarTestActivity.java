@@ -2,6 +2,7 @@ package py.fpuna.tesis.qoetest.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,5 +30,13 @@ public class EnviarTestActivity extends Activity {
         });
     }
 
+    public class EnviarResultados extends AsyncTask<Void, Void,
+            Void> {
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            return null;
+        }
+    }
 }

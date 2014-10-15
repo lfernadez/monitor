@@ -16,9 +16,20 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import py.fpuna.tesis.qoetest.model.DeviceLocation;
+import py.fpuna.tesis.qoetest.model.DeviceStatus;
+import py.fpuna.tesis.qoetest.model.PerfilUsuario;
+import py.fpuna.tesis.qoetest.model.PhoneInfo;
+import py.fpuna.tesis.qoetest.model.Prueba;
+import py.fpuna.tesis.qoetest.model.PruebaTest;
+import py.fpuna.tesis.qoetest.model.QoSParam;
 
 /**
  * Created by User on 10/10/2014.
@@ -155,5 +166,34 @@ public class WSHelper {
         }
         HttpResponse response = invoke(request);
         return proccess(response);
+    }
+
+    public String enviarResultados(PerfilUsuario pu, PhoneInfo info,
+                                   DeviceStatus deviceStatus,
+                                   DeviceLocation location,
+                                   List<PruebaTest> test,
+                                   Prueba prueba,
+                                   List<QoSParam> qoSParams){
+        String respuesta = "";
+        JSONObject datosJSON = new JSONObject();
+        try {
+            /* Datos del telefono*/
+            datosJSON.put("telefono", gson.toJson(info));
+            /*Datos del Usuario */
+            datosJSON.put("datosUsuario",gson.toJson(pu));
+            /* Datos del estado del telefono */
+            datosJSON.put("estadoTelefono", gson.toJson(deviceStatus));
+            /* Resultados de las pruebas */
+            datosJSON.put("pruebaTests", gson.toJson(test));
+            /* Localizacion */
+            datosJSON.put("localizacion", gson.toJson(location));
+            /* Valores de los parametros QoS */
+            datosJSON.put("pruebaQos", gson.toJson(qoSParams));
+            respuesta = post(URL, datosJSON.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return respuesta;
     }
 }

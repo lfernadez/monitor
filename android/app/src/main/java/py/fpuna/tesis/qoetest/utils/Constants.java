@@ -28,7 +28,7 @@ public class Constants {
             ".net/data/db_photos/porsche/911_carrera_gts/997/porsche_911_carrera_gts_997_coupe2d-4477.jpg";
     public static final long IMAGE_LENGTH = 1185228;
 
-
-
+    public static final int DELAY_ID = 1;
+    public static final int BANDWITDH_ID = 2;
 
 }

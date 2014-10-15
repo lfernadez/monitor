@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,8 +25,6 @@ import android.widget.Spinner;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.location.LocationUtils;
@@ -85,6 +82,7 @@ public class PreTestActivty extends Activity {
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
+
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             MonitoringService.LocalBinder binder = (MonitoringService.LocalBinder) service;
             mService = binder.getService();
