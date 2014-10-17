@@ -4,26 +4,21 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.fragment.InfoFragment;
 import py.fpuna.tesis.qoetest.fragment.NavigationDrawerFragment;
 import py.fpuna.tesis.qoetest.fragment.TestFragment;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
-import py.fpuna.tesis.qoetest.utils.Constants;
-
+import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 
 public class PrincipalActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -79,6 +74,9 @@ public class PrincipalActivity extends FragmentActivity
 
         Intent intent = new Intent(getApplicationContext(), MonitoringService.class);
         startService(intent);
+        Intent intentNetworkService = new Intent(getApplicationContext(),
+                NetworkMonitoringService.class);
+        startService(intentNetworkService);
     }
 
     @Override
@@ -133,18 +131,6 @@ public class PrincipalActivity extends FragmentActivity
             return true;
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

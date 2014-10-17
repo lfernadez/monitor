@@ -22,6 +22,7 @@ public class Constants {
     /* SharedPrefences */
     public static final String SAHRED_PREFERENCES = "py.fpuna.tesis.qoetest" +
             ".SHARED_PREFERENCES";
+    public static final String PERFIL_USUARIO_SHARED = "PERFIL_USUARIO";
 
     /* bandwidth Test */
     public static final String IMAGE_URL_DOWN = "http://carlook" +

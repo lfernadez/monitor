@@ -113,6 +113,11 @@
             android:name=".activity.EnviarTestActivity"
             android:label="@string/title_activity_enviar_test" >
         </activity>
+
+        <service
+            android:name=".services.NetworkMonitoringService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

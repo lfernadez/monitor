@@ -23,10 +23,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.Process;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -280,17 +283,32 @@ public class MonitoringService extends Service {
     public float getBandwidth() {
         long startTime = System.currentTimeMillis();
         float bandwidth = 0;
-        try {
-            HttpGet httpRequest = new HttpGet(new URL(Constants.IMAGE_URL_DOWN)
-                    .toURI());
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpResponse response = (HttpResponse) httpClient.execute(httpRequest);
-            long endTime = System.currentTimeMillis();
+        InputStream input = null;
 
+        try {
+            URL url = new URL(Constants.IMAGE_URL_DOWN);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setRequestMethod("GET");
+            connection.addRequestProperty("Cache-Control", "no-cache");
+            long starTime = System.currentTimeMillis();
+            connection.connect();
+            int response = connection.getResponseCode();
+            input = connection.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(input);
+            int red = 0;
+            long size = 0;
+
+            byte[] buf = new byte[1024];
+            while ((red = bis.read(buf)) != -1) {
+                size += red;
+            }
+            long endTime = System.currentTimeMillis();
+            input.close();
+            connection.disconnect();
             bandwidth = (NetworkUtils.toKbits(Constants.IMAGE_LENGTH))
                     / (DateHourUtils.toSeconds(endTime - startTime));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {

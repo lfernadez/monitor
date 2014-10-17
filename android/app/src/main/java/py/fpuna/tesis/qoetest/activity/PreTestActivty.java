@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,10 @@ import android.widget.Spinner;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.location.LocationUtils;
@@ -32,6 +37,7 @@ import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.PingResults;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
+import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 import py.fpuna.tesis.qoetest.ui.MultiSelectionSpinner;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
@@ -42,6 +48,7 @@ public class PreTestActivty extends Activity {
     public static final String SPIN_PROF_POS = "spinner_prof_pos";
     public static final String SPIN_FREC_POS = "spinner_frec_pos";
     public static final String EDAD = "edad";
+    public static final String SPIN_FREC_APPS = "spinner_frec_apps";
 
 
     SharedPreferences mPrefs;
@@ -69,11 +76,17 @@ public class PreTestActivty extends Activity {
     private DeviceInfoUtils deviceInfo;
     private long cpuLoad;
     private long memLoad;
-    private String [] apps;
+    private String[] apps;
     private String selectedApps;
 
     MonitoringService mService;
+    NetworkMonitoringService mNetworkService;
+
     private boolean mBound;
+
+    private int signalLevel3G;
+    private int signalLevelWifi;
+    private long dBm3G;
 
     public static final String TAG = "PreTestActivity";
 
@@ -86,6 +99,25 @@ public class PreTestActivty extends Activity {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             MonitoringService.LocalBinder binder = (MonitoringService.LocalBinder) service;
             mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        }
+    };
+
+    private ServiceConnection mNetworkServiceConnection = new ServiceConnection
+            () {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            NetworkMonitoringService.NetworkServiceBinder binder =
+                    (NetworkMonitoringService.NetworkServiceBinder) service;
+            mNetworkService = binder.getService();
             mBound = true;
         }
 
@@ -207,6 +239,11 @@ public class PreTestActivty extends Activity {
         mEditor.putInt(SPIN_FREC_POS, spinnerFrecuencia
                 .getSelectedItemPosition());
         mEditor.putString(EDAD, edad);
+        Set<String> apps = new HashSet<String>();
+        for(String app : spinnerApp.getSelectedStrings()){
+            apps.add(app);
+        }
+        mEditor.putStringSet(SPIN_FREC_APPS, apps);
         mEditor.commit();
     }
 
@@ -225,6 +262,13 @@ public class PreTestActivty extends Activity {
         if (mPrefs.contains(EDAD)) {
             edadEditText.setText(mPrefs.getString(EDAD, "0"));
         }
+        if(mPrefs.contains(SPIN_FREC_APPS)){
+            Set<String> apps = mPrefs.getStringSet(SPIN_FREC_APPS,
+                    new HashSet<String>());
+            List<String> frecApps = new ArrayList<String>();
+            frecApps.addAll(apps);
+            spinnerApp.setSelection(frecApps);
+        }
     }
 
     @Override
@@ -232,6 +276,8 @@ public class PreTestActivty extends Activity {
         super.onStart();
         Intent intent = new Intent(this, MonitoringService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        Intent intentNetworkService = new Intent(this, NetworkMonitoringService.class);
+        bindService(intentNetworkService, mNetworkServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -240,6 +286,7 @@ public class PreTestActivty extends Activity {
         // Unbind from the service
         if (mBound) {
             unbindService(mConnection);
+            unbindService(mNetworkServiceConnection);
             mBound = false;
         }
     }
@@ -305,10 +352,16 @@ public class PreTestActivty extends Activity {
                 //pingResults = mService.executePing();
                 publishProgress(1);
                 bandwidth = mService.getBandwidth();
+                Log.d("BANWIDTH", String.valueOf(bandwidth));
                 info = deviceInfo.getPhoneInfo();
                 cpuLoad = mService.getCpuLoad();
                 memLoad = mService.getMemFree();
-
+                signalLevel3G = mNetworkService.getSignalLevel3G();
+                signalLevelWifi = mNetworkService.getSignalLevelWiFi();
+                dBm3G = mNetworkService.getdBm3G();
+                Log.d(TAG + "3G Level", String.valueOf(signalLevel3G));
+                Log.d(TAG + "WiFi Level", String.valueOf(signalLevelWifi));
+                Log.d(TAG + "dBm 3G", String.valueOf(dBm3G));
                 savePerfilShared();
 
             } catch (InterruptedException e) {
@@ -361,7 +414,7 @@ public class PreTestActivty extends Activity {
         }
     }
 
-    public void savePerfilShared(){
+    public void savePerfilShared() {
         Gson gson = new Gson();
         PerfilUsuario perfilUsuario = new PerfilUsuario();
         perfilUsuario.setSexo(sexo);
@@ -370,9 +423,8 @@ public class PreTestActivty extends Activity {
         perfilUsuario.setFrecuenciaUso(frecuencia);
         perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
 
-        mEditor.putString("PERFIL_USUARIO0", gson.toJson(perfilUsuario));
+        mEditor.putString(Constants.PERFIL_USUARIO_SHARED, gson.toJson(perfilUsuario));
         mEditor.commit();
     }
-
 
 }

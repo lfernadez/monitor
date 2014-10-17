@@ -1,18 +1,15 @@
 package py.fpuna.tesis.qoetest.fragment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.activity.PreTestActivty;
@@ -26,7 +23,6 @@ import py.fpuna.tesis.qoetest.utils.Constants;
  * to handle interaction events.
  * Use the {@link TestFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
 public class TestFragment extends Fragment {
 
@@ -55,8 +51,8 @@ public class TestFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public TestFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -85,10 +81,10 @@ public class TestFragment extends Fragment {
         comenzarTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mPrefs.contains(EXISTE_SHARED)) {
+                if (mPrefs.contains(EXISTE_SHARED)) {
                     Intent intent = new Intent(getActivity(), WebTestIntroActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Intent intent = new Intent(getActivity(), PreTestActivty.class);
                     startActivity(intent);
                 }
@@ -127,7 +123,7 @@ public class TestFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
