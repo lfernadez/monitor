@@ -1,6 +1,5 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -9,8 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 
 import py.fpuna.tesis.qoetest.R;
@@ -20,7 +20,7 @@ import py.fpuna.tesis.qoetest.fragment.TestFragment;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
 import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 
-public class PrincipalActivity extends FragmentActivity
+public class PrincipalActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         InfoFragment.OnFragmentInteractionListener,
         TestFragment.OnFragmentInteractionListener {
@@ -40,7 +40,6 @@ public class PrincipalActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -50,6 +49,9 @@ public class PrincipalActivity extends FragmentActivity
 		} catch (IOException e) {
 				e.printStackTrace();
 		}*/
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -71,6 +73,7 @@ public class PrincipalActivity extends FragmentActivity
             cedf.show(getSupportFragmentManager(), "TAG");
 
         }*/
+
 
         Intent intent = new Intent(getApplicationContext(), MonitoringService.class);
         startService(intent);
@@ -113,8 +116,8 @@ public class PrincipalActivity extends FragmentActivity
     }
 
     public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        ActionBar actionBar = getSupportActionBar();
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }

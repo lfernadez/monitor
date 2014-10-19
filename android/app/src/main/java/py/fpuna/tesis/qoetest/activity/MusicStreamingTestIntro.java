@@ -1,11 +1,11 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import py.fpuna.tesis.qoetest.R;
 
-public class MusicStreamingTestIntro extends Activity {
+public class MusicStreamingTestIntro extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

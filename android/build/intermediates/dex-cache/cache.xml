@@ -2,16 +2,46 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-e311e493b238b75da4095bd5ee7b69d76d73dc42.jar"
-        jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-22a73a88c7076d1e60738433409221294cdcaf4f.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
         jumboMode="false"
-        revision="21.0.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+        revision="21.0.1"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
     <item
-        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-5c53c075fe900e5a341802ec9b57c0fc677f6103.jar"
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.0.89\classes.jar"
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\classes-0ec7fb9f7003ce2e7e597cc0a76af54af855e62a.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
         jumboMode="false"
-        revision="21.0.0"
-        sha1="d71573c9c5ea98a8db47ad6ff993a63d492b3bfa"/>
+        revision="21.0.1"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
+    <item
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\gson-2.3-f55b892e3f270eb0afae2795c1ced377568d0ae6.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\libs\gson-2.3.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce"/>
+    <item
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-af83ec9586c6eb1dbd903a70291762a64f6ee4db.jar"
+        jar="C:\Program Files\Android Studio\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+    <item
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\classes-a60871fc6d73a5883171a37c4c4f4caf08998767.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+    <item
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\classes-eb9c81ff2ce7fc32b576122b121197955e134847.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.11\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
+    <item
+        dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\otto-1.3.5-2d5c35f07b8df3aa861780d3be47c60b5711f340.jar"
+        jar="C:\Users\LF\.gradle\caches\modules-2\files-2.1\com.squareup\otto\1.3.5\7941cd2c2c8ec006800d75c35f8a9dacf892ab93\otto-1.3.5.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="7941cd2c2c8ec006800d75c35f8a9dacf892ab93"/>
 
 </pre-dex-items>

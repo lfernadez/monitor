@@ -1,16 +1,15 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,11 +18,12 @@ import android.widget.VideoView;
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.utils.VideoUtils;
 
-public class StreamingTestActivity extends Activity
+public class StreamingTestActivity extends ActionBarActivity
         implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener, SeekBar.OnSeekBarChangeListener,
         MediaPlayer.OnCompletionListener {
 
+    String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
     private MediaPlayer mediaPlayer;
     private SeekBar videoProgressBar;
     private VideoView videoView;
@@ -31,7 +31,6 @@ public class StreamingTestActivity extends Activity
     private TextView totalVideoLabel;
     private VideoUtils videoUtils;
     private Handler mHandler = new Handler();
-    String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
     private ProgressDialog loadingProgress;
     private Button siguienteBtn;
     private long duracionVideo;
@@ -39,12 +38,37 @@ public class StreamingTestActivity extends Activity
     private long inicioTotal;
     private long finCargando;
     private long finTotal;
+    /**
+     * Background Runnable thread
+     */
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            long totalDuration = videoView.getDuration();
+            long currentDuration = videoView.getCurrentPosition();
 
+            // Displaying Total Duration time
+            totalVideoLabel.setText("" + videoUtils.milliSecondsToTimer
+                    (totalDuration));
+            // Displaying time completed playing
+            posicionActualVideoLabel.setText("" + videoUtils.milliSecondsToTimer
+                    (currentDuration));
+
+            // Updating progress bar
+            int progress = (int) (videoUtils.getProgressPercentage(currentDuration,
+                    totalDuration));
+            //Log.d("Progress", ""+progress);
+            videoProgressBar.setProgress(progress);
+            Log.d(this.getClass().getName(), "percent played: " + progress);
+
+            // Running this thread after 100 milliseconds
+            mHandler.postDelayed(this, 100);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        //supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_streaming_test);
 
         /* VideoView */
@@ -83,7 +107,7 @@ public class StreamingTestActivity extends Activity
             public void onClick(View view) {
                 long tiempoBuffering = (finTotal - inicioTotal) - duracionVideo;
 
-                String tiempoCarga =  videoUtils.milliSecondsToTimer(finCargando -
+                String tiempoCarga = videoUtils.milliSecondsToTimer(finCargando -
                         inicioCargando);
                 String duracionVideoString = videoUtils.milliSecondsToTimer
                         (duracionVideo);
@@ -94,26 +118,26 @@ public class StreamingTestActivity extends Activity
 
                 Intent intent = new Intent(StreamingTestActivity.this,
                         QoEStreamingTestActivity
-                        .class);
+                                .class);
                 /* Se agregan los extras anteriores */
                 intent.putExtras(getIntent().getExtras());
                 /* Nuevos extras */
                 intent.putExtra(QoEStreamingTestActivity.EXTRA_TIEMPO_CARGA,
-                       tiempoCarga);
+                        tiempoCarga);
                 intent.putExtra(QoEStreamingTestActivity
                         .EXTRA_DURACION_VIDEO, duracionVideoString);
                 intent.putExtra(QoEStreamingTestActivity
-                        .EXTRA_TIEMPO_TOTAL_REP,tiempoTotalRep);
+                        .EXTRA_TIEMPO_TOTAL_REP, tiempoTotalRep);
                 intent.putExtra(QoEStreamingTestActivity
-                        .EXTRA_TIEMPO_BUFFERING,tiempoBufferingString);
+                        .EXTRA_TIEMPO_BUFFERING, tiempoBufferingString);
 
-                Log.d("StreamingTestActivity","Tiempo de carga inicial: " +
+                Log.d("StreamingTestActivity", "Tiempo de carga inicial: " +
                         tiempoCarga);
-                Log.d("StreamingTestActivity","Duracion video: " +
+                Log.d("StreamingTestActivity", "Duracion video: " +
                         duracionVideoString);
-                Log.d("StreamingTestActivity","Tiempo reproducción total: " +
+                Log.d("StreamingTestActivity", "Tiempo reproducción total: " +
                         tiempoTotalRep);
-                Log.d("StreamingTestActivity","Tiempo Buffering: " +
+                Log.d("StreamingTestActivity", "Tiempo Buffering: " +
                         tiempoBufferingString);
 
                 startActivity(intent);
@@ -123,7 +147,6 @@ public class StreamingTestActivity extends Activity
     }
 
     /**
-     *
      * @param mediaPlayer
      */
     @Override
@@ -154,34 +177,6 @@ public class StreamingTestActivity extends Activity
     }
 
     /**
-     * Background Runnable thread
-     */
-    private Runnable mUpdateTimeTask = new Runnable() {
-        public void run() {
-            long totalDuration = videoView.getDuration();
-            long currentDuration = videoView.getCurrentPosition();
-
-            // Displaying Total Duration time
-            totalVideoLabel.setText("" + videoUtils.milliSecondsToTimer
-                    (totalDuration));
-            // Displaying time completed playing
-            posicionActualVideoLabel.setText("" + videoUtils.milliSecondsToTimer
-                    (currentDuration));
-
-            // Updating progress bar
-            int progress = (int) (videoUtils.getProgressPercentage(currentDuration,
-                    totalDuration));
-            //Log.d("Progress", ""+progress);
-            videoProgressBar.setProgress(progress);
-            Log.d(this.getClass().getName(), "percent played: " + progress);
-
-            // Running this thread after 100 milliseconds
-            mHandler.postDelayed(this, 100);
-        }
-    };
-
-    /**
-     *
      * @param mediaPlayer
      * @param i
      * @param i2
@@ -189,14 +184,13 @@ public class StreamingTestActivity extends Activity
      */
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int i, int i2) {
-        if(loadingProgress.isShowing()) {
+        if (loadingProgress.isShowing()) {
             loadingProgress.dismiss();
         }
         return true;
     }
 
     /**
-     *
      * @param mediaPlayer
      */
     @Override
@@ -208,7 +202,6 @@ public class StreamingTestActivity extends Activity
     }
 
     /**
-     *
      * @param seekBar
      * @param i
      * @param b
@@ -219,7 +212,6 @@ public class StreamingTestActivity extends Activity
     }
 
     /**
-     *
      * @param seekBar
      */
     @Override
@@ -228,7 +220,6 @@ public class StreamingTestActivity extends Activity
     }
 
     /**
-     *
      * @param seekBar
      */
     @Override

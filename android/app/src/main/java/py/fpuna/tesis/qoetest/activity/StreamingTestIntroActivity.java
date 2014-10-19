@@ -1,14 +1,14 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 
 import py.fpuna.tesis.qoetest.R;
 
-public class StreamingTestIntroActivity extends Activity {
+public class StreamingTestIntroActivity extends ActionBarActivity {
 
     private Button startStreamingTestBtn;
 

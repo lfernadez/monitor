@@ -1,17 +1,15 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -19,19 +17,22 @@ import java.util.Date;
 import java.util.Locale;
 
 import py.fpuna.tesis.qoetest.R;
-import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.utils.Constants;
 
-public class WebTestDosActivity extends Activity {
+public class WebTestDosActivity extends ActionBarActivity {
     public static final String EXTRA_TCARGA_DOS = "EXTRA_TCARGA_DOS";
     private Button siguienteBtn;
     private Button atrasBtn;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        //supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_web_test_dos);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.INVISIBLE);
 
         WebView webView = (WebView) this.findViewById(R.id.webViewdos);
         webView.clearCache(true);
@@ -73,15 +74,13 @@ public class WebTestDosActivity extends Activity {
         private long loadTime; // Tiempo de carga de la pagina web
 
         /**
-         *
          * @return
          */
-        public long getLoadTime(){
+        public long getLoadTime() {
             return this.loadTime;
         }
 
         /**
-         *
          * @param view
          * @param url
          * @param favicon
@@ -92,7 +91,7 @@ public class WebTestDosActivity extends Activity {
 
             // Save start time
             this.loadTime = System.currentTimeMillis();
-            setProgressBarIndeterminateVisibility(true);
+            mProgressBar.setVisibility(View.VISIBLE);
 
             // Show a toast
             Toast.makeText(getApplicationContext(),
@@ -101,7 +100,6 @@ public class WebTestDosActivity extends Activity {
         }
 
         /**
-         *
          * @param view
          * @param url
          */
@@ -111,7 +109,7 @@ public class WebTestDosActivity extends Activity {
 
             // Calculate load time
             this.loadTime = System.currentTimeMillis() - this.loadTime;
-            setProgressBarIndeterminateVisibility(false);
+            mProgressBar.setVisibility(View.INVISIBLE);
 
             // Convert milliseconds to date format
             String time = new SimpleDateFormat("mm:ss:SSS", Locale.getDefault())

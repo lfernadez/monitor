@@ -1,6 +1,5 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -42,17 +42,18 @@ import py.fpuna.tesis.qoetest.ui.MultiSelectionSpinner;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
 
-public class PreTestActivty extends Activity {
+public class PreTestActivty extends ActionBarActivity {
 
     public static final String SPIN_SEXO_POS = "spinner_sexo_pos";
     public static final String SPIN_PROF_POS = "spinner_prof_pos";
     public static final String SPIN_FREC_POS = "spinner_frec_pos";
     public static final String EDAD = "edad";
     public static final String SPIN_FREC_APPS = "spinner_frec_apps";
-
-
+    public static final String TAG = "PreTestActivity";
     SharedPreferences mPrefs;
     SharedPreferences.Editor mEditor;
+    MonitoringService mService;
+    NetworkMonitoringService mNetworkService;
     private Spinner spinnerSexo;
     private Spinner spinnerProfesion;
     private Spinner spinnerFrecuencia;
@@ -78,18 +79,7 @@ public class PreTestActivty extends Activity {
     private long memLoad;
     private String[] apps;
     private String selectedApps;
-
-    MonitoringService mService;
-    NetworkMonitoringService mNetworkService;
-
     private boolean mBound;
-
-    private int signalLevel3G;
-    private int signalLevelWifi;
-    private long dBm3G;
-
-    public static final String TAG = "PreTestActivity";
-
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -106,7 +96,6 @@ public class PreTestActivty extends Activity {
         public void onServiceDisconnected(ComponentName arg0) {
         }
     };
-
     private ServiceConnection mNetworkServiceConnection = new ServiceConnection
             () {
 
@@ -125,11 +114,14 @@ public class PreTestActivty extends Activity {
         public void onServiceDisconnected(ComponentName arg0) {
         }
     };
+    private int signalLevel3G;
+    private int signalLevelWifi;
+    private long dBm3G;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_pre_test_activty);
 
         /* Spinner para la seleccion del Sexo */
@@ -240,7 +232,7 @@ public class PreTestActivty extends Activity {
                 .getSelectedItemPosition());
         mEditor.putString(EDAD, edad);
         Set<String> apps = new HashSet<String>();
-        for(String app : spinnerApp.getSelectedStrings()){
+        for (String app : spinnerApp.getSelectedStrings()) {
             apps.add(app);
         }
         mEditor.putStringSet(SPIN_FREC_APPS, apps);
@@ -262,7 +254,7 @@ public class PreTestActivty extends Activity {
         if (mPrefs.contains(EDAD)) {
             edadEditText.setText(mPrefs.getString(EDAD, "0"));
         }
-        if(mPrefs.contains(SPIN_FREC_APPS)){
+        if (mPrefs.contains(SPIN_FREC_APPS)) {
             Set<String> apps = mPrefs.getStringSet(SPIN_FREC_APPS,
                     new HashSet<String>());
             List<String> frecApps = new ArrayList<String>();
@@ -341,6 +333,19 @@ public class PreTestActivty extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void savePerfilShared() {
+        Gson gson = new Gson();
+        PerfilUsuario perfilUsuario = new PerfilUsuario();
+        perfilUsuario.setSexo(sexo);
+        perfilUsuario.setEdad(Integer.valueOf(edad));
+        perfilUsuario.setProfesion(profesion);
+        perfilUsuario.setFrecuenciaUso(frecuencia);
+        perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
+
+        mEditor.putString(Constants.PERFIL_USUARIO_SHARED, gson.toJson(perfilUsuario));
+        mEditor.commit();
+    }
+
     public class ObtenerParametrosTask extends AsyncTask<Void, Integer,
             Void> {
 
@@ -412,19 +417,6 @@ public class PreTestActivty extends Activity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
-    }
-
-    public void savePerfilShared() {
-        Gson gson = new Gson();
-        PerfilUsuario perfilUsuario = new PerfilUsuario();
-        perfilUsuario.setSexo(sexo);
-        perfilUsuario.setEdad(Integer.valueOf(edad));
-        perfilUsuario.setProfesion(profesion);
-        perfilUsuario.setFrecuenciaUso(frecuencia);
-        perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
-
-        mEditor.putString(Constants.PERFIL_USUARIO_SHARED, gson.toJson(perfilUsuario));
-        mEditor.commit();
     }
 
 }

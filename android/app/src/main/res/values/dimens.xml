@@ -31,4 +31,8 @@
     <!-- Dimensiones para el header de la seccion -->
     <dimen name="margin_top_header">10dp</dimen>
     <dimen name="margin_bottom_header">10dp</dimen>
+
+    <!-- Actionbar dimens -->
+    <dimen name="action_bar_default_height">56dp</dimen>
+    <dimen name="action_bar_icon_vertical_padding">16dp</dimen>
 </resources>

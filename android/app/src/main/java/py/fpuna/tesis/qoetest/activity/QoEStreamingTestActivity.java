@@ -1,8 +1,8 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -15,7 +15,7 @@ import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.utils.CalcUtils;
 import py.fpuna.tesis.qoetest.utils.VideoTestMessages;
 
-public class QoEStreamingTestActivity extends Activity {
+public class QoEStreamingTestActivity extends ActionBarActivity {
 
     public static final String EXTRA_TIEMPO_CARGA = "extra_tiempo_carga";
     public static final String EXTRA_DURACION_VIDEO = "extra_duracion_video";

@@ -1,42 +1,42 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.google.android.gms.drive.internal.i;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import py.fpuna.tesis.qoetest.R;
-import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.utils.Constants;
 
 /**
  *
  */
-public class WebTestUnoActivity extends Activity {
+public class WebTestUnoActivity extends ActionBarActivity {
 
     public static final String EXTRA_TCARGA_UNO = "EXTRA_TCARGA_UNO";
     private Button siguienteBtn;
     private Button atrasBtn;
     private WebView webView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_web_test_uno);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         webView = (WebView) this.findViewById(R.id.webView);
         webView.clearCache(true);
@@ -85,16 +85,14 @@ public class WebTestUnoActivity extends Activity {
 
 
         /**
-         *
          * @return
          */
-        public long getLoadTime(){
+        public long getLoadTime() {
             return this.loadTime;
         }
 
 
         /**
-         *
          * @param view
          * @param url
          * @param favicon
@@ -105,7 +103,7 @@ public class WebTestUnoActivity extends Activity {
 
             // Save start time
             this.loadTime = System.currentTimeMillis();
-            setProgressBarIndeterminateVisibility(true);
+            progressBar.setVisibility(View.VISIBLE);
 
             // Show a toast
             Toast.makeText(getApplicationContext(),
@@ -114,7 +112,6 @@ public class WebTestUnoActivity extends Activity {
         }
 
         /**
-         *
          * @param view
          * @param url
          */
@@ -124,8 +121,7 @@ public class WebTestUnoActivity extends Activity {
 
             // Calculate load time
             this.loadTime = System.currentTimeMillis() - this.loadTime;
-            setProgressBarIndeterminateVisibility(false);
-
+            progressBar.setVisibility(View.INVISIBLE);
             // Convert milliseconds to date format
             String time = new SimpleDateFormat("mm:ss:SSS", Locale.getDefault())
                     .format(new Date(this.loadTime));

@@ -1,11 +1,8 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -13,14 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import py.fpuna.tesis.qoetest.R;
-import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.utils.CalcUtils;
 
-public class QoEWebTestActivity extends Activity {
+public class QoEWebTestActivity extends ActionBarActivity {
 
     public static final String EXTRA_LISTA_PRUEBA = "EXTRA_LISTA_TEST";
 
@@ -42,15 +37,15 @@ public class QoEWebTestActivity extends Activity {
         velocQoERatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                if (v == 5){
+                if (v == 5) {
                     ratingBarVelocLabel.setText("Excelente");
-                }else if(v == 4){
+                } else if (v == 4) {
                     ratingBarVelocLabel.setText("Muy Bueno");
-                }else if(v == 3) {
+                } else if (v == 3) {
                     ratingBarVelocLabel.setText("Bueno");
-                }else if(v == 2){
+                } else if (v == 2) {
                     ratingBarVelocLabel.setText("Pobre");
-                }else{
+                } else {
                     ratingBarVelocLabel.setText("Malo");
                 }
             }
@@ -61,19 +56,19 @@ public class QoEWebTestActivity extends Activity {
         calidadRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                if (v == 5){
+                if (v == 5) {
                     ratingBarCalidadLabel.setText("Excelente \n Todos los " +
                             "contenidos se visualizaron perfectamente");
-                }else if(v == 4){
+                } else if (v == 4) {
                     ratingBarCalidadLabel.setText("Muy Bueno \n Pequeñas " +
                             "obstrucciones en la visualización del contenido");
-                }else if(v == 3) {
+                } else if (v == 3) {
                     ratingBarCalidadLabel.setText("Bueno \n Retardo en la " +
                             "visualización de ciertos contenidos");
-                }else if(v == 2){
+                } else if (v == 2) {
                     ratingBarCalidadLabel.setText("Pobre \n Algunos contenidos " +
                             "no se muestran");
-                }else{
+                } else {
                     ratingBarCalidadLabel.setText("Malo \n Varios contenidos no" +
                             " se muestra");
                 }
@@ -95,7 +90,7 @@ public class QoEWebTestActivity extends Activity {
         siguienteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(verificar()) {
+                if (verificar()) {
                     Intent intent = new Intent(getBaseContext(),
                             StreamingTestIntroActivity.class);
                     ArrayList<PruebaTest> pruebas = new ArrayList<PruebaTest>();
@@ -112,16 +107,16 @@ public class QoEWebTestActivity extends Activity {
         });
     }
 
-    public boolean verificar(){
-        if(velocQoERatingBar.getRating() == 0){
+    public boolean verificar() {
+        if (velocQoERatingBar.getRating() == 0) {
             Toast.makeText(getBaseContext(), "Seleccione una de las " +
-                    "estrellas de acuerdo a su evaluación ",
+                            "estrellas de acuerdo a su evaluación ",
                     Toast.LENGTH_LONG).show();
             return false;
         }
-        if(calidadRatingBar.getRating() == 0){
+        if (calidadRatingBar.getRating() == 0) {
             Toast.makeText(getBaseContext(), "Seleccione una de las " +
-                    "estrellas de acuerdo a su evaluación ",
+                            "estrellas de acuerdo a su evaluación ",
                     Toast.LENGTH_LONG).show();
             return false;
         }

@@ -3,4 +3,9 @@
     <color name="darkBlue">#6497B1</color>
     <color name="grey">#DEDEDE</color>
     <color name="darkGrey">#6f6f6f</color>
+    <color name="colorPrimario">#5677fc</color>
+    <color name="colorPrimarioDark">#3c53b0</color>
+    <color name="colorWindow">#ffff</color>
+    <color name="colorAccentDefault">#6497B1</color>
+    <color name="textNavColor">#000000</color>
 </resources>
