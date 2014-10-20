@@ -79,6 +79,23 @@ public class DeviceInfoUtils {
         return memInfo.totalMem / Constants.MULTIPLO_MB;
     }
 
+    public long getRAMProc(){
+        long totalRam = 0;
+        String ram = "";
+        try{
+            RandomAccessFile reader = new RandomAccessFile("/proc/meminfo","r");
+            String line = reader.readLine();
+            ram = line.replaceAll("\\D+","");
+            totalRam = Long.valueOf(ram);
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return totalRam / Constants.MULTIPLI_KB_MB;
+    }
+
     /**
      *
      * @return
@@ -101,7 +118,7 @@ public class DeviceInfoUtils {
         info.setPantalla(getScreenSize());
         info.setSoVersion(getOSVersion());
         info.setImei(getIMEI());
-        info.setRam(String.valueOf(getRAM()) + " MB");
+        info.setRam(String.valueOf(getRAMProc()) + " MB");
         return info;
     }
 

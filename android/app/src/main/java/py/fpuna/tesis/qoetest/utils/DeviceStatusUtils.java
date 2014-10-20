@@ -1,5 +1,10 @@
 package py.fpuna.tesis.qoetest.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +14,11 @@ import java.io.InputStreamReader;
  */
 public class DeviceStatusUtils {
     private BufferedReader reader;
+    private Context context;
 
+    public DeviceStatusUtils(Context context){
+        this.context = context;
+    }
     public long getCPULoad(){
         long carga = 0;
         try {
@@ -37,5 +46,12 @@ public class DeviceStatusUtils {
             e.printStackTrace();
         }
         return carga;
+    }
+
+    public int getBateryLevel(){
+        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = context.registerReceiver(null, ifilter);
+        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL , 0);
+        return level;
     }
 }

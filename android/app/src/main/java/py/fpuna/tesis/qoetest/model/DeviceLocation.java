@@ -1,12 +1,18 @@
 package py.fpuna.tesis.qoetest.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by User on 15/10/2014.
  */
-public class DeviceLocation {
+public class DeviceLocation implements Parcelable{
     private Double latitud;
     private Double longitud;
-    private long idCelda;
+    private int idCelda;
+
+    public DeviceLocation() {
+    }
 
     public Double getLatitud() {
         return latitud;
@@ -28,8 +34,38 @@ public class DeviceLocation {
         return idCelda;
     }
 
-    public void setIdCelda(long idCelda) {
+    public void setIdCelda(int idCelda) {
         this.idCelda = idCelda;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public DeviceLocation(Parcel in) {
+        this.latitud = in.readDouble();
+        this.longitud = in.readDouble();
+        this.idCelda = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeDouble(this.latitud);
+        parcel.writeDouble(this.longitud);
+        parcel.writeInt(this.idCelda);
+    }
+
+    public static final Creator<DeviceLocation> CREATOR = new Creator<DeviceLocation>() {
+        @Override
+        public DeviceLocation createFromParcel(Parcel in) {
+            return (new DeviceLocation(in));
+        }
+
+        @Override
+        public DeviceLocation[] newArray(int size) {
+            return (new DeviceLocation[size]);
+        }
+    };
 }
 

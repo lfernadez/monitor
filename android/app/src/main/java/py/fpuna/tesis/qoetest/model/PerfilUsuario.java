@@ -79,6 +79,7 @@ public class PerfilUsuario implements Parcelable {
         this.frecuenciaUso = frecuenciaUso;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -90,6 +91,7 @@ public class PerfilUsuario implements Parcelable {
         this.edad = in.readInt();
         this.profesion = in.readString();
         this.frecuenciaUso = in.readString();
+        this.aplicacionesFrecuentes = in.readString();
     }
     /*
     //TODO Base de datos para Perfiles...
@@ -112,6 +114,7 @@ public class PerfilUsuario implements Parcelable {
         parcel.writeInt(this.edad);
         parcel.writeString(this.profesion);
         parcel.writeString(this.frecuenciaUso);
+        parcel.writeString(this.aplicacionesFrecuentes);
 
     }
 

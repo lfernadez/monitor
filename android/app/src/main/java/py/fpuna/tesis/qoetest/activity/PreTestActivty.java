@@ -23,8 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,14 +31,20 @@ import java.util.Set;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.location.LocationUtils;
+import py.fpuna.tesis.qoetest.model.DeviceLocation;
+import py.fpuna.tesis.qoetest.model.DeviceStatus;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.PingResults;
+import py.fpuna.tesis.qoetest.model.QoSParam;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
 import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 import py.fpuna.tesis.qoetest.ui.MultiSelectionSpinner;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
+import py.fpuna.tesis.qoetest.utils.DeviceStatusUtils;
+import py.fpuna.tesis.qoetest.utils.NetworkUtils;
+import py.fpuna.tesis.qoetest.utils.PreferenceUtils;
 
 public class PreTestActivty extends ActionBarActivity {
 
@@ -62,12 +66,9 @@ public class PreTestActivty extends ActionBarActivity {
     private Button atrasBtn;
     private Button siguienteBtn;
     private String sexo;
-    private int sexoPos;
     private String edad;
     private String profesion;
-    private int profesionPos;
     private String frecuencia;
-    private int frecuenciaPos;
     private LocationUtils locationUtils;
     private Location currentLocation;
     private ProgressDialog progressDialog;
@@ -75,8 +76,8 @@ public class PreTestActivty extends ActionBarActivity {
     private float bandwidth;
     private PhoneInfo info;
     private DeviceInfoUtils deviceInfo;
-    private long cpuLoad;
-    private long memLoad;
+    private double cpuLoad;
+    private double memLoad;
     private String[] apps;
     private String selectedApps;
     private boolean mBound;
@@ -114,9 +115,17 @@ public class PreTestActivty extends ActionBarActivity {
         public void onServiceDisconnected(ComponentName arg0) {
         }
     };
+    private PreferenceUtils preferenceUtils;
+    private PerfilUsuario perfilUsuario;
     private int signalLevel3G;
     private int signalLevelWifi;
     private long dBm3G;
+    private int signalLevelActiveNetwork;
+    private int cellID;
+    private String redActiva;
+    private DeviceStatusUtils deviceStatsUtils;
+    private NetworkUtils networkUtils;
+    private int bateryLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +141,6 @@ public class PreTestActivty extends ActionBarActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sexoPos = i;
                 sexo = adapterView.getItemAtPosition(i).toString();
             }
 
@@ -142,12 +150,21 @@ public class PreTestActivty extends ActionBarActivity {
             }
         });
 
-        /** Device Info Utils */
+        /**Device Info Utils */
         deviceInfo = new DeviceInfoUtils(getApplicationContext());
+
+        preferenceUtils = new PreferenceUtils(this);
+
+        /** Device status utils */
+        deviceStatsUtils = new DeviceStatusUtils(this);
+
+        /** Network Utils */
+        networkUtils = new NetworkUtils(this);
 
         /** Progress Dialog */
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Obteniendo Localizacion...");
+        progressDialog.setCanceledOnTouchOutside(false);
 
         /* Spinner para la seleccion de la Profesion */
         spinnerProfesion = (Spinner) findViewById(R.id.spinner_profesion);
@@ -157,7 +174,6 @@ public class PreTestActivty extends ActionBarActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                profesionPos = i;
                 profesion = adapterView.getItemAtPosition(i).toString();
             }
 
@@ -175,7 +191,6 @@ public class PreTestActivty extends ActionBarActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                frecuenciaPos = i;
                 frecuencia = adapterView.getItemAtPosition(i).toString();
             }
 
@@ -290,8 +305,8 @@ public class PreTestActivty extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter.add("MASCULINO");
-        adapter.add("FEMENINO");
+        String[] sexo = getResources().getStringArray(R.array.sexo);
+        adapter.addAll(sexo);
         return adapter;
     }
 
@@ -302,8 +317,8 @@ public class PreTestActivty extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter.add("ESTUDIANTE");
-        adapter.add("EMPLEADITO");
+        String[] profesion = getResources().getStringArray(R.array.prefesion);
+        adapter.addAll(profesion);
         return adapter;
     }
 
@@ -314,10 +329,8 @@ public class PreTestActivty extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter.add("OBSESIONADO");
-        adapter.add("DIARIAMENTE");
-        adapter.add("OCASIONALMENTE");
-        adapter.add("NUNCA");
+        String[] frecuencia = getResources().getStringArray(R.array.frecuencia);
+        adapter.addAll(frecuencia);
         return adapter;
     }
 
@@ -333,41 +346,51 @@ public class PreTestActivty extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void savePerfilShared() {
-        Gson gson = new Gson();
-        PerfilUsuario perfilUsuario = new PerfilUsuario();
-        perfilUsuario.setSexo(sexo);
-        perfilUsuario.setEdad(Integer.valueOf(edad));
-        perfilUsuario.setProfesion(profesion);
-        perfilUsuario.setFrecuenciaUso(frecuencia);
-        perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
-
-        mEditor.putString(Constants.PERFIL_USUARIO_SHARED, gson.toJson(perfilUsuario));
-        mEditor.commit();
-    }
-
     public class ObtenerParametrosTask extends AsyncTask<Void, Integer,
             Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                /** Se guarda el perfil del usuario en el Shared Preferences */
+                perfilUsuario = new PerfilUsuario();
+                perfilUsuario.setSexo(sexo);
+                perfilUsuario.setEdad(Integer.valueOf(edad));
+                perfilUsuario.setProfesion(profesion);
+                perfilUsuario.setFrecuenciaUso(frecuencia);
+                perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
+                preferenceUtils.savePerfilUsuario(perfilUsuario);
+                mEditor.putBoolean("EXISTE_SHARED", true);
+                mEditor.commit();
+
                 currentLocation = locationUtils.getLastLocation();
                 publishProgress(0);
-                //pingResults = mService.executePing();
+                pingResults = mService.executePing();
                 publishProgress(1);
                 bandwidth = mService.getBandwidth();
                 Log.d("BANWIDTH", String.valueOf(bandwidth));
-                info = deviceInfo.getPhoneInfo();
+
+                /* Se obtienen los datos del usuario del Preference Shared */
+                perfilUsuario = preferenceUtils.getPerfilUsuario();
+
+                if (mPrefs.contains(Constants.DEVICE_SHARED)) {
+                    info = preferenceUtils.getDeviceInfo();
+                } else {
+                    info = deviceInfo.getPhoneInfo();
+                    preferenceUtils.savePhoneInfo(info);
+                }
                 cpuLoad = mService.getCpuLoad();
-                memLoad = mService.getMemFree();
+                double memFree = mService.getMemFree();
+                double totalram = deviceInfo.getRAMProc();
+                memLoad = ((totalram - memFree) / totalram) * 100;
                 signalLevel3G = mNetworkService.getSignalLevel3G();
                 signalLevelWifi = mNetworkService.getSignalLevelWiFi();
                 dBm3G = mNetworkService.getdBm3G();
-                Log.d(TAG + "3G Level", String.valueOf(signalLevel3G));
-                Log.d(TAG + "WiFi Level", String.valueOf(signalLevelWifi));
-                Log.d(TAG + "dBm 3G", String.valueOf(dBm3G));
-                savePerfilShared();
+                signalLevelActiveNetwork = mNetworkService
+                        .getSignalLevelActiveNetwork();
+                redActiva = mNetworkService.getActiveNetwork();
+                bateryLevel = deviceStatsUtils.getBateryLevel();
+                cellID = networkUtils.getCID();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -396,24 +419,67 @@ public class PreTestActivty extends ActionBarActivity {
         @Override
         protected void onPostExecute(Void res) {
             progressDialog.dismiss();
-
-            /* Perfil de Usuario */
-            PerfilUsuario perfilUsuario = new PerfilUsuario();
-            perfilUsuario.setSexo(sexo);
-            perfilUsuario.setEdad(Integer.valueOf(edad));
-            perfilUsuario.setProfesion(profesion);
-            perfilUsuario.setFrecuenciaUso(frecuencia);
-            perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
-
-            //selectedApps = spinnerApp.getSelectedItemsAsString();
-
-            mEditor.putBoolean("EXISTE_SHARED", true);
-            mEditor.commit();
-
             Intent intent = new Intent(getApplicationContext(),
                     WebTestIntroActivity.class);
-            intent.putExtra(WebTestIntroActivity.EXTRA_PERFIL_USUARIO,
+
+            Bundle extras = new Bundle();
+            // Extra del Perfil del Usuario
+            extras.putParcelable(Constants.EXTRA_PERFIL_USUARIO,
                     perfilUsuario);
+            // Extra de la Informacion del dispositivo
+            extras.putParcelable(Constants.EXTRA_DEVICE_INFO, info);
+
+            // Extra del estado del dispositivo
+            DeviceStatus status = new DeviceStatus();
+            status.setUsoCpu(cpuLoad);
+            status.setUsoRam(memLoad);
+            status.setTipoAccesoInternet(redActiva);
+            status.setIntensidadSenhal(String.valueOf
+                    (signalLevelActiveNetwork));
+            status.setNivelBaterial(bateryLevel);
+            extras.putParcelable(Constants.EXTRA_DEVICE_STATUS, status);
+
+            // Extra de la localizacion del usuario
+            DeviceLocation loc = new DeviceLocation();
+            loc.setLatitud(currentLocation.getLatitude());
+            loc.setLongitud(currentLocation.getLongitude());
+
+            /*loc.setFecha(DateHourUtils.format(new Date(),
+                    DateHourUtils.Format.DATE_VIEW));
+            loc.setHora(DateHourUtils.format(new Date(),
+                    DateHourUtils.Format.TIME_VIEW));*/
+            loc.setIdCelda(cellID);
+            extras.putParcelable(Constants.EXTRA_LOCALIZACION, loc);
+
+            // Extra de parametros QoS
+            ArrayList<QoSParam> parametrosQos = new ArrayList<QoSParam>();
+
+            //Delay
+            QoSParam delayParam = new QoSParam();
+            delayParam.setCodigoParametro(Constants.DELAY_ID);
+            delayParam.setValor(pingResults.getRttAvg());
+            // Bandwidth
+            QoSParam bandwidthParam = new QoSParam();
+            bandwidthParam.setCodigoParametro(Constants.BANDWITDH_ID);
+            bandwidthParam.setValor(bandwidth);
+            // Packet Loss
+            QoSParam packetLossParam = new QoSParam();
+            packetLossParam.setCodigoParametro(Constants.PACKET_LOSS_ID);
+            packetLossParam.setValor(pingResults.getPacketloss());
+            // Jitter
+            QoSParam jitterParam = new QoSParam();
+            jitterParam.setCodigoParametro(Constants.JITTER_ID);
+            jitterParam.setValor(pingResults.getRttMax() - pingResults.getRttMin());
+
+            // Se agregan los parametros
+            parametrosQos.add(delayParam);
+            parametrosQos.add(bandwidthParam);
+            parametrosQos.add(packetLossParam);
+            parametrosQos.add(jitterParam);
+
+            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS, parametrosQos);
+
+            intent.putExtras(extras);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }

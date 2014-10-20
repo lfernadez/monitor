@@ -9,22 +9,15 @@ import android.view.View;
 import android.widget.Button;
 
 import py.fpuna.tesis.qoetest.R;
-import py.fpuna.tesis.qoetest.model.PerfilUsuario;
-import py.fpuna.tesis.qoetest.utils.PreferenceUtils;
 
 public class WebTestIntroActivity extends ActionBarActivity {
 
-    public static final String EXTRA_PERFIL_USUARIO = "EXTRA_PERFIL_USUARIO";
     private Button startWebTestBtn;
-    private PerfilUsuario perfilUsuario;
-    private PreferenceUtils preferenceUtils;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_test_intro);
-        preferenceUtils = new PreferenceUtils(this);
 
         startWebTestBtn = (Button) findViewById(R.id.startWebTestBtn);
         startWebTestBtn.setOnClickListener(new View.OnClickListener() {
@@ -33,19 +26,14 @@ public class WebTestIntroActivity extends ActionBarActivity {
                 Intent intent = new Intent(getBaseContext(),
                         WebTestUnoActivity.class);
                 Bundle extras = getIntent().getExtras();
-                if (extras == null) {
-                    extras = new Bundle();
-                    perfilUsuario = preferenceUtils.getPerfilUsuario();
-                    extras.putParcelable(EXTRA_PERFIL_USUARIO, perfilUsuario);
-                }
                 intent.putExtras(extras);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
             }
         });
-    }
 
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -57,4 +45,5 @@ public class WebTestIntroActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

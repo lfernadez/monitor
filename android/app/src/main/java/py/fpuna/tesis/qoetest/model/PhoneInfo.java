@@ -1,9 +1,12 @@
 package py.fpuna.tesis.qoetest.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by User on 06/10/2014.
  */
-public class PhoneInfo {
+public class PhoneInfo implements Parcelable {
     private String modelo;
     private String marca;
     private String ram;
@@ -16,7 +19,7 @@ public class PhoneInfo {
     private String pantalla;
     private String imei;
 
-
+    public PhoneInfo(){}
 
     public String getModelo() {
         return modelo;
@@ -105,4 +108,50 @@ public class PhoneInfo {
     public void setImei(String imei) {
         this.imei = imei;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(this.modelo);
+        parcel.writeString(this.marca);
+        parcel.writeString(this.ram);
+        parcel.writeString(this.soVersion);
+        parcel.writeString(this.procesador);
+        parcel.writeInt(this.cpuCores);
+        parcel.writeInt(this.cpuFrec);
+        parcel.writeString(this.gama);
+        parcel.writeString(this.memoriaInterna);
+        parcel.writeString(this.pantalla);
+        parcel.writeString(this.imei);
+    }
+
+    public PhoneInfo (Parcel in){
+        this.modelo = in.readString();
+        this.marca = in.readString();
+        this.ram = in.readString();
+        this.soVersion = in.readString();
+        this.procesador = in.readString();
+        this.cpuCores = in.readInt();
+        this.cpuFrec = in.readInt();
+        this.gama = in.readString();
+        this.memoriaInterna = in.readString();
+        this.pantalla = in.readString();
+        this.imei = in.readString();
+    }
+
+    public static final Creator<PhoneInfo> CREATOR = new Creator<PhoneInfo>() {
+        @Override
+        public PhoneInfo createFromParcel(Parcel in) {
+            return (new PhoneInfo(in));
+        }
+
+        @Override
+        public PhoneInfo[] newArray(int size) {
+            return (new PhoneInfo[size]);
+        }
+    };
 }

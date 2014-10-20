@@ -56,9 +56,6 @@ public class GuardarDatosService extends IntentService {
                 .withValue(DatabaseContract.Localizacion.HORA, localizacion.getHora())
                 .withValue(DatabaseContract.Localizacion.LATITUD, localizacion.getLatitud())
                 .withValue(DatabaseContract.Localizacion.LONGITUD, localizacion.getLongitud())
-                .withValue(DatabaseContract.Localizacion.PRECISION, localizacion.getPrecision())
-                .withValue(DatabaseContract.Localizacion.IMEI, localizacion.getImei())
-                .withValue(DatabaseContract.Localizacion.TIPO_MUESTRA, localizacion.getTipoMuestra())
                 .withYieldAllowed(true).build());
 
         try {

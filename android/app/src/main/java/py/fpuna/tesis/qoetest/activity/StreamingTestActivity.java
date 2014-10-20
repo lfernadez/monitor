@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.VideoUtils;
 
 public class StreamingTestActivity extends ActionBarActivity
@@ -23,7 +24,6 @@ public class StreamingTestActivity extends ActionBarActivity
         MediaPlayer.OnErrorListener, SeekBar.OnSeekBarChangeListener,
         MediaPlayer.OnCompletionListener {
 
-    String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
     private MediaPlayer mediaPlayer;
     private SeekBar videoProgressBar;
     private VideoView videoView;
@@ -58,7 +58,7 @@ public class StreamingTestActivity extends ActionBarActivity
                     totalDuration));
             //Log.d("Progress", ""+progress);
             videoProgressBar.setProgress(progress);
-            Log.d(this.getClass().getName(), "percent played: " + progress);
+            Log.d("StreamingTestActivity", "percent played: " + progress);
 
             // Running this thread after 100 milliseconds
             mHandler.postDelayed(this, 100);
@@ -76,7 +76,7 @@ public class StreamingTestActivity extends ActionBarActivity
         videoView.setOnErrorListener(this);
         videoView.setOnPreparedListener(this);
         videoView.setOnCompletionListener(this);
-        videoView.setVideoURI(Uri.parse(vidAddress));
+        videoView.setVideoURI(Uri.parse(Constants.VIDEO_URL));
         inicioCargando = System.currentTimeMillis();
         videoView.start();
 
@@ -122,13 +122,13 @@ public class StreamingTestActivity extends ActionBarActivity
                 /* Se agregan los extras anteriores */
                 intent.putExtras(getIntent().getExtras());
                 /* Nuevos extras */
-                intent.putExtra(QoEStreamingTestActivity.EXTRA_TIEMPO_CARGA,
+                intent.putExtra(Constants.EXTRA_TIEMPO_CARGA,
                         tiempoCarga);
-                intent.putExtra(QoEStreamingTestActivity
+                intent.putExtra(Constants
                         .EXTRA_DURACION_VIDEO, duracionVideoString);
-                intent.putExtra(QoEStreamingTestActivity
+                intent.putExtra(Constants
                         .EXTRA_TIEMPO_TOTAL_REP, tiempoTotalRep);
-                intent.putExtra(QoEStreamingTestActivity
+                intent.putExtra(Constants
                         .EXTRA_TIEMPO_BUFFERING, tiempoBufferingString);
 
                 Log.d("StreamingTestActivity", "Tiempo de carga inicial: " +
@@ -153,7 +153,7 @@ public class StreamingTestActivity extends ActionBarActivity
     public void onPrepared(MediaPlayer mediaPlayer) {
         finCargando = System.currentTimeMillis();
         inicioTotal = System.currentTimeMillis();
-        Log.d(this.getClass().getName(), "prepared");
+        Log.d("StreaminTestActivity", "prepared");
         loadingProgress.dismiss();
         videoProgressBar.setProgress(0);
         videoProgressBar.setMax(100);
@@ -162,7 +162,7 @@ public class StreamingTestActivity extends ActionBarActivity
         mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
-                Log.d(this.getClass().getName(), "percent: " + percent);
+                Log.d("StreaminTestActivity", "percent: " + percent);
                 videoProgressBar.setSecondaryProgress(percent);
             }
         });

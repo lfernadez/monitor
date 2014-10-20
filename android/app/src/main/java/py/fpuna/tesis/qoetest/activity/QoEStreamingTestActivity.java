@@ -13,18 +13,10 @@ import java.util.ArrayList;
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.utils.CalcUtils;
+import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.VideoTestMessages;
 
 public class QoEStreamingTestActivity extends ActionBarActivity {
-
-    public static final String EXTRA_TIEMPO_CARGA = "extra_tiempo_carga";
-    public static final String EXTRA_DURACION_VIDEO = "extra_duracion_video";
-    public static final String EXTRA_TIEMPO_BUFFERING =
-            "extra_tiempo_buffering";
-    public static final String EXTRA_TIEMPO_TOTAL_REP =
-            "extra_tiempo_total_rep";
-
-    public static final String EXTRA_LISTA_PRUEBA = "EXTRA_LISTA_TEST";
 
     private RatingBar tiempoCargaInicialRatingBar;
     private RatingBar bufferingRatingBar;
@@ -43,7 +35,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
         tiempoCargaInicialRatingBar = (RatingBar) findViewById(R.id.ratingBar_tiempo_carga_video);
         tiempoCargaRBLabel = (TextView) findViewById(R.id.ratingBar_tiempo_carga_video_label);
 
-        pruebas = getIntent().getParcelableArrayListExtra(EXTRA_LISTA_PRUEBA);
+        pruebas = getIntent().getParcelableArrayListExtra(Constants.EXTRA_QOE_TEST);
 
         tiempoCargaInicialRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -100,7 +92,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
                                 tiempoCargaInicialRatingBar.getRating(),
                                 bufferingRatingBar.getRating()));
                 pruebas.add(pruebaStreaming);
-                intent.putParcelableArrayListExtra(EXTRA_LISTA_PRUEBA, pruebas);
+                intent.putParcelableArrayListExtra(Constants.EXTRA_QOE_TEST, pruebas);
                 intent.putExtras(getIntent().getExtras());
                 startActivity(intent);
             }

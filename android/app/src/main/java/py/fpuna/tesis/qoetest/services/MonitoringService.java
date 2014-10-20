@@ -191,11 +191,11 @@ public class MonitoringService extends Service {
      *
      * @return Memoria disponible en MB
      */
-    public Long getMemFree() {
+    public Double getMemFree() {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
-        long availableMegs = mi.availMem / Constants.MULTIPLO_MB;
+        double availableMegs = mi.availMem / Constants.MULTIPLO_MB;
         return availableMegs;
     }
 
@@ -210,8 +210,8 @@ public class MonitoringService extends Service {
      * @throws java.io.IOException
      * @throws InterruptedException
      */
-    public long getCpuLoad() throws IOException, InterruptedException {
-        long carga = 0;
+    public double getCpuLoad() throws IOException, InterruptedException {
+        double carga = 0;
         // Llamada al comando top desde un proceso
         Process p = Runtime.getRuntime().exec("/system/bin/top  -m 1 -d 1 -n 1");
         p.waitFor();
@@ -224,7 +224,7 @@ public class MonitoringService extends Service {
         String[] porcentajes = line.split(", ");
         for (String item : porcentajes) {
             String[] porcentaje = item.split(" ");
-            carga += Long.valueOf(porcentaje[1].substring(0,
+            carga += Double.valueOf(porcentaje[1].substring(0,
                     porcentaje[1].length() - 1));
         }
         reader.close();
@@ -254,18 +254,17 @@ public class MonitoringService extends Service {
             reader.readLine();
             /* Parseo de las estadisticas */
             line = reader.readLine();
-            String[] estadisticas = reader.readLine().split(", ");
-            result.setPacketsSended(Integer.valueOf(estadisticas[0].substring(0, 1)));
-            result.setPacketsReceived(Integer.valueOf(estadisticas[1].substring(0, 1)));
-            result.setPacketloss(Double.valueOf(estadisticas[2].substring(0, 1)));
-            result.setTime(Long.valueOf(estadisticas[3].substring(5,
-                    estadisticas[3].length() - 2)));
+            String[] estadisticas = line.split(", ");
+            result.setPacketsSended(Integer.valueOf(estadisticas[0].replaceAll("\\D+","")));
+            result.setPacketsReceived(Integer.valueOf(estadisticas[1].replaceAll("\\D+","")));
+            result.setPacketloss(Double.valueOf(estadisticas[2].replaceAll("\\D+","")));
+            result.setTime(Long.valueOf(estadisticas[3].replaceAll("\\D+","")));
             /* Parseo de los tiempo */
             line = reader.readLine();
             if (!line.isEmpty()) {
                 line = line.substring(line.lastIndexOf("=") + 2,
                         line.length() - 3);
-                String[] datosTiempos = line.split("/");
+                String[] datosTiempos = line.replaceAll("[^\\d./]","").split("/");
                 result.setRttMin(Double.valueOf(datosTiempos[0]));
                 result.setRttAvg(Double.valueOf(datosTiempos[1]));
                 result.setRttMax(Double.valueOf(datosTiempos[2]));

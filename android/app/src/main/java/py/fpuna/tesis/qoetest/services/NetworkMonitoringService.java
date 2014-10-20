@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
@@ -16,15 +17,14 @@ import android.util.Log;
 
 public class NetworkMonitoringService extends Service {
 
+    private final IBinder mBinder = new NetworkServiceBinder();
+    MyPhoneStateListener phoneStateListener;
     private TelephonyManager telManager;
     private WifiManager wifiManager;
-
+    private ConnectivityManager cm;
     private int signalLevelWiFi;
     private int signalLevel3G;
     private long dBm3G;
-
-    private final IBinder mBinder = new NetworkServiceBinder();
-    MyPhoneStateListener phoneStateListener;
 
     public NetworkMonitoringService() {
     }
@@ -50,6 +50,33 @@ public class NetworkMonitoringService extends Service {
         return this.dBm3G;
     }
 
+    public String getActiveNetwork() {
+        String redActiva = "Red no disponible";
+        if (cm.getActiveNetworkInfo() != null) {
+            if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
+                redActiva = cm.getActiveNetworkInfo().getSubtypeName();
+            } else if (cm.getActiveNetworkInfo().getType() ==
+                    ConnectivityManager.TYPE_WIFI) {
+                redActiva = "WiFi";
+            }
+        }
+        return redActiva;
+
+    }
+
+    public int getSignalLevelActiveNetwork(){
+        int signalLevel = 0;
+        if (cm.getActiveNetworkInfo() != null) {
+            if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
+                signalLevel = getSignalLevel3G();
+            } else if (cm.getActiveNetworkInfo().getType() ==
+                    ConnectivityManager.TYPE_WIFI) {
+                signalLevel = getSignalLevelWiFi();
+            }
+        }
+        return signalLevel;
+    }
+
     @Override
     public void onCreate() {
         wifiManager = (WifiManager) this
@@ -58,13 +85,9 @@ public class NetworkMonitoringService extends Service {
         telManager = (TelephonyManager)
                 getBaseContext().getSystemService(TELEPHONY_SERVICE);
         phoneStateListener = new MyPhoneStateListener();
+        cm = (ConnectivityManager) this
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    }
-
-    public class NetworkServiceBinder extends Binder {
-        public NetworkMonitoringService getService() {
-            return NetworkMonitoringService.this;
-        }
     }
 
     @Override
@@ -96,6 +119,12 @@ public class NetworkMonitoringService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
+    }
+
+    public class NetworkServiceBinder extends Binder {
+        public NetworkMonitoringService getService() {
+            return NetworkMonitoringService.this;
+        }
     }
 
     private class MyPhoneStateListener extends PhoneStateListener {

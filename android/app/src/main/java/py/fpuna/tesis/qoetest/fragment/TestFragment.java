@@ -2,9 +2,6 @@ package py.fpuna.tesis.qoetest.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import py.fpuna.tesis.qoetest.R;
-import py.fpuna.tesis.qoetest.activity.PreTestActivty;
-import py.fpuna.tesis.qoetest.activity.WebTestIntroActivity;
-import py.fpuna.tesis.qoetest.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,12 +23,11 @@ public class TestFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
 
     private int mParam1;
-    public static final String EXISTE_SHARED = "EXISTE_SHARED";
 
     private OnFragmentInteractionListener mListener;
+    private OnClickStartButtonListener mBtnListener;
 
-    SharedPreferences mPrefs;
-    SharedPreferences.Editor mEditor;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -62,12 +55,6 @@ public class TestFragment extends Fragment {
             mParam1 = getArguments().getInt(ARG_PARAM1);
         }
 
-        // Se abre el Shaerd Preferences
-        mPrefs = getActivity().getSharedPreferences(Constants.SAHRED_PREFERENCES,
-                Context.MODE_PRIVATE);
-        // Se Obtiene el editor del
-        mEditor = mPrefs.edit();
-
     }
 
     @Override
@@ -81,22 +68,16 @@ public class TestFragment extends Fragment {
         comenzarTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPrefs.contains(EXISTE_SHARED)) {
-                    Intent intent = new Intent(getActivity(), WebTestIntroActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getActivity(), PreTestActivty.class);
-                    startActivity(intent);
-                }
+                onButtonPressed();
+
             }
         });
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(int number) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(number);
+    public void onButtonPressed() {
+        if (mBtnListener != null) {
+            mBtnListener.onClickStartButton();
         }
     }
 
@@ -105,6 +86,7 @@ public class TestFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            mBtnListener = (OnClickStartButtonListener)activity;
             mListener.onFragmentInteraction(getArguments().getInt(ARG_PARAM1));
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -116,6 +98,7 @@ public class TestFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        mBtnListener = null;
     }
 
     /**
@@ -130,6 +113,10 @@ public class TestFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(int number);
+    }
+
+    public interface OnClickStartButtonListener{
+        public void onClickStartButton();
     }
 
 }

@@ -9,10 +9,26 @@
         <item>Acerda de</item>
     </string-array>
 
+    <string-array name="sexo">
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+
+    <string-array name="prefesion">
+        <item>Estudiante</item>
+        <item>Contratado</item>
+    </string-array>
+
+    <string-array name="frecuencia">
+        <item>Frecuentemente</item>
+        <item>Ocacionalmente</item>
+        <item>Nunca</item>
+    </string-array>
+
     <string-array name="apps">
-        <item>Facebook</item>
-        <item>Whastapp</item>
-        <item>Youtube</item>
+        <item>Redes Sociales (Facebook...)</item>
+        <item>Mensajería Instantánea (Whastapp...)</item>
+        <item>Video Streaming (Youtube...)</item>
         <item>Navegador Web</item>
     </string-array>
 

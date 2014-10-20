@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.utils.CalcUtils;
+import py.fpuna.tesis.qoetest.utils.Constants;
 
 public class QoEWebTestActivity extends ActionBarActivity {
-
-    public static final String EXTRA_LISTA_PRUEBA = "EXTRA_LISTA_TEST";
 
     private RatingBar velocQoERatingBar;
     private RatingBar calidadRatingBar;
@@ -100,7 +99,10 @@ public class QoEWebTestActivity extends ActionBarActivity {
                             CalcUtils.getPromedio(velocQoERatingBar.getRating(),
                                     calidadRatingBar.getRating()));
                     pruebas.add(pruebaWeb);
-                    intent.putParcelableArrayListExtra(EXTRA_LISTA_PRUEBA, pruebas);
+                    intent.putParcelableArrayListExtra(Constants
+                                    .EXTRA_QOE_TEST,
+                            pruebas);
+                    intent.putExtras(getIntent().getExtras());
                     startActivity(intent);
                 }
             }
