@@ -242,7 +242,7 @@ public class MonitoringService extends Service {
         PingResults result = new PingResults();
         // Llamada al comando ping desde un proceso
         Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
-                "google.com");
+                Constants.IP_TRANSMITTER_SERVER);
         p.waitFor();
         reader = new BufferedReader(new InputStreamReader(
                 p.getInputStream()));
@@ -285,7 +285,7 @@ public class MonitoringService extends Service {
         InputStream input = null;
 
         try {
-            URL url = new URL(Constants.IMAGE_URL_DOWN);
+            URL url = new URL(Constants.IMAGE_URL_DOWN_DOS);
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
             connection.setRequestMethod("GET");

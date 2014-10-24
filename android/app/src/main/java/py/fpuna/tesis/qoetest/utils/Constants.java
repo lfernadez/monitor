@@ -5,6 +5,9 @@ package py.fpuna.tesis.qoetest.utils;
  * Created by User on 01/09/2014.
  */
 public class Constants {
+    /** Direccion IP del server de transmision */
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.102";
+
     /** Representa el tiempo de actualizacion de los datos recogidos */
     public static final Integer TIEMPO_ACTUALIZACION = 1000;
 
@@ -19,6 +22,8 @@ public class Constants {
     public static final String ABC_URL = "http://www.abc.com.py";
     public static final String VIDEO_URL = "https://archive" +
             ".org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
+    public static final String VIDEO_URL_DOS = "rtsp://" +
+            IP_TRANSMITTER_SERVER + "/sample_300kbit.mp4";
 
     public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
     public static final int FAST_CEILING_IN_SECONDS = 1;
@@ -46,6 +51,9 @@ public class Constants {
     /* bandwidth Test */
     public static final String IMAGE_URL_DOWN = "http://carlook" +
             ".net/data/db_photos/porsche/911_carrera_gts/997/porsche_911_carrera_gts_997_coupe2d-4477.jpg";
+    public static final String IMAGE_URL_DOWN_DOS = "http://" +
+            IP_TRANSMITTER_SERVER +
+            ":8083/porsche_911_carrera_gts_997_coupe2d-4477.jpg";
     public static final long IMAGE_LENGTH = 1185228;
 
     public static final int DELAY_ID = 1;
