@@ -5,6 +5,11 @@ package py.fpuna.tesis.qoetest.utils;
  * Created by User on 01/09/2014.
  */
 public class Constants {
+    /** Iperf binary directory */
+    public static final String IPERF_BINARY_DIC = "/data/data/py.fpuna.tesis.qoetest/iperf";
+    public static final String IPERF_FILE_NAME = "iperf";
+
+
     /** Direccion IP del server de transmision */
     public static final String IP_TRANSMITTER_SERVER = "192.168.1.102";
 

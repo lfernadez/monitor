@@ -241,8 +241,10 @@ public class MonitoringService extends Service {
     public PingResults executePing() throws IOException, InterruptedException {
         PingResults result = new PingResults();
         // Llamada al comando ping desde un proceso
+        /*Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
+                Constants.IP_TRANSMITTER_SERVER);*/
         Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
-                Constants.IP_TRANSMITTER_SERVER);
+                "google.com");
         p.waitFor();
         reader = new BufferedReader(new InputStreamReader(
                 p.getInputStream()));
@@ -285,7 +287,7 @@ public class MonitoringService extends Service {
         InputStream input = null;
 
         try {
-            URL url = new URL(Constants.IMAGE_URL_DOWN_DOS);
+            URL url = new URL(Constants.IMAGE_URL_DOWN);
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
             connection.setRequestMethod("GET");

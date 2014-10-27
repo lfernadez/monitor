@@ -22,8 +22,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.fragment.InfoFragment;
@@ -194,6 +202,9 @@ public class PrincipalActivity extends ActionBarActivity
         Intent intentNetworkService = new Intent(getApplicationContext(),
                 NetworkMonitoringService.class);
         startService(intentNetworkService);
+
+        initIperf();
+        probarIperf();
     }
 
     @Override
@@ -440,6 +451,74 @@ public class PrincipalActivity extends ActionBarActivity
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+    }
+
+    public void initIperf() {
+        InputStream in;
+        try {
+            //The asset "iperf" (from assets folder) inside the activity is opened for reading.
+            in = getResources().getAssets().open(Constants.IPERF_FILE_NAME);
+        } catch (IOException e2) {
+            return;
+        }
+        try {
+            //Checks if the file already exists, if not copies it.
+            new FileInputStream(Constants.IPERF_BINARY_DIC);
+        } catch (FileNotFoundException e1) {
+            try {
+                //The file named "iperf" is created in a system designated folder for this application.
+                OutputStream out = new FileOutputStream(Constants.IPERF_BINARY_DIC, false);
+                // Transfer bytes from "in" to "out"
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
+                //After the copy operation is finished, we give execute permissions to the "iperf" executable using shell commands.
+                Process processChmod = Runtime.getRuntime().exec
+                        ("/system/bin/chmod 744 " + Constants.IPERF_BINARY_DIC);
+                // Executes the command and waits untill it finishes.
+                processChmod.waitFor();
+            } catch (IOException e) {
+                return;
+            } catch (InterruptedException e) {
+                return;
+            }
+
+            return;
+        }
+        //Creates an instance of the class IperfTask for running an iperf test, then executes.
+        return;
+    }
+
+    public void probarIperf() {
+        List<String> commands = new ArrayList<String>();
+        try {
+            commands.add(0,Constants.IPERF_BINARY_DIC);
+            commands.add(1, "-c");
+            commands.add(2, "iperf.scottlinux.com");
+            Process process = new ProcessBuilder().command(commands)
+                    .redirectErrorStream(true).start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            int read;
+            //The output text is accumulated into a string buffer and published to the GUI
+            char[] buffer = new char[4096];
+            StringBuffer output = new StringBuffer();
+            while ((read = reader.read(buffer)) > 0) {
+                output.append(buffer, 0, read);
+                //This is used to pass the output to the thread running the GUI, since this is separate thread.
+                Log.d("IPERF",output.toString());
+                output.delete(0, output.length());
+            }
+            reader.close();
+            process.destroy();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
