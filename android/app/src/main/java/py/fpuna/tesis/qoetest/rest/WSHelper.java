@@ -27,7 +27,6 @@ import py.fpuna.tesis.qoetest.model.DeviceLocation;
 import py.fpuna.tesis.qoetest.model.DeviceStatus;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
-import py.fpuna.tesis.qoetest.model.Prueba;
 import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.model.QoSParam;
 
@@ -37,19 +36,18 @@ import py.fpuna.tesis.qoetest.model.QoSParam;
 public class WSHelper {
 
     private static final String TAG = "WebServices";
-    private static final String URL = "/IndufarVentasWeb/rest/";
+    private static final String URL = "/mobileDataStorage/servicios/prueba/";
     private static final String HOST = "mail.indufar.com.py";
-    private static final int PORT = 80;
+    private static final int PORT = 8081;
 
     private Gson gson = new Gson();
 
     /**
      * Realiza una invocacion HTTP y retorna la respuesta obtenida.
      *
-     * @param request
-     *            Peticion HTTP
+     * @param request Peticion HTTP
      * @return Respuesta obtenida o <code>null</code> si no se obtuvo ninguna
-     *         respuesta
+     * respuesta
      */
     private HttpResponse invoke(HttpRequest request) {
         request.addHeader("Content-Type", "application/json");
@@ -98,10 +96,9 @@ public class WSHelper {
      * Realiza una invocacion GET y retorna una cadena que contiene el cuerpo de
      * la respuesta obtenida.
      *
-     * @param url
-     *            URL a invocar
+     * @param url URL a invocar
      * @return Texto de la respuesta o <code>null</code> si no se obtuvo ningua
-     *         respuesta
+     * respuesta
      */
     private String get(String url) {
         Log.d(TAG, "GET Method: " + url);
@@ -114,10 +111,9 @@ public class WSHelper {
      * Realiza una invocacion DELETE y retorna una cadena que contiene el cuerpo
      * de la respuesta obtenida.
      *
-     * @param url
-     *            URL a invocar
+     * @param url URL a invocar
      * @return Texto de la respuesta o <code>null</code> si no se obtuvo ningua
-     *         respuesta
+     * respuesta
      */
     private String delete(String url) {
         url = URL + url;
@@ -131,10 +127,9 @@ public class WSHelper {
      * Realiza una invocacion PUT y retorna una cadena que contiene el cuerpo de
      * la respuesta obtenida.
      *
-     * @param url
-     *            URL a invocar
+     * @param url URL a invocar
      * @return Texto de la respuesta o <code>null</code> si no se obtuvo ningua
-     *         respuesta
+     * respuesta
      */
     private String put(String url) {
         url = URL + url;
@@ -148,12 +143,10 @@ public class WSHelper {
      * Realiza una invocacion POST y retorna una cadena que contiene el cuerpo
      * de la respuesta obtenida.
      *
-     * @param url
-     *            URL a invocar
-     * @param datos
-     *            Datos a enviar
+     * @param url   URL a invocar
+     * @param datos Datos a enviar
      * @return Texto de la respuesta o <code>null</code> si no se obtuvo ningua
-     *         respuesta
+     * respuesta
      */
     private String post(String url, String datos) {
         url = URL + url;
@@ -172,15 +165,14 @@ public class WSHelper {
                                    DeviceStatus deviceStatus,
                                    DeviceLocation location,
                                    List<PruebaTest> test,
-                                   Prueba prueba,
-                                   List<QoSParam> qoSParams){
+                                   List<QoSParam> qoSParams) {
         String respuesta = "";
         JSONObject datosJSON = new JSONObject();
         try {
             /* Datos del telefono*/
             datosJSON.put("telefono", gson.toJson(info));
             /*Datos del Usuario */
-            datosJSON.put("datosUsuario",gson.toJson(pu));
+            datosJSON.put("datosUsuario", gson.toJson(pu));
             /* Datos del estado del telefono */
             datosJSON.put("estadoTelefono", gson.toJson(deviceStatus));
             /* Resultados de las pruebas */

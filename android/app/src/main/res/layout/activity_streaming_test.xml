@@ -23,6 +23,15 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"/>
 
+            <ProgressBar
+                android:id="@+id/bufferingProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:indeterminate="true"
+                android:layout_centerHorizontal="true"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,6 +71,9 @@
                     android:textStyle="bold"/>
 
                 </LinearLayout>
+
+
+
 
     </RelativeLayout>
 

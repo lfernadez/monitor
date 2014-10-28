@@ -204,7 +204,7 @@ public class PrincipalActivity extends ActionBarActivity
         startService(intentNetworkService);
 
         initIperf();
-        probarIperf();
+        //probarIperf();
     }
 
     @Override
@@ -489,7 +489,6 @@ public class PrincipalActivity extends ActionBarActivity
 
             return;
         }
-        //Creates an instance of the class IperfTask for running an iperf test, then executes.
         return;
     }
 
@@ -498,9 +497,13 @@ public class PrincipalActivity extends ActionBarActivity
         try {
             commands.add(0,Constants.IPERF_BINARY_DIC);
             commands.add(1, "-c");
-            commands.add(2, "iperf.scottlinux.com");
+            commands.add(2, Constants.IP_TRANSMITTER_SERVER);
+            commands.add(3, "-d");
+            commands.add(4, "-x");
+            commands.add(5, "CSM");
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
+            process.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             int read;
             //The output text is accumulated into a string buffer and published to the GUI
@@ -515,6 +518,8 @@ public class PrincipalActivity extends ActionBarActivity
             reader.close();
             process.destroy();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

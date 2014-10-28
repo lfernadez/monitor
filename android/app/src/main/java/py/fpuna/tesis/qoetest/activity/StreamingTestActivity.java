@@ -1,7 +1,6 @@
 package py.fpuna.tesis.qoetest.activity;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -24,20 +24,20 @@ public class StreamingTestActivity extends ActionBarActivity
         MediaPlayer.OnErrorListener, SeekBar.OnSeekBarChangeListener,
         MediaPlayer.OnCompletionListener {
 
-    private MediaPlayer mediaPlayer;
     private SeekBar videoProgressBar;
     private VideoView videoView;
     private TextView posicionActualVideoLabel;
     private TextView totalVideoLabel;
     private VideoUtils videoUtils;
     private Handler mHandler = new Handler();
-    private ProgressDialog loadingProgress;
     private Button siguienteBtn;
     private long duracionVideo;
     private long inicioCargando;
     private long inicioTotal;
     private long finCargando;
     private long finTotal;
+
+    private ProgressBar bufferingProgressBar;
     /**
      * Background Runnable thread
      */
@@ -56,10 +56,7 @@ public class StreamingTestActivity extends ActionBarActivity
             // Updating progress bar
             int progress = (int) (videoUtils.getProgressPercentage(currentDuration,
                     totalDuration));
-            //Log.d("Progress", ""+progress);
             videoProgressBar.setProgress(progress);
-            Log.d("StreamingTestActivity", "percent played: " + progress);
-
             // Running this thread after 100 milliseconds
             mHandler.postDelayed(this, 100);
         }
@@ -87,11 +84,11 @@ public class StreamingTestActivity extends ActionBarActivity
         /* Video utils */
         videoUtils = new VideoUtils();
 
-        /* ProgressBar */
-        loadingProgress = new ProgressDialog(this);
-        loadingProgress.setMessage("Cargando...");
-        loadingProgress.setCanceledOnTouchOutside(false);
-        loadingProgress.show();
+        /* Progress Buffering */
+        bufferingProgressBar = (ProgressBar) findViewById(R.id
+                .bufferingProgressBar);
+        bufferingProgressBar.setVisibility(View.VISIBLE);
+
 
         /* Posicion Actual Label */
         posicionActualVideoLabel = (TextView) findViewById(R.id
@@ -146,15 +143,47 @@ public class StreamingTestActivity extends ActionBarActivity
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int stopPosition = videoView.getCurrentPosition();
+        videoView.pause();
+        outState.putInt("position", stopPosition);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        int stopPosition = savedInstanceState.getInt("position");
+        videoView.seekTo(stopPosition);
+        videoView.start();
+        videoProgressBar.setProgress(stopPosition);
+        updateProgressBar();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        videoView.pause();
+        mHandler.removeCallbacks(mUpdateTimeTask);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateProgressBar();
+        videoView.resume();
+    }
+
     /**
      * @param mediaPlayer
      */
     @Override
-    public void onPrepared(MediaPlayer mediaPlayer) {
+    public void onPrepared(final MediaPlayer mediaPlayer) {
         finCargando = System.currentTimeMillis();
         inicioTotal = System.currentTimeMillis();
-        Log.d("StreaminTestActivity", "prepared");
-        loadingProgress.dismiss();
+        bufferingProgressBar.setVisibility(View.GONE);
         videoProgressBar.setProgress(0);
         videoProgressBar.setMax(100);
         updateProgressBar();
@@ -162,8 +191,22 @@ public class StreamingTestActivity extends ActionBarActivity
         mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
-                Log.d("StreaminTestActivity", "percent: " + percent);
                 videoProgressBar.setSecondaryProgress(percent);
+            }
+        });
+
+        mediaPlayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+                    bufferingProgressBar.setVisibility(View.VISIBLE);
+                    mp.pause();
+                }
+                if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
+                    bufferingProgressBar.setVisibility(View.GONE);
+                    mp.start();
+                }
+                return false;
             }
         });
 
@@ -184,9 +227,6 @@ public class StreamingTestActivity extends ActionBarActivity
      */
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int i, int i2) {
-        if (loadingProgress.isShowing()) {
-            loadingProgress.dismiss();
-        }
         return true;
     }
 
@@ -226,5 +266,4 @@ public class StreamingTestActivity extends ActionBarActivity
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
-
 }
