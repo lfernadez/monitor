@@ -36,6 +36,9 @@ public class StreamingTestActivity extends ActionBarActivity
     private long inicioTotal;
     private long finCargando;
     private long finTotal;
+    private long bufferingTime;
+    private long startBuffering;
+    private long endBuffering;
 
     private ProgressBar bufferingProgressBar;
     /**
@@ -73,7 +76,7 @@ public class StreamingTestActivity extends ActionBarActivity
         videoView.setOnErrorListener(this);
         videoView.setOnPreparedListener(this);
         videoView.setOnCompletionListener(this);
-        videoView.setVideoURI(Uri.parse(Constants.VIDEO_URL_DOS));
+        videoView.setVideoURI(Uri.parse(Constants.VIDEO_URL));
         inicioCargando = System.currentTimeMillis();
         videoView.start();
 
@@ -137,6 +140,9 @@ public class StreamingTestActivity extends ActionBarActivity
                 Log.d("StreamingTestActivity", "Tiempo Buffering: " +
                         tiempoBufferingString);
 
+                Log.d("StreamingTestActivity", "Bufferin Time:" +
+                        bufferingTime);
+
                 startActivity(intent);
             }
         });
@@ -199,12 +205,16 @@ public class StreamingTestActivity extends ActionBarActivity
             @Override
             public boolean onInfo(MediaPlayer mp, int what, int extra) {
                 if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+                    startBuffering = System.currentTimeMillis();
                     bufferingProgressBar.setVisibility(View.VISIBLE);
                     mp.pause();
                 }
                 if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
                     bufferingProgressBar.setVisibility(View.GONE);
+                    endBuffering = System.currentTimeMillis();
                     mp.start();
+
+                    bufferingTime += (endBuffering - startBuffering);
                 }
                 return false;
             }

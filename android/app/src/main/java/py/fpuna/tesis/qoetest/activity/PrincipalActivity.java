@@ -501,6 +501,7 @@ public class PrincipalActivity extends ActionBarActivity
             commands.add(3, "-d");
             commands.add(4, "-x");
             commands.add(5, "CSM");
+            commands.add(6, "-u");
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
             process.waitFor();

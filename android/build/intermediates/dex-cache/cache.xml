@@ -8,12 +8,6 @@
         revision="21.0.1"
         sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
     <item
-        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-028175cd65185c97972b21f309736068ba93f03f.jar"
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.0.1"
-        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
-    <item
         dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-807a54435abc659e35a1aa244eed2f75b58ea8ac.jar"
         jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
         jumboMode="false"
@@ -26,8 +20,8 @@
         revision="21.0.1"
         sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce"/>
     <item
-        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-12c1a64ad23e0be888f0dfa6119e65a210bf4620.jar"
-        jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-892b5137c61b7abc511575015de224d00b13e92a.jar"
+        jar="C:\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
         jumboMode="false"
         revision="21.0.1"
         sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
@@ -43,5 +37,11 @@
         jumboMode="false"
         revision="21.0.1"
         sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
+    <item
+        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-028175cd65185c97972b21f309736068ba93f03f.jar"
+        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
 
 </pre-dex-items>

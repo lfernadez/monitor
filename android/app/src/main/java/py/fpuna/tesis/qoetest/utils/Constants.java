@@ -11,7 +11,7 @@ public class Constants {
 
 
     /** Direccion IP del server de transmision */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.1.101";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.100";
 
     /** Representa el tiempo de actualizacion de los datos recogidos */
     public static final Integer TIEMPO_ACTUALIZACION = 1000;
