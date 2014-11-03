@@ -9,6 +9,11 @@ public class Constants {
     public static final String IPERF_BINARY_DIC = "/data/data/py.fpuna.tesis.qoetest/iperf";
     public static final String IPERF_FILE_NAME = "iperf";
 
+    /** TCPDump binary directory */
+    public static final String TCPDUMP_BINARY_DIC = "/data/data/py.fpuna" +
+            ".tesis.qoetest/tcpdump";
+
+    public static final String TCPDUMP_FILE_NAME = "tcpdump";
 
     /** Direccion IP del server de transmision */
     public static final String IP_TRANSMITTER_SERVER = "192.168.1.100";

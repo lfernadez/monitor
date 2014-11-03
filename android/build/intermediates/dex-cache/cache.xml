@@ -20,6 +20,12 @@
         revision="21.0.1"
         sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce"/>
     <item
+        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-f1c1e24b440df6540bde9e82b2c9e17c61ac326f.jar"
+        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da"/>
+    <item
         dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-892b5137c61b7abc511575015de224d00b13e92a.jar"
         jar="C:\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
         jumboMode="false"
@@ -31,12 +37,6 @@
         jumboMode="false"
         revision="21.0.1"
         sha1="7941cd2c2c8ec006800d75c35f8a9dacf892ab93"/>
-    <item
-        dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-722b38749ac69c42e164f76dbeaacc8850d68f38.jar"
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.11\classes.jar"
-        jumboMode="false"
-        revision="21.0.1"
-        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
     <item
         dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-028175cd65185c97972b21f309736068ba93f03f.jar"
         jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"

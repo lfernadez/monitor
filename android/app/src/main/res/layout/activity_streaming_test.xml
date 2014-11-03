@@ -31,7 +31,7 @@
                 android:indeterminate="true"
                 android:layout_centerHorizontal="true"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:orientation="horizontal"
@@ -43,35 +43,38 @@
                 <TextView
                     android:id="@+id/duracionActualLabel"
                     android:layout_width="40dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="#ffffffff"
                     android:gravity="bottom|center_horizontal"
-                    />
+                    android:layout_alignTop="@+id/duracionTotalLabel"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
 
                 <!-- Progress Bar/Seek bar -->
                 <SeekBar
                     android:id="@+id/videoProgressBar"
-                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.80"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@id/duracionActualLabel"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/duracionTotalLabel"
+                    android:layout_toStartOf="@+id/duracionTotalLabel"/>
 
                 <!-- Total Duration Label -->
                 <TextView
                     android:id="@+id/duracionTotalLabel"
                     android:layout_width="40dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.1"
+                    android:layout_height="wrap_content"
                     android:textColor="#ffffffff"
                     android:gravity="bottom|center_horizontal"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
     </RelativeLayout>
 

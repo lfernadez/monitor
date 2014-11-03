@@ -76,7 +76,7 @@ public class StreamingTestActivity extends ActionBarActivity
         videoView.setOnErrorListener(this);
         videoView.setOnPreparedListener(this);
         videoView.setOnCompletionListener(this);
-        videoView.setVideoURI(Uri.parse(Constants.VIDEO_URL));
+        videoView.setVideoURI(Uri.parse(Constants.VIDEO_URL_DOS));
         inicioCargando = System.currentTimeMillis();
         videoView.start();
 
