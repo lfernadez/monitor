@@ -11,7 +11,6 @@ import py.fpuna.tesis.qoetest.database.DatabaseContract;
  * Created by User on 19/09/2014.
  */
 public class PerfilUsuario implements Parcelable {
-    private long idPerfil;
     private String sexo;
     private Integer edad;
     private String profesion;
@@ -21,9 +20,8 @@ public class PerfilUsuario implements Parcelable {
     public PerfilUsuario() {
     }
 
-    public PerfilUsuario(long idPerfil, String sexo, Integer edad,
+    public PerfilUsuario( String sexo, Integer edad,
                          String profesion, String frecuenciaUso, String appFrecuentes) {
-        this.idPerfil = idPerfil;
         this.sexo = sexo;
         this.edad = edad;
         this.profesion = profesion;
@@ -37,14 +35,6 @@ public class PerfilUsuario implements Parcelable {
 
     public void setAplicacionesFrecuentes(String aplicacionesFrecuentes) {
         this.aplicacionesFrecuentes = aplicacionesFrecuentes;
-    }
-
-    public long getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(long idPerfil) {
-        this.idPerfil = idPerfil;
     }
 
     public String getSexo() {
@@ -86,7 +76,6 @@ public class PerfilUsuario implements Parcelable {
     }
 
     public PerfilUsuario(Parcel in) {
-        this.idPerfil = in.readLong();
         this.sexo = in.readString();
         this.edad = in.readInt();
         this.profesion = in.readString();
@@ -109,7 +98,6 @@ public class PerfilUsuario implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(this.idPerfil);
         parcel.writeString(this.sexo);
         parcel.writeInt(this.edad);
         parcel.writeString(this.profesion);

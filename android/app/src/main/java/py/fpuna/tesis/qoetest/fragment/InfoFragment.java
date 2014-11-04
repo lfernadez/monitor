@@ -107,7 +107,8 @@ public class InfoFragment extends Fragment {
         deviceInfoTextView.setText("Modelo: " + model + '\n'
                 + "Vendedor: " + manufacturer + '\n' + str_ScreenSize + '\n'
                 + "Versión SO: " +  osVersion + '\n' + "RAM: " + info.getRam() + '\n'
-                + "Procesador: " + info.getProcesador()  + '\n' + "Num Cores: " + info.getCpuCores()
+                + "Procesador: " + info.getCpuModel()  + '\n' + "Num Cores: " + info
+                .getCpuCores()
                 + '\n' + "Frecuencia: " + info.getCpuFrec()) ;
 
         networkInfoTextView.setText("Operador: " + networkOperator + '\n' + "Redes " +

@@ -63,13 +63,15 @@ public class DateHourUtils {
     private static final SimpleDateFormat dateService3Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
             Locale.US);
 
-    private static final SimpleDateFormat dateStoreFormat = new SimpleDateFormat("yyyyMMdd",
+    private static final SimpleDateFormat dateStoreFormat = new
+            SimpleDateFormat("yyyy-MM-dd",
             Locale.US);
 
     private static final SimpleDateFormat timeViewFormat = new SimpleDateFormat("HH:mm:ss",
             Locale.US);
 
-    private static final SimpleDateFormat timeStoreFormat = new SimpleDateFormat("HHmmss",
+    private static final SimpleDateFormat timeStoreFormat = new
+            SimpleDateFormat("HH:mm:ss",
             Locale.US);
 
     /**

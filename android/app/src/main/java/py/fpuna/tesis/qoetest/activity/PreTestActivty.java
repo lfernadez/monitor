@@ -436,7 +436,7 @@ public class PreTestActivty extends ActionBarActivity {
             status.setTipoAccesoInternet(redActiva);
             status.setIntensidadSenhal(String.valueOf
                     (signalLevelActiveNetwork));
-            status.setNivelBaterial(bateryLevel);
+            status.setNivelBateria(bateryLevel);
             extras.putParcelable(Constants.EXTRA_DEVICE_STATUS, status);
 
             // Extra de la localizacion del usuario

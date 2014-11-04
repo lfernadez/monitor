@@ -16,7 +16,7 @@ public class Constants {
     public static final String TCPDUMP_FILE_NAME = "tcpdump";
 
     /** Direccion IP del server de transmision */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.1.100";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.102";
 
     /** Representa el tiempo de actualizacion de los datos recogidos */
     public static final Integer TIEMPO_ACTUALIZACION = 1000;

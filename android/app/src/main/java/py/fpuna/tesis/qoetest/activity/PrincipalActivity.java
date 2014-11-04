@@ -205,7 +205,7 @@ public class PrincipalActivity extends ActionBarActivity
 
         initIperf();
         //initTcpDump();
-        probarIperf();
+
         //probarTcpDump();
     }
 
@@ -363,6 +363,9 @@ public class PrincipalActivity extends ActionBarActivity
                 bateryLevel = deviceStatsUtils.getBateryLevel();
                 cellID = networkUtils.getCID();
 
+                /* iperf */
+                probarIperf();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -407,7 +410,7 @@ public class PrincipalActivity extends ActionBarActivity
             status.setTipoAccesoInternet(redActiva);
             status.setIntensidadSenhal(String.valueOf
                     (signalLevelActiveNetwork));
-            status.setNivelBaterial(bateryLevel);
+            status.setNivelBateria(bateryLevel);
             extras.putParcelable(Constants.EXTRA_DEVICE_STATUS, status);
 
             // Extra de la localizacion del usuario

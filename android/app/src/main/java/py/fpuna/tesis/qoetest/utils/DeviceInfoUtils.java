@@ -114,7 +114,7 @@ public class DeviceInfoUtils {
         info.setMarca(getManufacturer());
         info.setCpuCores(getCores());
         info.setCpuFrec(getMaxCPUFreqMHz());
-        info.setProcesador(getProcessor());
+        info.setCpuModel(getProcessor());
         info.setPantalla(getScreenSize());
         info.setSoVersion(getOSVersion());
         info.setImei(getIMEI());

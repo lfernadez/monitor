@@ -7,19 +7,47 @@ import android.os.Parcelable;
  * Created by User on 06/10/2014.
  */
 public class PhoneInfo implements Parcelable {
+    public static final Creator<PhoneInfo> CREATOR = new Creator<PhoneInfo>() {
+        @Override
+        public PhoneInfo createFromParcel(Parcel in) {
+            return (new PhoneInfo(in));
+        }
+
+        @Override
+        public PhoneInfo[] newArray(int size) {
+            return (new PhoneInfo[size]);
+        }
+    };
     private String modelo;
     private String marca;
     private String ram;
     private String soVersion;
-    private String procesador;
+    private String cpuModel;
     private int cpuCores;
     private int cpuFrec;
     private String gama;
     private String memoriaInterna;
     private String pantalla;
     private String imei;
+    private DeviceStatus estadoTelefono;
+    private DeviceLocation localizacion;
 
-    public PhoneInfo(){}
+    public PhoneInfo() {
+    }
+
+    public PhoneInfo(Parcel in) {
+        this.modelo = in.readString();
+        this.marca = in.readString();
+        this.ram = in.readString();
+        this.soVersion = in.readString();
+        this.cpuModel = in.readString();
+        this.cpuCores = in.readInt();
+        this.cpuFrec = in.readInt();
+        this.gama = in.readString();
+        this.memoriaInterna = in.readString();
+        this.pantalla = in.readString();
+        this.imei = in.readString();
+    }
 
     public String getModelo() {
         return modelo;
@@ -53,12 +81,12 @@ public class PhoneInfo implements Parcelable {
         this.soVersion = soVersion;
     }
 
-    public String getProcesador() {
-        return procesador;
+    public String getCpuModel() {
+        return cpuModel;
     }
 
-    public void setProcesador(String procesador) {
-        this.procesador = procesador;
+    public void setCpuModel(String procesador) {
+        this.cpuModel = procesador;
     }
 
     public int getCpuCores() {
@@ -93,6 +121,22 @@ public class PhoneInfo implements Parcelable {
         this.memoriaInterna = memoriaInterna;
     }
 
+    public DeviceStatus getEstadoTelefono() {
+        return estadoTelefono;
+    }
+
+    public void setEstadoTelefono(DeviceStatus estadoTelefono) {
+        this.estadoTelefono = estadoTelefono;
+    }
+
+    public DeviceLocation getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(DeviceLocation localizacion) {
+        this.localizacion = localizacion;
+    }
+
     public String getPantalla() {
         return pantalla;
     }
@@ -120,7 +164,7 @@ public class PhoneInfo implements Parcelable {
         parcel.writeString(this.marca);
         parcel.writeString(this.ram);
         parcel.writeString(this.soVersion);
-        parcel.writeString(this.procesador);
+        parcel.writeString(this.cpuModel);
         parcel.writeInt(this.cpuCores);
         parcel.writeInt(this.cpuFrec);
         parcel.writeString(this.gama);
@@ -128,30 +172,4 @@ public class PhoneInfo implements Parcelable {
         parcel.writeString(this.pantalla);
         parcel.writeString(this.imei);
     }
-
-    public PhoneInfo (Parcel in){
-        this.modelo = in.readString();
-        this.marca = in.readString();
-        this.ram = in.readString();
-        this.soVersion = in.readString();
-        this.procesador = in.readString();
-        this.cpuCores = in.readInt();
-        this.cpuFrec = in.readInt();
-        this.gama = in.readString();
-        this.memoriaInterna = in.readString();
-        this.pantalla = in.readString();
-        this.imei = in.readString();
-    }
-
-    public static final Creator<PhoneInfo> CREATOR = new Creator<PhoneInfo>() {
-        @Override
-        public PhoneInfo createFromParcel(Parcel in) {
-            return (new PhoneInfo(in));
-        }
-
-        @Override
-        public PhoneInfo[] newArray(int size) {
-            return (new PhoneInfo[size]);
-        }
-    };
 }

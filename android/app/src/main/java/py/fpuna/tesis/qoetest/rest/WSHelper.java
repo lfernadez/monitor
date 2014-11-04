@@ -27,6 +27,7 @@ import py.fpuna.tesis.qoetest.model.DeviceLocation;
 import py.fpuna.tesis.qoetest.model.DeviceStatus;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
+import py.fpuna.tesis.qoetest.model.Prueba;
 import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.model.QoSParam;
 
@@ -36,8 +37,8 @@ import py.fpuna.tesis.qoetest.model.QoSParam;
 public class WSHelper {
 
     private static final String TAG = "WebServices";
-    private static final String URL = "/mobileDataStorage/servicios/prueba/";
-    private static final String HOST = "mail.indufar.com.py";
+    private static final String URL = "/mobileDataStorage/servicios/";
+    private static final String HOST = "192.168.1.105";
     private static final int PORT = 8081;
 
     private Gson gson = new Gson();
@@ -165,25 +166,38 @@ public class WSHelper {
                                    DeviceStatus deviceStatus,
                                    DeviceLocation location,
                                    List<PruebaTest> test,
-                                   List<QoSParam> qoSParams) {
+                                   List<QoSParam> qoSParams,
+                                   String fecha, String hora) {
         String respuesta = "";
         JSONObject datosJSON = new JSONObject();
         try {
-            /* Datos del telefono*/
+            Prueba prueba = new Prueba();
+            prueba.setFecha(fecha);
+            prueba.setHora(hora);
+            prueba.setTelefono(info);
+            prueba.setPruebaQoS(qoSParams);
+            prueba.setPruebaTests(test);
+            prueba.setDatosUsuario(pu);
+            /* Datos del telefono
             datosJSON.put("telefono", gson.toJson(info));
-            /*Datos del Usuario */
+            /*Datos del Usuario
             datosJSON.put("datosUsuario", gson.toJson(pu));
-            /* Datos del estado del telefono */
-            datosJSON.put("estadoTelefono", gson.toJson(deviceStatus));
-            /* Resultados de las pruebas */
+            /* Datos del estado del telefono
+            // datosJSON.put("estadoTelefono", gson.toJson(deviceStatus));
+            /* Resultados de las pruebas
             datosJSON.put("pruebaTests", gson.toJson(test));
             /* Localizacion */
-            datosJSON.put("localizacion", gson.toJson(location));
-            /* Valores de los parametros QoS */
+            //datosJSON.put("localizacion", gson.toJson(location));
+            /* Valores de los parametros QoS
             datosJSON.put("pruebaQos", gson.toJson(qoSParams));
-            respuesta = post(URL, datosJSON.toString());
+            /* Fecha
+            datosJSON.put("fecha", fecha);
+            /* Hora
+            datosJSON.put("hora", hora);*/
 
-        } catch (JSONException e) {
+            respuesta = post("prueba/",gson.toJson(prueba));
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return respuesta;

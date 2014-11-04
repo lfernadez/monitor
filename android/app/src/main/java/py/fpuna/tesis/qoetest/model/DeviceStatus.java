@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by User on 15/10/2014.
  */
 public class DeviceStatus implements Parcelable{
-    private int nivelBaterial;
+    private int nivelBateria;
     private String tipoAccesoInternet;
     private Double usoCpu;
     private Double usoRam;
@@ -17,12 +17,12 @@ public class DeviceStatus implements Parcelable{
     public DeviceStatus() {
     }
 
-    public int getNivelBaterial() {
-        return nivelBaterial;
+    public int getNivelBateria() {
+        return nivelBateria;
     }
 
-    public void setNivelBaterial(int nivelBaterial) {
-        this.nivelBaterial = nivelBaterial;
+    public void setNivelBateria(int nivelBateria) {
+        this.nivelBateria = nivelBateria;
     }
 
     public String getTipoAccesoInternet() {
@@ -64,7 +64,7 @@ public class DeviceStatus implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(this.nivelBaterial);
+        parcel.writeInt(this.nivelBateria);
         parcel.writeString(this.tipoAccesoInternet);
         parcel.writeDouble(this.usoCpu);
         parcel.writeDouble(this.usoRam);
@@ -72,7 +72,7 @@ public class DeviceStatus implements Parcelable{
     }
 
     public DeviceStatus (Parcel in){
-        this.nivelBaterial = in.readInt();
+        this.nivelBateria = in.readInt();
         this.tipoAccesoInternet = in.readString();
         this.usoCpu = in.readDouble();
         this.usoRam = in.readDouble();
