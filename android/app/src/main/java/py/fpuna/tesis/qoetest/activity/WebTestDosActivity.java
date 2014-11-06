@@ -38,7 +38,7 @@ public class WebTestDosActivity extends ActionBarActivity {
         webView.clearCache(true);
         final WebClientTest webClient = new WebClientTest();
         webView.setWebViewClient(webClient);
-        webView.loadUrl(Constants.GAG_URL);
+        webView.loadUrl(Constants.NINE_GAG_URL);
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);

@@ -26,6 +26,8 @@ public class Constants {
 
     /* URLs */
     public static final String GAG_URL = "http://9gag.com";
+    public static final String NINE_GAG_URL = IP_TRANSMITTER_SERVER +
+            ":8083/9GAG - Why So Serious.html";
     public static final String CODING_LOVE_URL = "http://thecodinglove.com";
     public static final String GOOGLE_URL = "http://www.google.com";
     public static final String YOUTUBE_URL = "http://www.youtube.com";
