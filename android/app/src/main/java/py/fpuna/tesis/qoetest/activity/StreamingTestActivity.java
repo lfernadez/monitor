@@ -141,7 +141,7 @@ public class StreamingTestActivity extends ActionBarActivity
                         tiempoBufferingString);
 
                 Log.d("StreamingTestActivity", "Bufferin Time:" +
-                        bufferingTime);
+                        videoUtils.milliSecondsToTimer(bufferingTime));
 
                 startActivity(intent);
             }

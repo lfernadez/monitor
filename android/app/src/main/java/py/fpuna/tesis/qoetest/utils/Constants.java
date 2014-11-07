@@ -16,7 +16,8 @@ public class Constants {
     public static final String TCPDUMP_FILE_NAME = "tcpdump";
 
     /** Direccion IP del server de transmision */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.1.102";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.103";
+    public static final String PORT_HTTP = "8083";
 
     /** Representa el tiempo de actualizacion de los datos recogidos */
     public static final Integer TIEMPO_ACTUALIZACION = 1000;
@@ -26,8 +27,9 @@ public class Constants {
 
     /* URLs */
     public static final String GAG_URL = "http://9gag.com";
-    public static final String NINE_GAG_URL = IP_TRANSMITTER_SERVER +
-            ":8083/9GAG - Why So Serious.html";
+    public static final String NINE_GAG_URL = "http://" +
+            IP_TRANSMITTER_SERVER +
+            ":8083/9GAG-WhySoSerious.html";
     public static final String CODING_LOVE_URL = "http://thecodinglove.com";
     public static final String GOOGLE_URL = "http://www.google.com";
     public static final String YOUTUBE_URL = "http://www.youtube.com";
