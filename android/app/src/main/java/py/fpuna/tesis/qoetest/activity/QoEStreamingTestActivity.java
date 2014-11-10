@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,10 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
     private TextView bufferingRBLabel;
     private Button siguienteBtn;
     private Button atrasBtn;
+
+    private RatingBar calidadRatingBar;
+    private TextView calidadRBLabel;
+    private RatingBar globalRatingBar;
 
     private ArrayList<PruebaTest> pruebas;
 
@@ -74,6 +79,28 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
             }
         });
 
+        calidadRatingBar = (RatingBar) findViewById(R.id.ratingBar_calidad_video);
+        calidadRBLabel = (TextView) findViewById(R.id.ratingBar_calidad_label);
+        calidadRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                if (v == 5) {
+                    calidadRBLabel.setText(VideoTestMessages.EXCELENT_QUALITY_QOE);
+                } else if (v == 4) {
+                    calidadRBLabel.setText(VideoTestMessages.VERY_GOOD_QUALITY_QOE);
+                } else if (v == 3) {
+                    calidadRBLabel.setText(VideoTestMessages.GOOD_QUALITY_QOE);
+                } else if (v == 2) {
+                    calidadRBLabel.setText(VideoTestMessages.POOR_QUALITY_QOE);
+                } else {
+                    calidadRBLabel.setText(VideoTestMessages.BAD_QUALITY_QOE);
+                }
+            }
+        });
+
+
+        globalRatingBar = (RatingBar) findViewById(R.id.ratingBar_globla_video);
+
         /* Boton Atras */
         atrasBtn = (Button) findViewById(R.id.leftButton);
         atrasBtn.setVisibility(View.INVISIBLE);
@@ -83,20 +110,50 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
         siguienteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(),
-                        EnviarTestActivity.class);
-                PruebaTest pruebaStreaming = new PruebaTest();
-                pruebaStreaming.setCodigoTest(2);
-                pruebaStreaming.setValorMos(
-                        CalcUtils.getPromedio(
-                                tiempoCargaInicialRatingBar.getRating(),
-                                bufferingRatingBar.getRating()));
-                pruebas.add(pruebaStreaming);
-                intent.putParcelableArrayListExtra(Constants.EXTRA_QOE_TEST, pruebas);
-                intent.putExtras(getIntent().getExtras());
-                startActivity(intent);
+                if (verificar()) {
+                    Intent intent = new Intent(getBaseContext(),
+                            EnviarTestActivity.class);
+                    PruebaTest pruebaStreaming = new PruebaTest();
+                    pruebaStreaming.setCodigoTest(2);
+                    pruebaStreaming.setValorMos(
+                            CalcUtils.getPromedio(
+                                    tiempoCargaInicialRatingBar.getRating(),
+                                    bufferingRatingBar.getRating()));
+                    pruebas.add(pruebaStreaming);
+                    intent.putParcelableArrayListExtra(Constants.EXTRA_QOE_TEST, pruebas);
+                    intent.putExtras(getIntent().getExtras());
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    public boolean verificar() {
+        if (tiempoCargaInicialRatingBar.getRating() == 0) {
+            Toast.makeText(getBaseContext(), "Seleccione una de las " +
+                            "estrellas de acuerdo a su evaluación ",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (calidadRatingBar.getRating() == 0) {
+            Toast.makeText(getBaseContext(), "Seleccione una de las " +
+                            "estrellas de acuerdo a su evaluación ",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (bufferingRatingBar.getRating() == 0) {
+            Toast.makeText(getBaseContext(), "Seleccione una de las " +
+                            "estrellas de acuerdo a su evaluación ",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (globalRatingBar.getRating() == 0) {
+            Toast.makeText(getBaseContext(), "Seleccione una de las " +
+                            "estrellas de acuerdo a su evaluación ",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
 

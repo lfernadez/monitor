@@ -89,7 +89,7 @@
         <activity
             android:name=".activity.StreamingTestActivity"
             android:label="@string/title_activity_streaming_test"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".activity.QoEStreamingTestActivity"

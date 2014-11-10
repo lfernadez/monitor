@@ -11,31 +11,32 @@ import android.net.ConnectivityManager;
 import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.*;
+import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.Process;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.activity.PrincipalActivity;
+import py.fpuna.tesis.qoetest.model.IperfTCPResults;
+import py.fpuna.tesis.qoetest.model.IperfUDPResults;
 import py.fpuna.tesis.qoetest.model.PingResults;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
@@ -44,17 +45,7 @@ import py.fpuna.tesis.qoetest.utils.NetworkUtils;
 public class MonitoringService extends Service {
 
     public static final int NOTIF_ID = 101;
-    private ConnectivityManager cm;
-    private WifiManager wifiManager;
-    private TelephonyManager telManager;
-    HandlerThread mHandlerThread;
     public static final String TAG = "MonitoringServive";
-
-    private long bpsDown;
-    private long bpsUP;
-    private long cpuLoad;
-    private long memLoad;
-
     /* Mobile network stats */
     private static long bytesRXanterior;
     private static long bytesRXActual;
@@ -64,7 +55,6 @@ public class MonitoringService extends Service {
     private static long bytesTXanterior;
     private static long bytesTXActual;
     private static long packetsTXActual;
-
     /* WiFi network stats */
     private static long bytesWiFiRXAnterior;
     private static long bytesWiFiTXAnterior;
@@ -74,18 +64,22 @@ public class MonitoringService extends Service {
     private static long bytesWiFiTXActual;
     private static long packetsWiFiRXActual;
     private static long packetsWiFiTXActual;
-
+    /* Harmonic mean Down*/
+    private static float hMBpsDown;
+    /* Harmonic mean UP*/
+    private static float hMBpsUP;
+    private final IBinder mBinder = new LocalBinder();
+    HandlerThread mHandlerThread;
+    private ConnectivityManager cm;
+    private WifiManager wifiManager;
+    private TelephonyManager telManager;
+    private long bpsDown;
+    private long bpsUP;
+    private long cpuLoad;
+    private long memLoad;
     private boolean startMean = false;
     private long timeAnterior;
     private long timeActual;
-
-    /* Harmonic mean Down*/
-    private static float hMBpsDown;
-
-    /* Harmonic mean UP*/
-    private static float hMBpsUP;
-
-    private final IBinder mBinder = new LocalBinder();
     private BufferedReader reader;
     private Handler mHandler;
 
@@ -93,14 +87,21 @@ public class MonitoringService extends Service {
     }
 
     /**
+     * Obtiene la cantidad de memoria disponible en el sistema
      *
+     * @return Memoria disponible en MB
      */
-    public class LocalBinder extends Binder {
-        public MonitoringService getService() {
-            return MonitoringService.this;
-        }
+    public Double getMemFree() {
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        activityManager.getMemoryInfo(mi);
+        double availableMegs = mi.availMem / Constants.MULTIPLO_MB;
+        return availableMegs;
     }
 
+    public void startMean() {
+        startMean = true;
+    }
 
     /**
      *
@@ -119,9 +120,7 @@ public class MonitoringService extends Service {
                     packetsRXActual;
             packetsWiFiTXActual = TrafficStats.getTotalTxPackets() -
                     packetsTXActual;
-            //memLoad = getMemFree();
-            //cpuLoad = getCpuLoad();
-            //PingResults pingResults = executePing();
+
             /* Datos de la red activa */
             if (cm.getActiveNetworkInfo() != null) {
                 // Tipo de Red Mobile (3G, HSPA, HSPA+,...)
@@ -187,23 +186,6 @@ public class MonitoringService extends Service {
     };
 
     /**
-     * Obtiene la cantidad de memoria disponible en el sistema
-     *
-     * @return Memoria disponible en MB
-     */
-    public Double getMemFree() {
-        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        activityManager.getMemoryInfo(mi);
-        double availableMegs = mi.availMem / Constants.MULTIPLO_MB;
-        return availableMegs;
-    }
-
-    public void startMean() {
-        startMean = true;
-    }
-
-    /**
      * Obtiene la carga de la CPU dada a partir del comando top
      *
      * @return porcentaje de carga de la CPU
@@ -232,7 +214,6 @@ public class MonitoringService extends Service {
         return carga;
     }
 
-
     /**
      * @return
      * @throws IOException
@@ -243,8 +224,6 @@ public class MonitoringService extends Service {
         // Llamada al comando ping desde un proceso
         Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
                 Constants.IP_TRANSMITTER_SERVER);
-        /*Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
-                "google.com");*/
         p.waitFor();
         reader = new BufferedReader(new InputStreamReader(
                 p.getInputStream()));
@@ -257,16 +236,16 @@ public class MonitoringService extends Service {
             /* Parseo de las estadisticas */
             line = reader.readLine();
             String[] estadisticas = line.split(", ");
-            result.setPacketsSended(Integer.valueOf(estadisticas[0].replaceAll("\\D+","")));
-            result.setPacketsReceived(Integer.valueOf(estadisticas[1].replaceAll("\\D+","")));
-            result.setPacketloss(Double.valueOf(estadisticas[2].replaceAll("\\D+","")));
-            result.setTime(Long.valueOf(estadisticas[3].replaceAll("\\D+","")));
+            result.setPacketsSended(Integer.valueOf(estadisticas[0].replaceAll("\\D+", "")));
+            result.setPacketsReceived(Integer.valueOf(estadisticas[1].replaceAll("\\D+", "")));
+            result.setPacketloss(Double.valueOf(estadisticas[2].replaceAll("\\D+", "")));
+            result.setTime(Long.valueOf(estadisticas[3].replaceAll("\\D+", "")));
             /* Parseo de los tiempo */
             line = reader.readLine();
             if (!line.isEmpty()) {
                 line = line.substring(line.lastIndexOf("=") + 2,
                         line.length() - 3);
-                String[] datosTiempos = line.replaceAll("[^\\d./]","").split("/");
+                String[] datosTiempos = line.replaceAll("[^\\d./]", "").split("/");
                 result.setRttMin(Double.valueOf(datosTiempos[0]));
                 result.setRttAvg(Double.valueOf(datosTiempos[1]));
                 result.setRttMax(Double.valueOf(datosTiempos[2]));
@@ -278,7 +257,6 @@ public class MonitoringService extends Service {
     }
 
     /**
-     *
      * @return
      */
     public float getBandwidth() {
@@ -292,7 +270,7 @@ public class MonitoringService extends Service {
                     .openConnection();
             connection.setRequestMethod("GET");
             connection.addRequestProperty("Cache-Control", "no-cache");
-            long starTime = System.currentTimeMillis();
+            long starTime = System.nanoTime();
             connection.connect();
             int response = connection.getResponseCode();
             input = connection.getInputStream();
@@ -304,11 +282,11 @@ public class MonitoringService extends Service {
             while ((red = bis.read(buf)) != -1) {
                 size += red;
             }
-            long endTime = System.currentTimeMillis();
+            long endTime = System.nanoTime();
             input.close();
             connection.disconnect();
             bandwidth = (NetworkUtils.toKbits(Constants.IMAGE_LENGTH))
-                    / (DateHourUtils.toSeconds(endTime - startTime));
+                    / (DateHourUtils.nanoToSeconds(endTime - startTime));
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -319,7 +297,6 @@ public class MonitoringService extends Service {
         }
         return bandwidth;
     }
-
 
     /**
      * Actualiza la notificacion mostrada en pantalla
@@ -334,7 +311,7 @@ public class MonitoringService extends Service {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(datos));
         Intent startIntent = new Intent(getApplicationContext(),
                 PrincipalActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 1,startIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 1, startIntent, 0);
         builder.setContentIntent(contentIntent);
         Notification note = builder.build();
         NotificationManager mNotificationManager =
@@ -342,6 +319,120 @@ public class MonitoringService extends Service {
         mNotificationManager.notify(NOTIF_ID, note);
     }
 
+
+    /**
+     * Execute IPERF in TCP mode
+     * @return
+     */
+    public IperfTCPResults executeIperfTCP(){
+        List<String> commands = new ArrayList<String>();
+        IperfTCPResults results = new IperfTCPResults();
+        try {
+            commands.add(0,Constants.IPERF_BINARY_DIC);
+            commands.add(1, "-c");
+            commands.add(2, Constants.IP_TRANSMITTER_SERVER);
+            commands.add(3, "-r");
+            commands.add(4, "-x");
+            commands.add(5, "CSM");
+            commands.add(6, "-f");
+            commands.add(7, "k");
+
+            Process process = new ProcessBuilder().command(commands)
+                    .redirectErrorStream(true).start();
+            process.waitFor();
+            reader = new BufferedReader(new InputStreamReader(
+                    process.getInputStream()));
+            // Parseo del resultado de Iperf
+            String line = reader.readLine();
+            String valoresSec1 [] = line.replaceAll("[^0-9.]+",
+                    " ").trim().split(" ");
+            line = reader.readLine();
+            String valoresSec2 [] = line.replaceAll("[^0-9.]+",
+                    " ").trim().split(" ");
+            if(Integer.valueOf(valoresSec1[0]) > Integer.valueOf
+                    (valoresSec2[0])){
+                results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
+                results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
+                results.setFileSize(Double.valueOf(valoresSec1[3]));
+            }else{
+                results.setBandwidthDown(Double.valueOf(valoresSec2[4]));
+                results.setBandwidthUp(Double.valueOf(valoresSec1[4]));
+                results.setFileSize(Double.valueOf(valoresSec2[3]));
+            }
+
+            reader.close();
+            process.destroy();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+
+    /**
+     * Execute Iperf UDP mode
+     * @return
+     */
+    public IperfUDPResults executeIperfUDP(){
+        List<String> commands = new ArrayList<String>();
+        IperfUDPResults results = new IperfUDPResults();
+        try {
+
+            commands.add(0,Constants.IPERF_BINARY_DIC);
+            commands.add(1, "-c");
+            commands.add(2, Constants.IP_TRANSMITTER_SERVER);
+            commands.add(3, "-u");
+            commands.add(4, "-r");
+            commands.add(5, "-x");
+            commands.add(6, "CSM");
+            commands.add(7, "-f");
+            commands.add(8, "k");
+
+            Process process = new ProcessBuilder().command(commands)
+                    .redirectErrorStream(true).start();
+            process.waitFor();
+
+            reader = new BufferedReader(new InputStreamReader(
+                    process.getInputStream()));
+
+            for(int i= 0; i<3;i++){
+                reader.readLine();
+            }
+
+            String line = reader.readLine();
+            String valoresSec1 [] = line.replaceAll("[^0-9.]+",
+                    " ").trim().split(" ");
+
+            line = reader.readLine();
+            String valoresSec2 [] = line.replaceAll("[^0-9.]+",
+                    " ").trim().split(" ");
+
+            if(Integer.valueOf(valoresSec1[0]) > Integer.valueOf
+                    (valoresSec2[0])){
+                results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
+                results.setJitter(Double.valueOf(valoresSec1[5]));
+                results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
+                results.setPacketLoss(Double.valueOf(valoresSec1[8]));
+                results.setFileSize(Double.valueOf(valoresSec1[3]));
+            }else{
+                results.setBandwidthUp(Double.valueOf(valoresSec1[4]));
+                results.setJitter(Double.valueOf(valoresSec2[5]));
+                results.setBandwidthDown(Double.valueOf(valoresSec2[4]));
+                results.setPacketLoss(Double.valueOf(valoresSec2[8]));
+                results.setFileSize(Double.valueOf(valoresSec2[3]));
+            }
+
+            reader.close();
+            process.destroy();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
 
     /**
      *
@@ -381,7 +472,7 @@ public class MonitoringService extends Service {
     /**
      *
      */
-    public void init(){
+    public void init() {
         timeAnterior = DateHourUtils.toSeconds(System.currentTimeMillis());
         bytesRXanterior = TrafficStats.getMobileRxBytes();
         packetsRXanterior = TrafficStats.getMobileRxPackets();
@@ -418,7 +509,7 @@ public class MonitoringService extends Service {
     public void onDestroy() {
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
         mHandler.removeCallbacks(monitoring);
-        mHandler.getLooper().quitSafely();
+        mHandler.getLooper().quit();
     }
 
     /**
@@ -443,5 +534,15 @@ public class MonitoringService extends Service {
     public long getBpsUP() {
         return this.bpsUP;
     }
+
+    /**
+     *
+     */
+    public class LocalBinder extends Binder {
+        public MonitoringService getService() {
+            return MonitoringService.this;
+        }
+    }
+
 
 }

@@ -30,6 +30,24 @@ public class VideoTestMessages {
             "muy fluida";
     public static final String BAD_DELAY_QOE = "Malo \n Atascos inaceptables de" +
             " larga duración o en grandes cantidades";
+    public static final String EXCELENT_QUALITY_QOE = "Excelente \n Imagen " +
+            "clara y nítida, audio sin distorciones";
+    public static final String VERY_GOOD_QUALITY_QOE = "Muy Buena \n " +
+            "Pequeños lapsos de imagen distorcionada, audio sin distorciones";
+
+    public static final String GOOD_QUALITY_QOE = "Buena \n " +
+            "Imagen aceptable, audio con pequeñas distorciones";
+
+    public static final String POOR_QUALITY_QOE = "Pobre \n " +
+            "Imagen con distorciones, distorciones de audio";
+
+    public static final String BAD_QUALITY_QOE = "Pobre \n " +
+            "No puede visualizar correctamente el video, " +
+            "audio con varias distorciones o nulo";
+
+
+
+
 
 
 }

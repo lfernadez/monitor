@@ -166,4 +166,8 @@ public class DateHourUtils {
     public static long toSeconds (long miliseconds){
         return miliseconds / 1000;
     }
+
+    public static long nanoToSeconds( long nanoseconds){
+        return nanoseconds / 1000000000;
+    }
 }

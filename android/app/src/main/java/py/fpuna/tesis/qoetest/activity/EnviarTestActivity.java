@@ -51,7 +51,6 @@ public class EnviarTestActivity extends ActionBarActivity {
         /** Localizacion del dispositivo */
         deviceLocation = bundle.getParcelable(Constants.EXTRA_LOCALIZACION);
 
-
         enviarTest = (Button) findViewById(R.id.startWebTestBtn);
         enviarTest.setOnClickListener(new View.OnClickListener() {
             @Override

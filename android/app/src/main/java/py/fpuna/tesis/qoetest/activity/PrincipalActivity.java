@@ -40,6 +40,8 @@ import py.fpuna.tesis.qoetest.fragment.TestFragment;
 import py.fpuna.tesis.qoetest.location.LocationUtils;
 import py.fpuna.tesis.qoetest.model.DeviceLocation;
 import py.fpuna.tesis.qoetest.model.DeviceStatus;
+import py.fpuna.tesis.qoetest.model.IperfTCPResults;
+import py.fpuna.tesis.qoetest.model.IperfUDPResults;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.PingResults;
@@ -85,6 +87,8 @@ public class PrincipalActivity extends ActionBarActivity
     private NetworkUtils networkUtils;
     private int bateryLevel;
     private PingResults pingResults;
+    private IperfTCPResults iperfTCPResults;
+    private IperfUDPResults iperfUDPResults;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -364,7 +368,8 @@ public class PrincipalActivity extends ActionBarActivity
                 cellID = networkUtils.getCID();
 
                 /* iperf */
-                probarIperf();
+                iperfTCPResults = mService.executeIperfTCP();
+                iperfUDPResults = mService.executeIperfUDP();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -435,15 +440,15 @@ public class PrincipalActivity extends ActionBarActivity
             // Bandwidth
             QoSParam bandwidthParam = new QoSParam();
             bandwidthParam.setCodigoParametro(Constants.BANDWITDH_ID);
-            bandwidthParam.setValor(bandwidth);
+            bandwidthParam.setValor(iperfTCPResults.getBandwidthDown());
             // Packet Loss
             QoSParam packetLossParam = new QoSParam();
             packetLossParam.setCodigoParametro(Constants.PACKET_LOSS_ID);
-            packetLossParam.setValor(pingResults.getPacketloss());
+            packetLossParam.setValor(iperfUDPResults.getPacketLoss());
             // Jitter
             QoSParam jitterParam = new QoSParam();
             jitterParam.setCodigoParametro(Constants.JITTER_ID);
-            jitterParam.setValor(pingResults.getRttMax() - pingResults.getRttMin());
+            jitterParam.setValor(iperfUDPResults.getJitter());
 
             // Se agregan los parametros
             parametrosQos.add(delayParam);
@@ -495,39 +500,6 @@ public class PrincipalActivity extends ActionBarActivity
             return;
         }
         return;
-    }
-
-    public void probarIperf() {
-        List<String> commands = new ArrayList<String>();
-        try {
-            commands.add(0,Constants.IPERF_BINARY_DIC);
-            commands.add(1, "-c");
-            commands.add(2, Constants.IP_TRANSMITTER_SERVER);
-            commands.add(3, "-d");
-            commands.add(4, "-x");
-            commands.add(5, "CSM");
-            //commands.add(6, "-u");
-            Process process = new ProcessBuilder().command(commands)
-                    .redirectErrorStream(true).start();
-            process.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            int read;
-            //The output text is accumulated into a string buffer and published to the GUI
-            char[] buffer = new char[4096];
-            StringBuffer output = new StringBuffer();
-            while ((read = reader.read(buffer)) > 0) {
-                output.append(buffer, 0, read);
-                //This is used to pass the output to the thread running the GUI, since this is separate thread.
-                Log.d("IPERF",output.toString());
-                output.delete(0, output.length());
-            }
-            reader.close();
-            process.destroy();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void probarTcpDump() {

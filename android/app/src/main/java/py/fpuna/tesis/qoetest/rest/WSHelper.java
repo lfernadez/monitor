@@ -16,7 +16,6 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -195,7 +194,7 @@ public class WSHelper {
             /* Hora
             datosJSON.put("hora", hora);*/
 
-            respuesta = post("prueba/",gson.toJson(prueba));
+            respuesta = post("prueba/", gson.toJson(prueba));
 
         } catch (Exception e) {
             e.printStackTrace();

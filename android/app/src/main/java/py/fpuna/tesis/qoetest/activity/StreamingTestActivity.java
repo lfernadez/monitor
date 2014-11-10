@@ -31,6 +31,7 @@ public class StreamingTestActivity extends ActionBarActivity
     private VideoUtils videoUtils;
     private Handler mHandler = new Handler();
     private Button siguienteBtn;
+    private Button atrasBtn;
     private long duracionVideo;
     private long inicioCargando;
     private long inicioTotal;
@@ -39,6 +40,7 @@ public class StreamingTestActivity extends ActionBarActivity
     private long bufferingTime;
     private long startBuffering;
     private long endBuffering;
+    private long cantidadPausas = 0;
 
     private ProgressBar bufferingProgressBar;
     /**
@@ -99,6 +101,17 @@ public class StreamingTestActivity extends ActionBarActivity
         /* Duracion total Label */
         totalVideoLabel = (TextView) findViewById(R.id.duracionTotalLabel);
 
+        /* Boton Atras */
+        atrasBtn = (Button) findViewById(R.id.leftButton);
+        atrasBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent atrasIntent = new Intent(getApplicationContext(),
+                        StreamingTestIntroActivity.class);
+                startActivity(atrasIntent);
+            }
+        });
+
         /* Boton Siguiente */
         siguienteBtn = (Button) findViewById(R.id.rightButton);
         siguienteBtn.setVisibility(View.INVISIBLE);
@@ -130,6 +143,7 @@ public class StreamingTestActivity extends ActionBarActivity
                         .EXTRA_TIEMPO_TOTAL_REP, tiempoTotalRep);
                 intent.putExtra(Constants
                         .EXTRA_TIEMPO_BUFFERING, tiempoBufferingString);
+                intent.putExtra(Constants.EXTRA_CANT_PAUSAS, cantidadPausas);
 
                 Log.d("StreamingTestActivity", "Tiempo de carga inicial: " +
                         tiempoCarga);
@@ -205,6 +219,7 @@ public class StreamingTestActivity extends ActionBarActivity
             @Override
             public boolean onInfo(MediaPlayer mp, int what, int extra) {
                 if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+                    cantidadPausas++;
                     startBuffering = System.currentTimeMillis();
                     bufferingProgressBar.setVisibility(View.VISIBLE);
                     mp.pause();
@@ -213,7 +228,6 @@ public class StreamingTestActivity extends ActionBarActivity
                     bufferingProgressBar.setVisibility(View.GONE);
                     endBuffering = System.currentTimeMillis();
                     mp.start();
-
                     bufferingTime += (endBuffering - startBuffering);
                 }
                 return false;

@@ -16,7 +16,7 @@ public class Constants {
     public static final String TCPDUMP_FILE_NAME = "tcpdump";
 
     /** Direccion IP del server de transmision */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.1.103";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.101";
     public static final String PORT_HTTP = "8083";
 
     /** Representa el tiempo de actualizacion de los datos recogidos */
@@ -37,7 +37,7 @@ public class Constants {
     public static final String VIDEO_URL = "https://archive" +
             ".org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
     public static final String VIDEO_URL_DOS = "rtsp://" +
-            IP_TRANSMITTER_SERVER + "/sample_300kbit.mp4";
+            IP_TRANSMITTER_SERVER + "/sample_h264_1mbit.mp4";
 
     public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
     public static final int FAST_CEILING_IN_SECONDS = 1;
@@ -61,6 +61,7 @@ public class Constants {
             "EXTRA_TIEMPO_BUFFERING";
     public static final String EXTRA_TIEMPO_TOTAL_REP =
             "EXTRA_TIEMPO_TOTAL_REP";
+    public static final String EXTRA_CANT_PAUSAS = "EXTRA_CANT_PAUSAS";
 
     /* bandwidth Test */
     public static final String IMAGE_URL_DOWN = "http://carlook" +
@@ -74,5 +75,9 @@ public class Constants {
     public static final int BANDWITDH_ID = 2;
     public static final int PACKET_LOSS_ID = 3;
     public static final int JITTER_ID = 4;
+    public static final int TIEMPO_CARGA_ID = 5;
+    public static final int CARGA_INICIAL_VIDEO = 6;
+    public static final int TIEMPO_BUFFERING = 7;
+    public static final int CANT_BUFFERING = 8;
 
 }

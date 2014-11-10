@@ -96,6 +96,10 @@
     <!-- QoE Streaming Test -->
     <string name="pregunta_tiempo_carga_video">El tiempo de carga inicial del video le pareció:</string>
     <string name="pregunta_buffering_video">Evalué el tiempo/cantidad de veces que la reproducción del video se pausó:</string>
+    <string name="pregunta_global_video">De manera global ¿Qué
+        puntuación le daría a la reproducción de video?</string>
+    <string name="pregunta_calidad_video">Evalúe la calidad de imagen/audio
+    de la reproducción</string>
     <string name="title_activity_music_straming_test_intro">Music Streaming Test</string>
 
     <!-- Music Streaming Test -->
