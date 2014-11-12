@@ -114,11 +114,13 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
                     Intent intent = new Intent(getBaseContext(),
                             EnviarTestActivity.class);
                     PruebaTest pruebaStreaming = new PruebaTest();
-                    pruebaStreaming.setCodigoTest(2);
+                    pruebaStreaming.setCodigoTest(Constants.TEST_STREAMING);
                     pruebaStreaming.setValorMos(
                             CalcUtils.getPromedio(
                                     tiempoCargaInicialRatingBar.getRating(),
-                                    bufferingRatingBar.getRating()));
+                                    bufferingRatingBar.getRating(),
+                                    calidadRatingBar.getRating(),
+                                    globalRatingBar.getRating()));
                     pruebas.add(pruebaStreaming);
                     intent.putParcelableArrayListExtra(Constants.EXTRA_QOE_TEST, pruebas);
                     intent.putExtras(getIntent().getExtras());
@@ -128,6 +130,10 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean verificar() {
         if (tiempoCargaInicialRatingBar.getRating() == 0) {
             Toast.makeText(getBaseContext(), "Seleccione una de las " +

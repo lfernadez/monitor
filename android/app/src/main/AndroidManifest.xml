@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.PrincipalActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.PrincipalActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -32,92 +32,99 @@
 
         <!-- Content Provider -->
         <provider
-            android:name=".database.Provider"
+            android:name="py.fpuna.tesis.qoetest.database.Provider"
             android:authorities="py.fpuna.tesis.qoetest.provider"
             android:exported="false" >
         </provider>
 
         <!-- Servicio para el guardado de datos -->
         <service
-            android:name=".services.GuardarDatosService"
+            android:name="py.fpuna.tesis.qoetest.services.GuardarDatosService"
             android:exported="false" >
         </service>
 
         <!-- Servicio de monitoreo de red y telefono -->
         <service
-            android:name=".services.MonitoringService"
+            android:name="py.fpuna.tesis.qoetest.services.MonitoringService"
             android:exported="false" >
         </service>
 
         <activity
-            android:name=".activity.PreTestActivty"
+            android:name="py.fpuna.tesis.qoetest.activity.PreTestActivty"
             android:label="@string/title_activity_pre_test_activty"
-            android:parentActivityName=".activity.PrincipalActivity"
+            android:parentActivityName="py.fpuna.tesis.qoetest.activity.PrincipalActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="py.fpuna.tesis.qoetest.activity.PrincipalActivity" />
         </activity>
         <activity
-            android:name=".activity.WebTestIntroActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.WebTestIntroActivity"
             android:label="@string/title_activity_web_test_into"
-            android:parentActivityName=".activity.PreTestActivty"
+            android:parentActivityName="py.fpuna.tesis.qoetest.activity.PreTestActivty"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="py.fpuna.tesis.qoetest.activity.PreTestActivty" />
         </activity>
         <activity
-            android:name=".activity.WebTestUnoActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.WebTestUnoActivity"
             android:label="@string/title_activity_web_test"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.WebTestDosActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.WebTestDosActivity"
             android:label="@string/title_activity_web_test_dos"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.QoEWebTestActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.QoEWebTestActivity"
             android:label="@string/title_activity_qo_eweb_test"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.StreamingTestIntroActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.StreamingTestIntroActivity"
             android:label="@string/title_activity_streaming_test_intro" >
         </activity>
         <activity
-            android:name=".activity.StreamingTestActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.StreamingTestActivity"
             android:label="@string/title_activity_streaming_test"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name=".activity.QoEStreamingTestActivity"
-            android:label="@string/title_activity_qo_estreaming_test" >
+            android:name="py.fpuna.tesis.qoetest.activity.QoEStreamingTestActivity"
+            android:label="@string/title_activity_qo_estreaming_test"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.MusicStreamingTestIntro"
+            android:name="py.fpuna.tesis.qoetest.activity.MusicStreamingTestIntro"
             android:label="@string/title_activity_music_straming_test_intro" >
         </activity>
 
         <service
-            android:name=".services.CPUMonitoringService"
+            android:name="py.fpuna.tesis.qoetest.services.CPUMonitoringService"
             android:exported="false" >
         </service>
         <service
-            android:name=".services.MemoryMonitoringService"
+            android:name="py.fpuna.tesis.qoetest.services.MemoryMonitoringService"
             android:exported="false" >
         </service>
 
         <activity
-            android:name=".activity.EnviarTestActivity"
+            android:name="py.fpuna.tesis.qoetest.activity.EnviarTestActivity"
             android:label="@string/title_activity_enviar_test" >
         </activity>
 
         <service
-            android:name=".services.NetworkMonitoringService"
+            android:name="py.fpuna.tesis.qoetest.services.NetworkMonitoringService"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name="py.fpuna.tesis.qoetest.activity.EmocionTestActivity"
+            android:label="@string/title_activity_emocion_test"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

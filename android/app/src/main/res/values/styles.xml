@@ -46,6 +46,8 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+
+
     <!-- Style para la letra de los nav items -->
     <style name="NavItemTextStyle">
         <item name="android:textSize">14sp</item>

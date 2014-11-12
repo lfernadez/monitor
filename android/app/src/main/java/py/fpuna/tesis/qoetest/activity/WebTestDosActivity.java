@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,6 +46,13 @@ public class WebTestDosActivity extends ActionBarActivity {
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                mProgressBar.setProgress(newProgress);
+            }
+        });
 
         /* Boton siguiente */
         siguienteBtn = (Button) findViewById(R.id.rightButton);
@@ -111,7 +119,7 @@ public class WebTestDosActivity extends ActionBarActivity {
 
             // Calculate load time
             this.loadTime = System.currentTimeMillis() - this.loadTime;
-            mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressBar.setVisibility(View.GONE);
 
             // Convert milliseconds to date format
             String time = new SimpleDateFormat("mm:ss:SSS", Locale.getDefault())

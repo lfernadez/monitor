@@ -19,7 +19,7 @@ public class VideoTestMessages {
             "en el inicio de la reproducción";
 
     public static final String EXCELENT_DELAY_QOE = "Excelente \n Reproducción " +
-            "fluida del video, como si fuera que se viera " +
+            "fluida del video, como si se estuviese viendo " +
             "desde el móvil";
     public static final String VERY_GOOG_DELAY_QOE = "Muy Bueno \n Imperceptibles " +
             "atascos en la reproducción";

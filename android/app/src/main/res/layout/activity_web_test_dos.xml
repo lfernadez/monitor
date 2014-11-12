@@ -1,26 +1,33 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:layout_weight="1">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminate="true" />
+        android:layout_width="fill_parent"
+        android:layout_height="8dip"
+        style="?android:attr/progressBarStyleHorizontal"/>
 
     <WebView
         android:id="@+id/webViewdos"
+        android:layout_below="@id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.99"/>
-
-    <include
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/linearLayout"/>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        layout="@layout/button_bar" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
 
-</LinearLayout>
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/button_bar"/>
+    </LinearLayout>
 
+</RelativeLayout>

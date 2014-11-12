@@ -94,7 +94,7 @@ public class QoEWebTestActivity extends ActionBarActivity {
                             StreamingTestIntroActivity.class);
                     ArrayList<PruebaTest> pruebas = new ArrayList<PruebaTest>();
                     PruebaTest pruebaWeb = new PruebaTest();
-                    pruebaWeb.setCodigoTest(1);
+                    pruebaWeb.setCodigoTest(Constants.TEST_WEB_UNO);
                     pruebaWeb.setValorMos(
                             CalcUtils.getPromedio(velocQoERatingBar.getRating(),
                                     calidadRatingBar.getRating()));

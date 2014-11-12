@@ -1,25 +1,31 @@
 package py.fpuna.tesis.qoetest.activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.util.ArrayList;
+
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.model.QoSParam;
 import py.fpuna.tesis.qoetest.utils.Constants;
+import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 import py.fpuna.tesis.qoetest.utils.VideoUtils;
 
-public class StreamingTestActivity extends ActionBarActivity
+public class StreamingTestActivity extends Activity
         implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener, SeekBar.OnSeekBarChangeListener,
         MediaPlayer.OnCompletionListener {
@@ -30,6 +36,7 @@ public class StreamingTestActivity extends ActionBarActivity
     private TextView totalVideoLabel;
     private VideoUtils videoUtils;
     private Handler mHandler = new Handler();
+    private Handler mHandlerAutoHide = new Handler();
     private Button siguienteBtn;
     private Button atrasBtn;
     private long duracionVideo;
@@ -38,11 +45,17 @@ public class StreamingTestActivity extends ActionBarActivity
     private long finCargando;
     private long finTotal;
     private long bufferingTime;
-    private long startBuffering;
-    private long endBuffering;
+    private long startBuffering = 0;
+    private long endBuffering = 0;
     private long cantidadPausas = 0;
+    private LinearLayout buttonBar;
+    private RelativeLayout progressLayout;
+    public static final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View
+            .SYSTEM_UI_FLAG_FULLSCREEN;
 
     private ProgressBar bufferingProgressBar;
+    View decorView;
+
     /**
      * Background Runnable thread
      */
@@ -67,10 +80,34 @@ public class StreamingTestActivity extends ActionBarActivity
         }
     };
 
+    private Runnable mAutoHideLayouts = new Runnable() {
+        @Override
+        public void run() {
+
+            if(progressLayout.getVisibility() == View.VISIBLE){
+                progressLayout.setVisibility(View.GONE);
+            }
+
+            if(decorView.getSystemUiVisibility() != uiOptions){
+                decorView.setSystemUiVisibility(uiOptions);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(uiOptions);
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0){
+                    progressLayout.setVisibility(View.VISIBLE);
+                    mHandlerAutoHide.postDelayed(mAutoHideLayouts, 5*1000);
+                }
+            }
+        });
         setContentView(R.layout.activity_streaming_test);
 
         /* VideoView */
@@ -128,23 +165,6 @@ public class StreamingTestActivity extends ActionBarActivity
                         inicioTotal);
                 String tiempoBufferingString =
                         videoUtils.milliSecondsToTimer(tiempoBuffering);
-
-                Intent intent = new Intent(StreamingTestActivity.this,
-                        QoEStreamingTestActivity
-                                .class);
-                /* Se agregan los extras anteriores */
-                intent.putExtras(getIntent().getExtras());
-                /* Nuevos extras */
-                intent.putExtra(Constants.EXTRA_TIEMPO_CARGA,
-                        tiempoCarga);
-                intent.putExtra(Constants
-                        .EXTRA_DURACION_VIDEO, duracionVideoString);
-                intent.putExtra(Constants
-                        .EXTRA_TIEMPO_TOTAL_REP, tiempoTotalRep);
-                intent.putExtra(Constants
-                        .EXTRA_TIEMPO_BUFFERING, tiempoBufferingString);
-                intent.putExtra(Constants.EXTRA_CANT_PAUSAS, cantidadPausas);
-
                 Log.d("StreamingTestActivity", "Tiempo de carga inicial: " +
                         tiempoCarga);
                 Log.d("StreamingTestActivity", "Duracion video: " +
@@ -157,10 +177,45 @@ public class StreamingTestActivity extends ActionBarActivity
                 Log.d("StreamingTestActivity", "Bufferin Time:" +
                         videoUtils.milliSecondsToTimer(bufferingTime));
 
+                Intent intent = new Intent(StreamingTestActivity.this,
+                        QoEStreamingTestActivity
+                                .class);
+                /* Se agregan los extras anteriores */
+                Bundle extras = getIntent().getExtras();
+                ArrayList<QoSParam> parametrosQoS = extras
+                        .getParcelableArrayList(Constants.EXTRA_PARAM_QOS);
+
+
+                /* Carga Inicial Video */
+                QoSParam cargaInicialVideo = new QoSParam();
+                cargaInicialVideo.setCodigoParametro(Constants.CARGA_INICIAL_VIDEO);
+                cargaInicialVideo.setValor(DateHourUtils.toSeconds(finCargando-inicioCargando));
+                parametrosQoS.add(cargaInicialVideo);
+
+                /* Tiempo Buffering */
+                QoSParam tiempoBufferingParam = new QoSParam();
+                tiempoBufferingParam.setCodigoParametro(Constants.TIEMPO_BUFFERING);
+                tiempoBufferingParam.setValor(DateHourUtils.toSeconds(bufferingTime));
+                parametrosQoS.add(tiempoBufferingParam);
+
+                /* Cantidad Buffering */
+                QoSParam cantBufferingParam = new QoSParam();
+                cantBufferingParam.setCodigoParametro(Constants.CANT_BUFFERING);
+                cantBufferingParam.setValor(cantidadPausas);
+                parametrosQoS.add(cantBufferingParam);
+
+                extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
+                        parametrosQoS);
+                intent.putExtras(extras);
                 startActivity(intent);
             }
         });
 
+        buttonBar = (LinearLayout) findViewById(R.id.btLayout);
+        buttonBar.setVisibility(View.GONE);
+
+        progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
+        progressLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -222,13 +277,15 @@ public class StreamingTestActivity extends ActionBarActivity
                     cantidadPausas++;
                     startBuffering = System.currentTimeMillis();
                     bufferingProgressBar.setVisibility(View.VISIBLE);
-                    mp.pause();
+                    //mp.pause();
                 }
                 if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
                     bufferingProgressBar.setVisibility(View.GONE);
                     endBuffering = System.currentTimeMillis();
-                    mp.start();
-                    bufferingTime += (endBuffering - startBuffering);
+                    //mp.start();
+                    if(startBuffering != 0) {
+                        bufferingTime += (endBuffering - startBuffering);
+                    }
                 }
                 return false;
             }
@@ -259,10 +316,14 @@ public class StreamingTestActivity extends ActionBarActivity
      */
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+        buttonBar.setVisibility(View.VISIBLE);
         duracionVideo = mediaPlayer.getDuration();
         finTotal = System.currentTimeMillis();
         siguienteBtn.setVisibility(View.VISIBLE);
+        mostrarSystemUI();
+        progressLayout.setVisibility(View.VISIBLE);
         mHandler.removeCallbacks(mUpdateTimeTask);
+        mHandlerAutoHide.removeCallbacks(mAutoHideLayouts);
     }
 
     /**
@@ -288,6 +349,11 @@ public class StreamingTestActivity extends ActionBarActivity
      */
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    public void mostrarSystemUI(){
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
     }
 }

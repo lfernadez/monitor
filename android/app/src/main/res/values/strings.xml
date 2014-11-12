@@ -8,23 +8,19 @@
         <item>Información del Teléfono</item>
         <item>Acerda de</item>
     </string-array>
-
     <string-array name="sexo">
         <item>Masculino</item>
         <item>Femenino</item>
     </string-array>
-
     <string-array name="prefesion">
         <item>Estudiante</item>
         <item>Contratado</item>
     </string-array>
-
     <string-array name="frecuencia">
         <item>Frecuentemente</item>
         <item>Ocacionalmente</item>
         <item>Nunca</item>
     </string-array>
-
     <string-array name="apps">
         <item>Redes Sociales (Facebook...)</item>
         <item>Mensajería Instantánea (Whastapp...)</item>
@@ -58,7 +54,7 @@
     <string name="sexo_label">Sexo:</string>
     <string name="frecuencia_pregunta_text">¿Con que frecuencia utiliza
         internet con paquete de datos móviles?</string>
-     <string name="frecuencia_pregunta_app_text">¿Qué aplicaciones utilizas con frecuencia?</string>
+    <string name="frecuencia_pregunta_app_text">¿Qué aplicaciones utilizas con frecuencia?</string>
     <string name="edad_label">Edad:</string>
     <string name="profesion_label">Profesión:</string>
 
@@ -85,6 +81,10 @@
          contenido web fue: </string>
     <string name="title_activity_streaming_test_intro">Test de video streaming</string>
 
+    <!-- Emotion Test -->
+    <string name="emotion_text">Pre-Test</string>
+    <string name="emocion_label">¿Cuál es su estado de ánimo actual?</string>
+
     <!-- Streaming Test -->
     <string name="streaming_test_label">Test 2: Multimedia Streaming</string>
     <string name="streaming_test_text">Este test pretende evaluar la calidad
@@ -104,9 +104,11 @@
 
     <!-- Music Streaming Test -->
 
+
     <!-- Test Finalizado -->
     <string name="title_activity_enviar_test">Test Finalizado</string>
     <string name="evalucion_finalizada">Evaluación Finalizada</string>
     <string name="enviar_resultados_test">Enviar Resultados</string>
+    <string name="title_activity_emocion_test">Pre-Test</string>
 
 </resources>

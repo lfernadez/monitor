@@ -16,6 +16,7 @@ public class PerfilUsuario implements Parcelable {
     private String profesion;
     private String frecuenciaUso;
     private String aplicacionesFrecuentes;
+    private String emociones;
 
     public PerfilUsuario() {
     }
@@ -69,6 +70,13 @@ public class PerfilUsuario implements Parcelable {
         this.frecuenciaUso = frecuenciaUso;
     }
 
+    public String getEmociones() {
+        return emociones;
+    }
+
+    public void setEmociones(String emociones) {
+        this.emociones = emociones;
+    }
 
     @Override
     public int describeContents() {
@@ -81,6 +89,7 @@ public class PerfilUsuario implements Parcelable {
         this.profesion = in.readString();
         this.frecuenciaUso = in.readString();
         this.aplicacionesFrecuentes = in.readString();
+        this.emociones = in.readString();
     }
     /*
     //TODO Base de datos para Perfiles...
@@ -103,6 +112,7 @@ public class PerfilUsuario implements Parcelable {
         parcel.writeString(this.profesion);
         parcel.writeString(this.frecuenciaUso);
         parcel.writeString(this.aplicacionesFrecuentes);
+        parcel.writeString(this.emociones);
 
     }
 

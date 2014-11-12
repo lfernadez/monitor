@@ -1,19 +1,12 @@
 package py.fpuna.tesis.qoetest.activity;
 
-import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,27 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import py.fpuna.tesis.qoetest.R;
-import py.fpuna.tesis.qoetest.location.LocationUtils;
-import py.fpuna.tesis.qoetest.model.DeviceLocation;
-import py.fpuna.tesis.qoetest.model.DeviceStatus;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
-import py.fpuna.tesis.qoetest.model.PhoneInfo;
-import py.fpuna.tesis.qoetest.model.PingResults;
-import py.fpuna.tesis.qoetest.model.QoSParam;
-import py.fpuna.tesis.qoetest.services.MonitoringService;
-import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 import py.fpuna.tesis.qoetest.ui.MultiSelectionSpinner;
 import py.fpuna.tesis.qoetest.utils.Constants;
-import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
-import py.fpuna.tesis.qoetest.utils.DeviceStatusUtils;
-import py.fpuna.tesis.qoetest.utils.NetworkUtils;
 import py.fpuna.tesis.qoetest.utils.PreferenceUtils;
 
 public class PreTestActivty extends ActionBarActivity {
@@ -56,8 +37,6 @@ public class PreTestActivty extends ActionBarActivity {
     public static final String TAG = "PreTestActivity";
     SharedPreferences mPrefs;
     SharedPreferences.Editor mEditor;
-    MonitoringService mService;
-    NetworkMonitoringService mNetworkService;
     private Spinner spinnerSexo;
     private Spinner spinnerProfesion;
     private Spinner spinnerFrecuencia;
@@ -69,63 +48,12 @@ public class PreTestActivty extends ActionBarActivity {
     private String edad;
     private String profesion;
     private String frecuencia;
-    private LocationUtils locationUtils;
-    private Location currentLocation;
-    private ProgressDialog progressDialog;
-    private PingResults pingResults;
-    private float bandwidth;
-    private PhoneInfo info;
-    private DeviceInfoUtils deviceInfo;
-    private double cpuLoad;
-    private double memLoad;
     private String[] apps;
-    private String selectedApps;
-    private boolean mBound;
-    private ServiceConnection mConnection = new ServiceConnection() {
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
 
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            MonitoringService.LocalBinder binder = (MonitoringService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-        }
-    };
-    private ServiceConnection mNetworkServiceConnection = new ServiceConnection
-            () {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            NetworkMonitoringService.NetworkServiceBinder binder =
-                    (NetworkMonitoringService.NetworkServiceBinder) service;
-            mNetworkService = binder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-        }
-    };
     private PreferenceUtils preferenceUtils;
     private PerfilUsuario perfilUsuario;
-    private int signalLevel3G;
-    private int signalLevelWifi;
-    private long dBm3G;
-    private int signalLevelActiveNetwork;
-    private int cellID;
-    private String redActiva;
-    private DeviceStatusUtils deviceStatsUtils;
-    private NetworkUtils networkUtils;
-    private int bateryLevel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,22 +77,6 @@ public class PreTestActivty extends ActionBarActivity {
 
             }
         });
-
-        /**Device Info Utils */
-        deviceInfo = new DeviceInfoUtils(getApplicationContext());
-
-        preferenceUtils = new PreferenceUtils(this);
-
-        /** Device status utils */
-        deviceStatsUtils = new DeviceStatusUtils(this);
-
-        /** Network Utils */
-        networkUtils = new NetworkUtils(this);
-
-        /** Progress Dialog */
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Obteniendo Localizacion...");
-        progressDialog.setCanceledOnTouchOutside(false);
 
         /* Spinner para la seleccion de la Profesion */
         spinnerProfesion = (Spinner) findViewById(R.id.spinner_profesion);
@@ -217,10 +129,31 @@ public class PreTestActivty extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 edad = edadEditText.getText().toString();
-                if (edad == null || TextUtils.isEmpty(edad)) {
-                    edadEditText.setError("Complete su edad");
+                if (verificar()) {
+                    /** Se guarda el perfil del usuario en el Shared Preferences */
+                    perfilUsuario = new PerfilUsuario();
+                    perfilUsuario.setSexo(sexo);
+                    perfilUsuario.setEdad(Integer.valueOf(edad));
+                    perfilUsuario.setProfesion(profesion);
+                    perfilUsuario.setFrecuenciaUso(frecuencia);
+                    perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
+                    preferenceUtils.savePerfilUsuario(perfilUsuario);
+                    mEditor.putBoolean("EXISTE_SHARED", true);
+                    mEditor.commit();
+
+                    Bundle extras = getIntent().getExtras();
+                    if(extras == null){
+                        extras = new Bundle();
+                    }
+
+                    extras.putParcelable(Constants.EXTRA_PERFIL_USUARIO, perfilUsuario);
+                    Intent intent = new Intent(getApplicationContext(),
+                            EmocionTestActivity.class);
+                    intent.putExtras(extras);
+                    startActivity(intent);
+
                 } else {
-                    new ObtenerParametrosTask().execute();
+                    edadEditText.setError("Complete su edad");
 
                 }
             }
@@ -231,10 +164,14 @@ public class PreTestActivty extends ActionBarActivity {
                 Context.MODE_PRIVATE);
         // Se Obtiene el editor del
         mEditor = mPrefs.edit();
+    }
 
-        // Se crea el objeto LocationUtils
-        locationUtils = new LocationUtils(this);
-        locationUtils.connect();
+    public boolean verificar (){
+        edad = edadEditText.getText().toString();
+        if(edad == null || TextUtils.isEmpty(edad)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -275,26 +212,6 @@ public class PreTestActivty extends ActionBarActivity {
             List<String> frecApps = new ArrayList<String>();
             frecApps.addAll(apps);
             spinnerApp.setSelection(frecApps);
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = new Intent(this, MonitoringService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        Intent intentNetworkService = new Intent(this, NetworkMonitoringService.class);
-        bindService(intentNetworkService, mNetworkServiceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Unbind from the service
-        if (mBound) {
-            unbindService(mConnection);
-            unbindService(mNetworkServiceConnection);
-            mBound = false;
         }
     }
 
@@ -345,144 +262,4 @@ public class PreTestActivty extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public class ObtenerParametrosTask extends AsyncTask<Void, Integer,
-            Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                /** Se guarda el perfil del usuario en el Shared Preferences */
-                perfilUsuario = new PerfilUsuario();
-                perfilUsuario.setSexo(sexo);
-                perfilUsuario.setEdad(Integer.valueOf(edad));
-                perfilUsuario.setProfesion(profesion);
-                perfilUsuario.setFrecuenciaUso(frecuencia);
-                perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
-                preferenceUtils.savePerfilUsuario(perfilUsuario);
-                mEditor.putBoolean("EXISTE_SHARED", true);
-                mEditor.commit();
-
-                currentLocation = locationUtils.getLastLocation();
-                publishProgress(0);
-                pingResults = mService.executePing();
-                publishProgress(1);
-                bandwidth = mService.getBandwidth();
-                Log.d("BANWIDTH", String.valueOf(bandwidth));
-
-                /* Se obtienen los datos del usuario del Preference Shared */
-                perfilUsuario = preferenceUtils.getPerfilUsuario();
-
-                if (mPrefs.contains(Constants.DEVICE_SHARED)) {
-                    info = preferenceUtils.getDeviceInfo();
-                } else {
-                    info = deviceInfo.getPhoneInfo();
-                    preferenceUtils.savePhoneInfo(info);
-                }
-                cpuLoad = mService.getCpuLoad();
-                double memFree = mService.getMemFree();
-                double totalram = deviceInfo.getRAMProc();
-                memLoad = ((totalram - memFree) / totalram) * 100;
-                signalLevel3G = mNetworkService.getSignalLevel3G();
-                signalLevelWifi = mNetworkService.getSignalLevelWiFi();
-                dBm3G = mNetworkService.getdBm3G();
-                signalLevelActiveNetwork = mNetworkService
-                        .getSignalLevelActiveNetwork();
-                redActiva = mNetworkService.getActiveNetwork();
-                bateryLevel = deviceStatsUtils.getBateryLevel();
-                cellID = networkUtils.getCID();
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            if (values[0] == 0) {
-                progressDialog.setMessage("Realizando test Ping");
-            }
-            if (values[0] == 1) {
-                progressDialog.setMessage("Realizando Speed Test");
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(Void res) {
-            progressDialog.dismiss();
-            Intent intent = new Intent(getApplicationContext(),
-                    WebTestIntroActivity.class);
-
-            Bundle extras = new Bundle();
-            // Extra del Perfil del Usuario
-            extras.putParcelable(Constants.EXTRA_PERFIL_USUARIO,
-                    perfilUsuario);
-            // Extra de la Informacion del dispositivo
-            extras.putParcelable(Constants.EXTRA_DEVICE_INFO, info);
-
-            // Extra del estado del dispositivo
-            DeviceStatus status = new DeviceStatus();
-            status.setUsoCpu(cpuLoad);
-            status.setUsoRam(memLoad);
-            status.setTipoAccesoInternet(redActiva);
-            status.setIntensidadSenhal(String.valueOf
-                    (signalLevelActiveNetwork));
-            status.setNivelBateria(bateryLevel);
-            extras.putParcelable(Constants.EXTRA_DEVICE_STATUS, status);
-
-            // Extra de la localizacion del usuario
-            DeviceLocation loc = new DeviceLocation();
-            loc.setLatitud(currentLocation.getLatitude());
-            loc.setLongitud(currentLocation.getLongitude());
-
-            /*loc.setFecha(DateHourUtils.format(new Date(),
-                    DateHourUtils.Format.DATE_VIEW));
-            loc.setHora(DateHourUtils.format(new Date(),
-                    DateHourUtils.Format.TIME_VIEW));*/
-            loc.setIdCelda(cellID);
-            extras.putParcelable(Constants.EXTRA_LOCALIZACION, loc);
-
-            // Extra de parametros QoS
-            ArrayList<QoSParam> parametrosQos = new ArrayList<QoSParam>();
-
-            //Delay
-            QoSParam delayParam = new QoSParam();
-            delayParam.setCodigoParametro(Constants.DELAY_ID);
-            delayParam.setValor(pingResults.getRttAvg());
-            // Bandwidth
-            QoSParam bandwidthParam = new QoSParam();
-            bandwidthParam.setCodigoParametro(Constants.BANDWITDH_ID);
-            bandwidthParam.setValor(bandwidth);
-            // Packet Loss
-            QoSParam packetLossParam = new QoSParam();
-            packetLossParam.setCodigoParametro(Constants.PACKET_LOSS_ID);
-            packetLossParam.setValor(pingResults.getPacketloss());
-            // Jitter
-            QoSParam jitterParam = new QoSParam();
-            jitterParam.setCodigoParametro(Constants.JITTER_ID);
-            jitterParam.setValor(pingResults.getRttMax() - pingResults.getRttMin());
-
-            // Se agregan los parametros
-            parametrosQos.add(delayParam);
-            parametrosQos.add(bandwidthParam);
-            parametrosQos.add(packetLossParam);
-            parametrosQos.add(jitterParam);
-
-            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS, parametrosQos);
-
-            intent.putExtras(extras);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
-    }
-
 }

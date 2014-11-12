@@ -30,14 +30,16 @@ public class Constants {
     public static final String NINE_GAG_URL = "http://" +
             IP_TRANSMITTER_SERVER +
             ":8083/9GAG-WhySoSerious.html";
-    public static final String CODING_LOVE_URL = "http://thecodinglove.com";
+    public static final String CODING_LOVE_URL = "http://" +
+            IP_TRANSMITTER_SERVER +
+            ":8083/The%20coding%20love.html";
     public static final String GOOGLE_URL = "http://www.google.com";
     public static final String YOUTUBE_URL = "http://www.youtube.com";
     public static final String ABC_URL = "http://www.abc.com.py";
     public static final String VIDEO_URL = "https://archive" +
             ".org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
     public static final String VIDEO_URL_DOS = "rtsp://" +
-            IP_TRANSMITTER_SERVER + "/sample_h264_1mbit.mp4";
+            IP_TRANSMITTER_SERVER + "/videoStr.mp4";
 
     public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
     public static final int FAST_CEILING_IN_SECONDS = 1;
@@ -70,6 +72,11 @@ public class Constants {
             IP_TRANSMITTER_SERVER +
             ":8083/porsche_911_carrera_gts_997_coupe2d-4477.jpg";
     public static final long IMAGE_LENGTH = 1185228;
+
+    /** Codigos de Test */
+    public static final int TEST_WEB_UNO = 1;
+    public static final int TEST_WEB_DOS = 2;
+    public static final int TEST_STREAMING = 2;
 
     public static final int DELAY_ID = 1;
     public static final int BANDWITDH_ID = 2;

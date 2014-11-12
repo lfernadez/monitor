@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,13 +43,20 @@ public class WebTestUnoActivity extends ActionBarActivity {
         webView.clearCache(true);
         final WebClientTest webClient = new WebClientTest();
         webView.setWebViewClient(webClient);
-        webView.loadUrl(Constants.ABC_URL);
+        webView.loadUrl(Constants.CODING_LOVE_URL);
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
+            }
+        });
 
         /* Boton siguiente */
         siguienteBtn = (Button) findViewById(R.id.rightButton);
@@ -123,7 +131,7 @@ public class WebTestUnoActivity extends ActionBarActivity {
 
             // Calculate load time
             this.loadTime = System.currentTimeMillis() - this.loadTime;
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.GONE);
             // Convert milliseconds to date format
             String time = new SimpleDateFormat("mm:ss:SSS", Locale.getDefault())
                     .format(new Date(this.loadTime));
@@ -133,7 +141,6 @@ public class WebTestUnoActivity extends ActionBarActivity {
                     "La carga de la página ha finalizado en " + time,
                     Toast.LENGTH_SHORT)
                     .show();
-
         }
     }
 }
