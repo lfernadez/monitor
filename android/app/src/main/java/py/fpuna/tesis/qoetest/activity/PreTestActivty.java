@@ -160,6 +160,7 @@ public class PreTestActivty extends ActionBarActivity {
         });
 
         // Se abre el Shaerd Preferences
+        preferenceUtils = new PreferenceUtils(this);
         mPrefs = getSharedPreferences(Constants.SAHRED_PREFERENCES,
                 Context.MODE_PRIVATE);
         // Se Obtiene el editor del

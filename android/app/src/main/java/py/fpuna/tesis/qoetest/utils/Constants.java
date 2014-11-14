@@ -16,8 +16,8 @@ public class Constants {
     public static final String TCPDUMP_FILE_NAME = "tcpdump";
 
     /** Direccion IP del server de transmision */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.1.101";
-    public static final String PORT_HTTP = "8083";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.104";
+    public static final String PORT_HTTP = "8084";
 
     /** Representa el tiempo de actualizacion de los datos recogidos */
     public static final Integer TIEMPO_ACTUALIZACION = 1000;
@@ -28,18 +28,21 @@ public class Constants {
     /* URLs */
     public static final String GAG_URL = "http://9gag.com";
     public static final String NINE_GAG_URL = "http://" +
-            IP_TRANSMITTER_SERVER +
-            ":8083/9GAG-WhySoSerious.html";
+            IP_TRANSMITTER_SERVER + ":" + PORT_HTTP +
+            "/9GAG%20-%20Why%20So%20Serious%20.html";
     public static final String CODING_LOVE_URL = "http://" +
-            IP_TRANSMITTER_SERVER +
-            ":8083/The%20coding%20love.html";
+            IP_TRANSMITTER_SERVER + ":" + PORT_HTTP + "/The%20coding%20love.html";
     public static final String GOOGLE_URL = "http://www.google.com";
     public static final String YOUTUBE_URL = "http://www.youtube.com";
     public static final String ABC_URL = "http://www.abc.com.py";
-    public static final String VIDEO_URL = "https://archive" +
-            ".org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
+    public static final String VIDEO_URL = "http://" + IP_TRANSMITTER_SERVER +
+                                    "/videoStr.mp4";
     public static final String VIDEO_URL_DOS = "rtsp://" +
             IP_TRANSMITTER_SERVER + "/videoStr.mp4";
+
+    public static final String PORT_WOWZA = "1935";
+    public static final String VIDEO_URL_WOWZA = "rtsp://" +
+            IP_TRANSMITTER_SERVER + ":" +  PORT_WOWZA + "/vod/videoStr.mp4";
 
     public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
     public static final int FAST_CEILING_IN_SECONDS = 1;
