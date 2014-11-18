@@ -17,7 +17,7 @@ import py.fpuna.tesis.qoetest.utils.CalcUtils;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.VideoTestMessages;
 
-public class QoEStreamingTestActivity extends ActionBarActivity {
+public class QoEStreamingTestDosActivity extends ActionBarActivity {
 
     private RatingBar tiempoCargaInicialRatingBar;
     private RatingBar bufferingRatingBar;
@@ -35,10 +35,12 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qoe_streaming_test);
+        setContentView(R.layout.activity_qoe_streaming_test_dos);
 
-        tiempoCargaInicialRatingBar = (RatingBar) findViewById(R.id.ratingBar_tiempo_carga_video);
-        tiempoCargaRBLabel = (TextView) findViewById(R.id.ratingBar_tiempo_carga_video_label);
+        tiempoCargaInicialRatingBar = (RatingBar) findViewById(R.id
+                .ratingBar_tiempo_carga_videoDos);
+        tiempoCargaRBLabel = (TextView) findViewById(R.id
+                .ratingBar_tiempo_carga_video_labelDos);
 
         pruebas = getIntent().getParcelableArrayListExtra(Constants.EXTRA_QOE_TEST);
 
@@ -60,8 +62,10 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
             }
         });
 
-        bufferingRatingBar = (RatingBar) findViewById(R.id.ratingBar_buffering_video);
-        bufferingRBLabel = (TextView) findViewById(R.id.ratingBar_buffering_label);
+        bufferingRatingBar = (RatingBar) findViewById(R.id
+                .ratingBar_buffering_videoDos);
+        bufferingRBLabel = (TextView) findViewById(R.id
+                .ratingBar_buffering_labelDos);
         bufferingRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -79,8 +83,9 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
             }
         });
 
-        calidadRatingBar = (RatingBar) findViewById(R.id.ratingBar_calidad_video);
-        calidadRBLabel = (TextView) findViewById(R.id.ratingBar_calidad_label);
+        calidadRatingBar = (RatingBar) findViewById(R.id
+                .ratingBar_calidad_videoDos);
+        calidadRBLabel = (TextView) findViewById(R.id.ratingBar_calidad_labelDos);
         calidadRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -99,7 +104,8 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
         });
 
 
-        globalRatingBar = (RatingBar) findViewById(R.id.ratingBar_globla_video);
+        globalRatingBar = (RatingBar) findViewById(R.id
+                .ratingBar_globla_videoDos);
 
         /* Boton Atras */
         atrasBtn = (Button) findViewById(R.id.leftButton);
@@ -112,9 +118,9 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
             public void onClick(View view) {
                 if (verificar()) {
                     Intent intent = new Intent(getBaseContext(),
-                            StreamingTestDosActivity.class);
+                            EnviarTestActivity.class);
                     PruebaTest pruebaStreaming = new PruebaTest();
-                    pruebaStreaming.setCodigoTest(Constants.TEST_STREAMING_UNO);
+                    pruebaStreaming.setCodigoTest(Constants.TEST_STREAMING_DOS);
                     pruebaStreaming.setValorMos(
                             CalcUtils.getPromedio(
                                     tiempoCargaInicialRatingBar.getRating(),
@@ -131,7 +137,6 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
     }
 
     /**
-     *
      * @return
      */
     public boolean verificar() {
@@ -161,6 +166,4 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
         }
         return true;
     }
-
-
 }

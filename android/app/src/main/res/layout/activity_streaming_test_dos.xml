@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_weight="1"
+              tools:context="py.fpuna.tesis.qoetest.activity.StreamingTestDosActivity">
+
+    <RelativeLayout
+        android:id="@+id/videoProgressBarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.8"
+        android:weightSum="1">
+
+        <VideoView
+            android:id="@+id/streamingViewDos"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"/>
+
+        <ProgressBar
+            android:id="@+id/bufferingProgressBarDos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:id="@+id/progressLayoutDos"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/seekbar_gradient_back">
+
+            <TextView
+                android:id="@+id/duracionActualLabelDos"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#ffffffff"
+                android:gravity="bottom|center_horizontal"
+                android:layout_alignTop="@+id/duracionTotalLabelDos"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <!-- Progress Bar/Seek bar -->
+            <SeekBar
+                android:id="@+id/videoProgressBarDos"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/duracionActualLabelDos"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/duracionTotalLabelDos"
+                android:layout_toStartOf="@+id/duracionTotalLabelDos"/>
+
+            <!-- Total Duration Label -->
+            <TextView
+                android:id="@+id/duracionTotalLabelDos"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffffff"
+                android:gravity="bottom|center_horizontal"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/button_bar"/>
+
+</LinearLayout>

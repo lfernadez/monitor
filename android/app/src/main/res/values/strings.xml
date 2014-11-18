@@ -90,7 +90,7 @@
     <string name="streaming_test_text">Este test pretende evaluar la calidad
         de la experiencia de la redes celulares durante su uso en la
         tranmisión multimedia a través de internet</string>
-    <string name="title_activity_streaming_test">Streaming Test</string>
+    <string name="title_activity_streaming_test">Streaming Test 1/2</string>
     <string name="title_activity_qo_estreaming_test">"Evaluación "</string>
 
     <!-- QoE Streaming Test -->
@@ -110,5 +110,7 @@
     <string name="evalucion_finalizada">Evaluación Finalizada</string>
     <string name="enviar_resultados_test">Enviar Resultados</string>
     <string name="title_activity_emocion_test">Pre-Test</string>
+    <string name="title_activity_streaming_test_dos">Streaming Test 2/2</string>
+    <string name="title_activity_qo_estreaming_test_dos">Evaluación</string>
 
 </resources>

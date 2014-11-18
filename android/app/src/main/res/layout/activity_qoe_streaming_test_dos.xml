@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="py.fpuna.tesis.qoetest.activity.QoEStreamingTestDosActivity">
+              tools:context="py.fpuna.tesis.qoetest.activity.QoEStreamingTestActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,37 +20,37 @@
 
             <!-- Header de Datos -->
             <TextView
-                android:id="@+id/header_evaluacion"
+                android:id="@+id/header_evaluacionDos"
                 style="@style/HeaderTextView"
                 android:text="@string/header_qoe_test"
                 android:layout_width="match_parent"/>
 
             <!-- Campo Tiempo Carga Inicial -->
             <TextView
-                android:id="@+id/veloc_pregunta_label"
+                android:id="@+id/veloc_pregunta_labelDos"
                 android:text="@string/pregunta_tiempo_carga_video"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/header_evaluacion"
+                android:layout_below="@id/header_evaluacionDos"
                 android:layout_width="wrap_content"/>
 
             <RatingBar
-                android:id="@+id/ratingBar_tiempo_carga_video"
+                android:id="@+id/ratingBar_tiempo_carga_videoDos"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:numStars="5"
                 android:stepSize="1.0"
-                android:layout_below="@id/veloc_pregunta_label"/>
+                android:layout_below="@id/veloc_pregunta_labelDos"/>
 
             <TextView
-                android:id="@+id/ratingBar_tiempo_carga_video_label"
+                android:id="@+id/ratingBar_tiempo_carga_video_labelDos"
                 android:layout_height="wrap_content"
                 style="@style/normal_label_style"
-                android:layout_below="@id/ratingBar_tiempo_carga_video"
+                android:layout_below="@id/ratingBar_tiempo_carga_videoDos"
                 android:layout_width="wrap_content"/>
 
             <View
-                android:id="@+id/separator"
-                android:layout_below="@id/ratingBar_tiempo_carga_video_label"
+                android:id="@+id/separatorDos"
+                android:layout_below="@id/ratingBar_tiempo_carga_video_labelDos"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider"
@@ -59,66 +59,66 @@
 
             <!-- Campo Buffering -->
             <TextView
-                android:id="@+id/buffering_video_pregunta_label"
+                android:id="@+id/buffering_video_pregunta_labelDos"
                 android:text="@string/pregunta_buffering_video"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/separator"
+                android:layout_below="@id/separatorDos"
                 android:layout_width="wrap_content"/>
 
             <RatingBar
-                android:id="@+id/ratingBar_buffering_video"
+                android:id="@+id/ratingBar_buffering_videoDos"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:numStars="5"
                 android:stepSize="1.0"
-                android:layout_below="@id/buffering_video_pregunta_label"/>
+                android:layout_below="@id/buffering_video_pregunta_labelDos"/>
 
             <TextView
-                android:id="@+id/ratingBar_buffering_label"
+                android:id="@+id/ratingBar_buffering_labelDos"
                 android:layout_height="wrap_content"
                 style="@style/normal_label_style"
-                android:layout_below="@id/ratingBar_buffering_video"
+                android:layout_below="@id/ratingBar_buffering_videoDos"
                 android:layout_width="wrap_content"/>
 
             <!-- Campo Calidad Video -->
             <TextView
-                android:id="@+id/calidad_video_pregunta_label"
+                android:id="@+id/calidad_video_pregunta_labelDos"
                 android:text="@string/pregunta_calidad_video"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ratingBar_buffering_label"
+                android:layout_below="@id/ratingBar_buffering_labelDos"
                 android:layout_width="wrap_content"/>
 
             <RatingBar
-                android:id="@+id/ratingBar_calidad_video"
+                android:id="@+id/ratingBar_calidad_videoDos"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:numStars="5"
                 android:stepSize="1.0"
-                android:layout_below="@id/calidad_video_pregunta_label"/>
+                android:layout_below="@id/calidad_video_pregunta_labelDos"/>
 
             <TextView
-                android:id="@+id/ratingBar_calidad_label"
+                android:id="@+id/ratingBar_calidad_labelDos"
                 android:layout_height="wrap_content"
                 style="@style/normal_label_style"
-                android:layout_below="@id/ratingBar_calidad_video"
+                android:layout_below="@id/ratingBar_calidad_videoDos"
                 android:layout_width="wrap_content"/>
 
 
             <!-- Campo Calidad Globar -->
             <TextView
-                android:id="@+id/global_pregunta_label"
+                android:id="@+id/global_pregunta_labelDos"
                 android:text="@string/pregunta_global_video"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ratingBar_calidad_label"
+                android:layout_below="@id/ratingBar_calidad_labelDos"
                 android:layout_width="wrap_content"/>
 
             <RatingBar
-                android:id="@+id/ratingBar_globla_video"
+                android:id="@+id/ratingBar_globla_videoDos"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:numStars="5"
                 android:stepSize="1.0"
-                android:layout_below="@id/global_pregunta_label"/>
+                android:layout_below="@id/global_pregunta_labelDos"/>
 
         </RelativeLayout>
 
@@ -129,5 +129,3 @@
         android:layout_height="wrap_content"
         layout="@layout/button_bar" />
 </LinearLayout>
-
-
