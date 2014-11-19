@@ -340,11 +340,11 @@ public class EmocionTestActivity extends ActionBarActivity {
 
             // Extra de la localizacion del usuario
             DeviceLocation loc = new DeviceLocation();
-            //loc.setLatitud(currentLocation.getLatitude());
-            //loc.setLongitud(currentLocation.getLongitude());
+            loc.setLatitud(currentLocation.getLatitude());
+            loc.setLongitud(currentLocation.getLongitude());
 
             loc.setIdCelda(cellID);
-            //extras.putParcelable(Constants.EXTRA_LOCALIZACION, loc);
+            extras.putParcelable(Constants.EXTRA_LOCALIZACION, loc);
 
             // Extra de parametros QoS
             ArrayList<QoSParam> parametrosQos = new ArrayList<QoSParam>();

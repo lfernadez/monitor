@@ -32,22 +32,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb4fc88b-e42b-4984-bee1-d347c2b7fa7b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestDosActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/StreamingTestDosActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test_dos.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_streaming_test_dos.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_qo_estreaming_test_dos.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_streaming_test_dos.xml" />
-      <change type="DELETED" beforePath="C:\Users\User\Documents\monitor\android\app\src\main\java\py\fpuna\tesis\qoetest\activity\MusicStreamingTestIntro.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\User\Documents\monitor\android\app\src\main\res\layout\activity_music_streaming_test_intro.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\User\Documents\monitor\android\app\src\main\res\menu\music_streaming_test_intro.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="QoE Test.iws" />
@@ -76,35 +61,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="StreamingTestDosActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="StreamingTestDosActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/StreamingTestDosActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.6765286" vertical-offset="2975" max-vertical-offset="5644">
-              <caret line="150" column="40" selection-start-line="150" selection-start-column="40" selection-end-line="150" selection-end-column="40" />
-              <folding>
-                <element signature="e#2377#3203#0" expanded="true" />
-                <element signature="e#3196#3197#0" expanded="true" />
-                <element signature="e#3477#3873#0" expanded="true" />
-                <element signature="e#3862#3863#0" expanded="true" />
-                <element signature="e#5130#5425#0" expanded="true" />
-                <element signature="e#5414#5415#0" expanded="true" />
-                <element signature="e#5615#8543#0" expanded="true" />
-                <element signature="e#8532#8533#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="4471" max-vertical-offset="6171">
+              <caret line="263" column="49" selection-start-line="263" selection-start-column="49" selection-end-line="263" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="activity_streaming_test_dos.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_streaming_test_dos.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="1101" max-vertical-offset="1581">
               <caret line="50" column="67" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="67" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -113,17 +89,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="275" max-vertical-offset="2975">
               <caret line="115" column="40" selection-start-line="115" selection-start-column="40" selection-end-line="115" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1594#2397#0" expanded="true" />
-                <element signature="e#2386#2387#0" expanded="true" />
-                <element signature="e#2668#3432#0" expanded="true" />
-                <element signature="e#3421#3422#0" expanded="true" />
-                <element signature="e#3676#4440#0" expanded="true" />
-                <element signature="e#4429#4430#0" expanded="true" />
-                <element signature="e#4815#5880#0" expanded="true" />
-                <element signature="e#5869#5870#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -131,23 +97,57 @@
       <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1346" max-vertical-offset="1853">
+            <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1853">
               <caret line="45" column="31" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="EmocionTestActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2499" max-vertical-offset="6596">
+              <caret line="147" column="36" selection-start-line="147" selection-start-column="36" selection-end-line="147" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrincipalActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="5831">
+              <caret line="72" column="52" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PreTestActivty.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8915187" vertical-offset="3254" max-vertical-offset="4148">
+              <caret line="246" column="55" selection-start-line="246" selection-start-column="55" selection-end-line="246" selection-end-column="55" />
+              <folding>
+                <element signature="e#8276#8284#0" expanded="true" />
+                <element signature="e#8714#8722#0" expanded="true" />
+                <element signature="e#9168#9176#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="activity_qoe_streaming_test_dos.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test_dos.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="2312">
               <caret line="120" column="69" selection-start-line="120" selection-start-column="69" selection-end-line="120" selection-end-column="69" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -1318,7 +1318,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/StreamingTestActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_qo_estreaming_test_dos.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
@@ -1328,6 +1327,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/StreamingTestDosActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_streaming_test_dos.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestDosActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java" />
       </list>
     </option>
   </component>
@@ -1366,6 +1366,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
@@ -1376,19 +1377,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1716,7 +1706,11 @@
       <created>1415989033194</created>
       <updated>1415989033194</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Modificaciones hechas:&#10;** Se agregaron nuevos activity de test de streaming&#10;">
+      <created>1416322857825</created>
+      <updated>1416322857825</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1767,8 +1761,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22867803" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1836,7 +1830,8 @@
     <MESSAGE value="Modificaciones hechas:&#10;** Cambios en las preguntas del test de streaming&#10;** Se agregó la posibilidad de zoom al test de navegación" />
     <MESSAGE value="Modificaciones hechas:&#10;** Se agregaron los parámetros medidos desde los test&#10;" />
     <MESSAGE value="Modificaciones hechas:&#10;** Cambio de protocolo en la transmisión de video&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modificaciones hechas:&#10;** Cambio de protocolo en la transmisión de video&#10;" />
+    <MESSAGE value="Modificaciones hechas:&#10;** Se agregaron nuevos activity de test de streaming&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificaciones hechas:&#10;** Se agregaron nuevos activity de test de streaming&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1904,14 +1899,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/button_bar.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.5185184" vertical-offset="0" max-vertical-offset="816">
           <caret line="4" column="33" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="33" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/VideoTestMessages.java">
@@ -1937,14 +1932,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_web_test_dos.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.037037" vertical-offset="0" max-vertical-offset="646">
           <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
@@ -1975,9 +1970,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_streaming_test_intro.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.555555" vertical-offset="766" max-vertical-offset="1309">
           <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
@@ -1986,11 +1978,11 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_web_test.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_web_test.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.6666665" vertical-offset="102" max-vertical-offset="1700">
           <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
@@ -2002,6 +1994,9 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/model/PerfilUsuario.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -2011,14 +2006,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_web_test_uno.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2641026" vertical-offset="0" max-vertical-offset="663">
           <caret line="29" column="41" selection-start-line="26" selection-start-column="8" selection-end-line="29" selection-end-column="41" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/indiferente_selected.png">
@@ -2046,14 +2041,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_pre_test_activty.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3897436" vertical-offset="1429" max-vertical-offset="2329">
           <caret line="93" column="48" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="48" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
@@ -2079,9 +2074,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_emocion_test.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23431952" vertical-offset="720" max-vertical-offset="1836">
           <caret line="54" column="62" selection-start-line="54" selection-start-column="62" selection-end-line="54" selection-end-column="62" />
@@ -2093,6 +2085,9 @@
             <element signature="e#4045#4067#0" expanded="false" />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://C:/adt-bundle-windows-x86_64-20140702/sdk/sources/android-21/java/lang/Override.java">
@@ -2125,24 +2120,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="5729">
-          <caret line="72" column="52" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4148">
-          <caret line="162" column="52" selection-start-line="162" selection-start-column="52" selection-end-line="162" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/services/MonitoringService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7140" max-vertical-offset="8517">
           <caret line="304" column="7" selection-start-line="304" selection-start-column="7" selection-end-line="304" selection-end-column="7" />
+          <folding>
+            <element signature="e#13331#13339#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2157,14 +2141,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_streaming_test.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="425" max-vertical-offset="1581">
           <caret line="25" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/location/LocationUtils.java">
@@ -2189,18 +2173,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.642857" vertical-offset="1938" max-vertical-offset="5763">
-          <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/adt-bundle-windows-x86_64-20140702/sdk/sources/android-21/android/media/MediaPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36883628" vertical-offset="49011" max-vertical-offset="57630">
           <caret line="2970" column="57" selection-start-line="2970" selection-start-column="57" selection-end-line="2970" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2222,9 +2198,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9291667" vertical-offset="1798" max-vertical-offset="2363">
           <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
@@ -2243,6 +2216,9 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -2251,67 +2227,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1346" max-vertical-offset="1853">
-          <caret line="45" column="31" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_streaming_test_dos.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1101" max-vertical-offset="1581">
           <caret line="50" column="67" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="67" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test_dos.xml">
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="2312">
-          <caret line="120" column="69" selection-start-line="120" selection-start-column="69" selection-end-line="120" selection-end-column="69" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/QoEStreamingTestDosActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="275" max-vertical-offset="2975">
           <caret line="115" column="40" selection-start-line="115" selection-start-column="40" selection-end-line="115" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1594#2397#0" expanded="true" />
-            <element signature="e#2386#2387#0" expanded="true" />
-            <element signature="e#2668#3432#0" expanded="true" />
-            <element signature="e#3421#3422#0" expanded="true" />
-            <element signature="e#3676#4440#0" expanded="true" />
-            <element signature="e#4429#4430#0" expanded="true" />
-            <element signature="e#4815#5880#0" expanded="true" />
-            <element signature="e#5869#5870#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qoe_streaming_test_dos.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="2312">
+          <caret line="120" column="69" selection-start-line="120" selection-start-column="69" selection-end-line="120" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/StreamingTestDosActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6765286" vertical-offset="2975" max-vertical-offset="5644">
-          <caret line="150" column="40" selection-start-line="150" selection-start-column="40" selection-end-line="150" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6069">
+          <caret line="263" column="49" selection-start-line="263" selection-start-column="49" selection-end-line="263" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/utils/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1853">
+          <caret line="45" column="31" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/EmocionTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1717" max-vertical-offset="5899">
+          <caret line="147" column="36" selection-start-line="147" selection-start-column="36" selection-end-line="147" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PrincipalActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="5729">
+          <caret line="72" column="52" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/py/fpuna/tesis/qoetest/activity/PreTestActivty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8915187" vertical-offset="3254" max-vertical-offset="4148">
+          <caret line="246" column="55" selection-start-line="246" selection-start-column="55" selection-end-line="246" selection-end-column="55" />
           <folding>
-            <element signature="e#2377#3203#0" expanded="true" />
-            <element signature="e#3196#3197#0" expanded="true" />
-            <element signature="e#3477#3873#0" expanded="true" />
-            <element signature="e#3862#3863#0" expanded="true" />
-            <element signature="e#5130#5425#0" expanded="true" />
-            <element signature="e#5414#5415#0" expanded="true" />
-            <element signature="e#5615#8543#0" expanded="true" />
-            <element signature="e#8532#8533#0" expanded="true" />
+            <element signature="e#8276#8284#0" expanded="true" />
+            <element signature="e#8714#8722#0" expanded="true" />
+            <element signature="e#9168#9176#0" expanded="true" />
           </folding>
         </state>
       </provider>
