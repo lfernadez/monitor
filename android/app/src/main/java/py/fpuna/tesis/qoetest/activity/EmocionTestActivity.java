@@ -371,7 +371,8 @@ public class EmocionTestActivity extends ActionBarActivity {
             parametrosQos.add(bandwidthParam);
             parametrosQos.add(packetLossParam);
             parametrosQos.add(jitterParam);
-            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS, parametrosQos);
+            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
+            parametrosQos);
 
             intent.putExtras(extras);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
