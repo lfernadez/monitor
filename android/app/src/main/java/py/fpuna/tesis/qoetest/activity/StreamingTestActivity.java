@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.model.QoSParam;
+import py.fpuna.tesis.qoetest.utils.CalcUtils;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 import py.fpuna.tesis.qoetest.utils.VideoUtils;
@@ -30,6 +31,22 @@ public class StreamingTestActivity extends Activity
         MediaPlayer.OnErrorListener, SeekBar.OnSeekBarChangeListener,
         MediaPlayer.OnCompletionListener {
 
+    public static final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View
+            .SYSTEM_UI_FLAG_FULLSCREEN;
+    private Runnable mAutoHideLayouts = new Runnable() {
+        @Override
+        public void run() {
+
+            if (progressLayout.getVisibility() == View.VISIBLE) {
+                progressLayout.setVisibility(View.GONE);
+            }
+
+            if (decorView.getSystemUiVisibility() != uiOptions) {
+                decorView.setSystemUiVisibility(uiOptions);
+            }
+        }
+    };
+    View decorView;
     private SeekBar videoProgressBar;
     private VideoView videoView;
     private TextView posicionActualVideoLabel;
@@ -50,12 +67,8 @@ public class StreamingTestActivity extends Activity
     private long cantidadPausas = 0;
     private LinearLayout buttonBar;
     private RelativeLayout progressLayout;
-    public static final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View
-            .SYSTEM_UI_FLAG_FULLSCREEN;
-
+    private ArrayList<Long> bufferingTimeArray;
     private ProgressBar bufferingProgressBar;
-    View decorView;
-
     /**
      * Background Runnable thread
      */
@@ -80,31 +93,19 @@ public class StreamingTestActivity extends Activity
         }
     };
 
-    private Runnable mAutoHideLayouts = new Runnable() {
-        @Override
-        public void run() {
-
-            if(progressLayout.getVisibility() == View.VISIBLE){
-                progressLayout.setVisibility(View.GONE);
-            }
-
-            if(decorView.getSystemUiVisibility() != uiOptions){
-                decorView.setSystemUiVisibility(uiOptions);
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bufferingTimeArray = new ArrayList<Long>();
+
         decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(uiOptions);
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
-                if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0){
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
                     progressLayout.setVisibility(View.VISIBLE);
-                    mHandlerAutoHide.postDelayed(mAutoHideLayouts, 5*1000);
+                    mHandlerAutoHide.postDelayed(mAutoHideLayouts, 5 * 1000);
                 }
             }
         });
@@ -189,13 +190,15 @@ public class StreamingTestActivity extends Activity
                 /* Carga Inicial Video */
                 QoSParam cargaInicialVideo = new QoSParam();
                 cargaInicialVideo.setCodigoParametro(Constants.CARGA_INICIAL_VIDEO);
-                cargaInicialVideo.setValor(DateHourUtils.toSeconds(finCargando-inicioCargando));
+                cargaInicialVideo.setValor(DateHourUtils.toSeconds(finCargando - inicioCargando));
                 parametrosQoS.add(cargaInicialVideo);
 
-                /* Tiempo Buffering */
+                /* Tiempo promedio Buffering */
                 QoSParam tiempoBufferingParam = new QoSParam();
                 tiempoBufferingParam.setCodigoParametro(Constants.TIEMPO_BUFFERING);
-                tiempoBufferingParam.setValor(DateHourUtils.toSeconds(bufferingTime));
+                Double promedioBuffering = CalcUtils.getPromedio
+                        (bufferingTimeArray);
+                tiempoBufferingParam.setValor(DateHourUtils.toSeconds(promedioBuffering));
                 parametrosQoS.add(tiempoBufferingParam);
 
                 /* Cantidad Buffering */
@@ -283,8 +286,8 @@ public class StreamingTestActivity extends Activity
                     bufferingProgressBar.setVisibility(View.GONE);
                     endBuffering = System.currentTimeMillis();
                     //mp.start();
-                    if(startBuffering != 0) {
-                        bufferingTime += (endBuffering - startBuffering);
+                    if (startBuffering != 0) {
+                        bufferingTimeArray.add(endBuffering - startBuffering);
                     }
                 }
                 return false;
@@ -352,7 +355,7 @@ public class StreamingTestActivity extends Activity
 
     }
 
-    public void mostrarSystemUI(){
+    public void mostrarSystemUI() {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
     }

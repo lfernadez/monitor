@@ -1,5 +1,7 @@
 package py.fpuna.tesis.qoetest.utils;
 
+import java.util.ArrayList;
+
 /**
  * Created by User on 01/10/2014.
  */
@@ -11,5 +13,15 @@ public class CalcUtils {
             total += valor;
         }
         return Math.ceil(total/size);
+    }
+
+    public static double getPromedio(ArrayList<Long> data){
+        int size = data.size();
+        long total = 0;
+        for(Long dato : data){
+            total += dato;
+        }
+        return Math.ceil(total/size);
+
     }
 }

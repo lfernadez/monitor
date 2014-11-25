@@ -30,12 +30,16 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
     private TextView calidadRBLabel;
     private RatingBar globalRatingBar;
 
+
+
     private ArrayList<PruebaTest> pruebas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qoe_streaming_test);
+
+
 
         tiempoCargaInicialRatingBar = (RatingBar) findViewById(R.id.ratingBar_tiempo_carga_video);
         tiempoCargaRBLabel = (TextView) findViewById(R.id.ratingBar_tiempo_carga_video_label);
@@ -112,7 +116,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
             public void onClick(View view) {
                 if (verificar()) {
                     Intent intent = new Intent(getBaseContext(),
-                            StreamingTestDosActivity.class);
+                            EnviarTestActivity.class);
                     PruebaTest pruebaStreaming = new PruebaTest();
                     pruebaStreaming.setCodigoTest(Constants.TEST_STREAMING_UNO);
                     pruebaStreaming.setValorMos(
