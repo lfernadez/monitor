@@ -30,18 +30,18 @@
         <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-f1c1e24b440df6540bde9e82b2c9e17c61ac326f.jar" />
     </item>
     <item
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-00c0991aebb5cbf208209b9b03a950611bc20082.jar" />
-    </item>
-    <item
         jar="C:\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
         <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-3b0b6682386ef52c4d201005bc90e057d1ba4e51.jar" />
+    </item>
+    <item
+        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-00c0991aebb5cbf208209b9b03a950611bc20082.jar" />
     </item>
 
 </items>

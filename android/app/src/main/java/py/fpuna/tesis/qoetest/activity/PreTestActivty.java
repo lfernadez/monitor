@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -142,7 +143,7 @@ public class PreTestActivty extends ActionBarActivity {
                     mEditor.commit();
 
                     Bundle extras = getIntent().getExtras();
-                    if(extras == null){
+                    if (extras == null) {
                         extras = new Bundle();
                     }
 
@@ -153,7 +154,13 @@ public class PreTestActivty extends ActionBarActivity {
                     startActivity(intent);
 
                 } else {
-                    edadEditText.setError("Complete su edad");
+                    if (edad == null || TextUtils.isEmpty(edad)) {
+                        edadEditText.setError("Complete su ");
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "Complete todos los campos",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
@@ -167,9 +174,12 @@ public class PreTestActivty extends ActionBarActivity {
         mEditor = mPrefs.edit();
     }
 
-    public boolean verificar (){
+    public boolean verificar() {
         edad = edadEditText.getText().toString();
-        if(edad == null || TextUtils.isEmpty(edad)) {
+        if (edad == null || TextUtils.isEmpty(edad)) {
+            return false;
+        }
+        if (spinnerApp.getSelectedStrings().isEmpty()) {
             return false;
         }
         return true;

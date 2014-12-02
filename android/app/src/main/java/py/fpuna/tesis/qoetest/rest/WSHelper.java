@@ -3,6 +3,7 @@ package py.fpuna.tesis.qoetest.rest;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -20,10 +21,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import py.fpuna.tesis.qoetest.model.DeviceLocation;
 import py.fpuna.tesis.qoetest.model.DeviceStatus;
+import py.fpuna.tesis.qoetest.model.NetworkStat;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.Prueba;
@@ -36,7 +39,7 @@ import py.fpuna.tesis.qoetest.model.QoSParam;
 public class WSHelper {
 
     private static final String TAG = "WebServices";
-    private static final String URL = "/mobileDataStorage/servicios/";
+    private static final String URL = "/tesis/servicios/";
     private static final String HOST = "192.168.1.105";
     private static final int PORT = 8081;
 
@@ -161,6 +164,34 @@ public class WSHelper {
         return proccess(response);
     }
 
+    /**
+     *
+     * @return
+     */
+    public NetworkStat obtenerParametros(){
+        String jsonParametros = "";
+        jsonParametros = post("parametros/", null);
+        Gson gson = new Gson();
+        Type tipo = new TypeToken<NetworkStat>() {
+        }.getType();
+
+        NetworkStat networkParam = gson.fromJson(jsonParametros, tipo);
+        return networkParam;
+    }
+
+
+    /**
+     *
+     * @param pu
+     * @param info
+     * @param deviceStatus
+     * @param location
+     * @param test
+     * @param qoSParams
+     * @param fecha
+     * @param hora
+     * @return
+     */
     public String enviarResultados(PerfilUsuario pu, PhoneInfo info,
                                    DeviceStatus deviceStatus,
                                    DeviceLocation location,

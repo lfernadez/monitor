@@ -26,10 +26,12 @@ import py.fpuna.tesis.qoetest.model.DeviceLocation;
 import py.fpuna.tesis.qoetest.model.DeviceStatus;
 import py.fpuna.tesis.qoetest.model.IperfTCPResults;
 import py.fpuna.tesis.qoetest.model.IperfUDPResults;
+import py.fpuna.tesis.qoetest.model.NetworkStat;
 import py.fpuna.tesis.qoetest.model.PerfilUsuario;
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.PingResults;
 import py.fpuna.tesis.qoetest.model.QoSParam;
+import py.fpuna.tesis.qoetest.rest.WSHelper;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
 import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 import py.fpuna.tesis.qoetest.utils.Constants;
@@ -72,6 +74,9 @@ public class EmocionTestActivity extends ActionBarActivity {
     private PingResults pingResults;
     private IperfTCPResults iperfTCPResults;
     private IperfUDPResults iperfUDPResults;
+
+    private WSHelper wsHelper;
+    private NetworkStat parametrosNet;
 
     private boolean mBound;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -191,6 +196,8 @@ public class EmocionTestActivity extends ActionBarActivity {
         /** Network Utils */
         networkUtils = new NetworkUtils(this);
 
+        wsHelper = new WSHelper();
+
     }
 
     @Override
@@ -283,6 +290,10 @@ public class EmocionTestActivity extends ActionBarActivity {
 
                 //ID Celda
                 cellID = networkUtils.getCID();
+
+                // Se obtiene los parametros de la red
+                //parametrosNet = wsHelper.obtenerParametros();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -353,24 +364,62 @@ public class EmocionTestActivity extends ActionBarActivity {
             QoSParam delayParam = new QoSParam();
             delayParam.setCodigoParametro(Constants.DELAY_ID);
             delayParam.setValor(pingResults.getRttAvg());
+            delayParam.setObtenido(Constants.OBT_TEL);
+
             // Bandwidth
             QoSParam bandwidthParam = new QoSParam();
             bandwidthParam.setCodigoParametro(Constants.BANDWITDH_ID);
             bandwidthParam.setValor(iperfTCPResults.getBandwidthDown());
+            bandwidthParam.setObtenido(Constants.OBT_TEL);
+
             // Packet Loss
             QoSParam packetLossParam = new QoSParam();
             packetLossParam.setCodigoParametro(Constants.PACKET_LOSS_ID);
             packetLossParam.setValor(iperfUDPResults.getPacketLoss());
+            packetLossParam.setObtenido(Constants.OBT_TEL);
+
             // Jitter
             QoSParam jitterParam = new QoSParam();
             jitterParam.setCodigoParametro(Constants.JITTER_ID);
             jitterParam.setValor(iperfUDPResults.getJitter());
+            jitterParam.setObtenido(Constants.OBT_TEL);
+
+            /* Enviados desde el servidor */
+
+            /*Delay
+            QoSParam delayServerParam = new QoSParam();
+            delayServerParam.setCodigoParametro(Constants.DELAY_ID);
+            delayServerParam.setValor(parametrosNet.getDelay());
+            delayServerParam.setObtenido(Constants.OBT_ENV);
+
+            // Bandwidth
+            QoSParam bandwidthServerParam = new QoSParam();
+            bandwidthServerParam.setCodigoParametro(Constants.BANDWITDH_ID);
+            bandwidthServerParam.setValor(parametrosNet.getkbpsDown());
+            bandwidthServerParam.setObtenido(Constants.OBT_ENV);
+
+            // Packet Loss
+            QoSParam packetLossServerParam = new QoSParam();
+            packetLossServerParam.setCodigoParametro(Constants.PACKET_LOSS_ID);
+            packetLossServerParam.setValor(parametrosNet.getPacketLoss());
+            packetLossServerParam.setObtenido(Constants.OBT_ENV);
+
+            // Jitter
+            QoSParam jitterServerParam = new QoSParam();
+            jitterServerParam.setCodigoParametro(Constants.JITTER_ID);
+            jitterServerParam.setValor(parametrosNet.getJitter());
+            jitterServerParam.setObtenido(Constants.OBT_ENV);*/
+
 
             // Se agregan los parametros
             parametrosQos.add(delayParam);
             parametrosQos.add(bandwidthParam);
             parametrosQos.add(packetLossParam);
             parametrosQos.add(jitterParam);
+            /*parametrosQos.add(delayServerParam);
+            parametrosQos.add(bandwidthServerParam);
+            parametrosQos.add(packetLossServerParam);
+            parametrosQos.add(jitterServerParam);*/
             extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
             parametrosQos);
 

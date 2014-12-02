@@ -9,13 +9,15 @@ import android.os.Parcelable;
 public class QoSParam  implements Parcelable{
     private int codigoParametro;
     private double valor;
+    private String obtenido;
 
     public QoSParam() {
     }
 
-    public QoSParam(int codigoParametro, double valor) {
+    public QoSParam(int codigoParametro, double valor, String obtenido) {
         this.codigoParametro = codigoParametro;
         this.valor = valor;
+        this.obtenido = obtenido;
     }
 
 
@@ -35,20 +37,31 @@ public class QoSParam  implements Parcelable{
         this.valor = valor;
     }
 
+    public String getObtenido() {
+        return obtenido;
+    }
+
+    public void setObtenido(String obtenido) {
+        this.obtenido = obtenido;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
+
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(this.codigoParametro);
         parcel.writeDouble(this.valor);
+        parcel.writeString(this.obtenido);
     }
 
     public QoSParam(Parcel in){
         this.codigoParametro = in.readInt();
         this.valor = in.readDouble();
+        this.obtenido = in.readString();
     }
 
     public static final Creator<QoSParam> CREATOR = new Creator<QoSParam>() {

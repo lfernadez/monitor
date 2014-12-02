@@ -22,7 +22,7 @@ public class Constants {
     /**
      * Direccion IP del server de transmision
      */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.1.101";
+    public static final String IP_TRANSMITTER_SERVER = "10.90.1.2";
     public static final String VIDEO_URL_DOS = "rtsp://" +
             IP_TRANSMITTER_SERVER + "/videoStr.mp4";
     public static final String IMAGE_URL_DOWN_DOS = "http://" +
@@ -37,8 +37,7 @@ public class Constants {
             "/9GAG%20-%20Why%20So%20Serious%20.html";
 
     public static final String CODING_LOVE_URL = "http://" +
-            IP_TRANSMITTER_SERVER + ":" + PORT_HTTP + "/html/thecodinglove" +
-            ".html";
+            IP_TRANSMITTER_SERVER + ":" + PORT_HTTP + "/html/coding.html";
 
     public static final String VIDEO_URL = "http://" + IP_TRANSMITTER_SERVER +
             ":" + PORT_HTTP + "/videos/videoStr.mp4";
@@ -89,15 +88,20 @@ public class Constants {
     public static final int BANDWITDH_ID = 2;
     public static final int PACKET_LOSS_ID = 3;
     public static final int JITTER_ID = 4;
+
     /*Streaming uno */
     public static final int TIEMPO_CARGA_ID = 5;
     public static final int CARGA_INICIAL_VIDEO = 6;
     public static final int TIEMPO_BUFFERING = 7;
     public static final int CANT_BUFFERING = 8;
+
     /*Streaming dos */
     public static final int TIEMPO_CARGA_ID_DOS = 9;
     public static final int CARGA_INICIAL_VIDEO_DOS = 10;
     public static final int TIEMPO_BUFFERING_DOS = 11;
     public static final int CANT_BUFFERING_DOS = 12;
+
+    public static final String OBT_TEL = "telefono";
+    public static final String OBT_ENV = "enviado";
 
 }

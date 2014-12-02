@@ -349,8 +349,8 @@ public class MonitoringService extends Service {
             line = reader.readLine();
             String valoresSec2 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
-            if(Integer.valueOf(valoresSec1[0]) > Integer.valueOf
-                    (valoresSec2[0])){
+            if(Integer.valueOf(valoresSec2[4]) > Integer.valueOf
+                    (valoresSec1[4])){
                 results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
                 results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
                 results.setFileSize(Double.valueOf(valoresSec1[3]));
@@ -389,6 +389,8 @@ public class MonitoringService extends Service {
             commands.add(6, "CSM");
             commands.add(7, "-f");
             commands.add(8, "k");
+            commands.add(9, "-b");
+            commands.add(10, "4m");
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
@@ -408,9 +410,14 @@ public class MonitoringService extends Service {
             line = reader.readLine();
             String valoresSec2 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
+            if(valoresSec2.length != 9){
+                line = reader.readLine();
+                valoresSec2 = line.replaceAll("[^0-9.]+",
+                        " ").trim().split(" ");
+            }
 
-            if(Integer.valueOf(valoresSec1[0]) > Integer.valueOf
-                    (valoresSec2[0])){
+            if(Integer.valueOf(valoresSec1[4]) < Integer.valueOf
+                    (valoresSec2[4])){
                 results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
                 results.setJitter(Double.valueOf(valoresSec1[5]));
                 results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
