@@ -33,6 +33,8 @@ public class PreTestActivty extends ActionBarActivity {
     public static final String SPIN_SEXO_POS = "spinner_sexo_pos";
     public static final String SPIN_PROF_POS = "spinner_prof_pos";
     public static final String SPIN_FREC_POS = "spinner_frec_pos";
+    public static final String SPIN_COSTO = "spinner_costo";
+    public static final String SPIN_COSTO_MAS = "spinner_costo_mas";
     public static final String EDAD = "edad";
     public static final String SPIN_FREC_APPS = "spinner_frec_apps";
     public static final String TAG = "PreTestActivity";
@@ -41,6 +43,8 @@ public class PreTestActivty extends ActionBarActivity {
     private Spinner spinnerSexo;
     private Spinner spinnerProfesion;
     private Spinner spinnerFrecuencia;
+    private Spinner spinnerCosto;
+    private Spinner spinnerCostoMas;
     private MultiSelectionSpinner spinnerApp;
     private EditText edadEditText;
     private Button atrasBtn;
@@ -49,6 +53,8 @@ public class PreTestActivty extends ActionBarActivity {
     private String edad;
     private String profesion;
     private String frecuencia;
+    private String respuestaCostoMas;
+    private String respuestaCosto;
     private String[] apps;
 
 
@@ -113,6 +119,40 @@ public class PreTestActivty extends ActionBarActivity {
             }
         });
 
+        /** Spinner de Costo */
+        spinnerCosto = (Spinner) findViewById(R.id.spinner_costo);
+        ArrayAdapter<String> adapterCosto = getSpinnerAdapterCosto();
+        spinnerCosto.setAdapter(adapterCosto);
+        spinnerCosto.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                respuestaCosto = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        /** Spinner de Costo */
+        spinnerCostoMas = (Spinner) findViewById(R.id.spinner_costo_mas);
+        ArrayAdapter<String> adapterCostoMas = getSpinnerAdapterCostoMas();
+        spinnerCostoMas.setAdapter(adapterCostoMas);
+        spinnerCostoMas.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                respuestaCostoMas = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         edadEditText = (EditText) findViewById(R.id.edad_editText);
 
         /** Spinner para seleccion de apps */
@@ -138,6 +178,8 @@ public class PreTestActivty extends ActionBarActivity {
                     perfilUsuario.setProfesion(profesion);
                     perfilUsuario.setFrecuenciaUso(frecuencia);
                     perfilUsuario.setAplicacionesFrecuentes(spinnerApp.getSelectedItemsAsString());
+                    perfilUsuario.setRespuestaCosto(respuestaCosto);
+                    perfilUsuario.setRespuestaCostoMas(respuestaCostoMas);
                     preferenceUtils.savePerfilUsuario(perfilUsuario);
                     mEditor.putBoolean("EXISTE_SHARED", true);
                     mEditor.commit();
@@ -198,6 +240,8 @@ public class PreTestActivty extends ActionBarActivity {
         for (String app : spinnerApp.getSelectedStrings()) {
             apps.add(app);
         }
+        mEditor.putInt(SPIN_COSTO, spinnerCosto.getSelectedItemPosition());
+        mEditor.putInt(SPIN_COSTO_MAS, spinnerCostoMas.getSelectedItemPosition());
         mEditor.putStringSet(SPIN_FREC_APPS, apps);
         mEditor.commit();
     }
@@ -213,6 +257,12 @@ public class PreTestActivty extends ActionBarActivity {
         }
         if (mPrefs.contains(SPIN_FREC_POS)) {
             spinnerFrecuencia.setSelection(mPrefs.getInt(SPIN_FREC_POS, 0));
+        }
+        if (mPrefs.contains(SPIN_COSTO)) {
+            spinnerCosto.setSelection(mPrefs.getInt(SPIN_COSTO, 0));
+        }
+        if (mPrefs.contains(SPIN_COSTO_MAS)) {
+            spinnerCostoMas.setSelection(mPrefs.getInt(SPIN_COSTO_MAS, 0));
         }
         if (mPrefs.contains(EDAD)) {
             edadEditText.setText(mPrefs.getString(EDAD, "0"));
@@ -259,6 +309,24 @@ public class PreTestActivty extends ActionBarActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         String[] frecuencia = getResources().getStringArray(R.array.frecuencia);
         adapter.addAll(frecuencia);
+        return adapter;
+    }
+
+    private ArrayAdapter<String> getSpinnerAdapterCosto() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        String[] costo = getResources().getStringArray(R.array.costo);
+        adapter.addAll(costo);
+        return adapter;
+    }
+
+    private ArrayAdapter<String> getSpinnerAdapterCostoMas() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        String[] costo = getResources().getStringArray(R.array.costoMas);
+        adapter.addAll(costo);
         return adapter;
     }
 

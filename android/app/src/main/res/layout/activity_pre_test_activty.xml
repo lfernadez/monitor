@@ -119,6 +119,54 @@
                 android:layout_height="@dimen/layout_height"
                 android:layout_below="@id/frecuencia_app_label"/>
 
+            <View
+                android:id="@+id/view_separator2"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider"
+                android:layout_below="@id/spinner_frecuencia_app"/>
+
+            <!-- Campo de costo -->
+            <TextView
+                android:id="@+id/costo_datos"
+                style="@style/HeaderTextView"
+                android:text="@string/costo_header_label"
+                android:layout_width="match_parent"
+                android:layout_below="@id/view_separator2"/>
+
+            <!-- Campo Costo -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/costo_label"
+                android:text="@string/costo_pregunta_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/costo_datos"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_costo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@id/costo_label"/>
+
+            <!-- Campo Costo -->
+            <TextView
+                style="@style/normal_label_style"
+                android:id="@+id/costo_mas_label"
+                android:text="@string/costo_pregunta2_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner_costo"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_costo_mas"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_below="@id/costo_mas_label"/>
+
         </RelativeLayout>
 
     </ScrollView>

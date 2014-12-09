@@ -16,12 +16,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import py.fpuna.tesis.qoetest.model.DeviceLocation;
@@ -40,8 +42,12 @@ public class WSHelper {
 
     private static final String TAG = "WebServices";
     private static final String URL = "/tesis/servicios/";
-    private static final String HOST = "192.168.1.105";
+    private static final String URL_CONFIG = "/config/servicios/";
+    private static final String HOST_PERSISTENCIA = "192.168.1.101";
+    private static final String HOST_CONF = "192.168.1.101";
     private static final int PORT = 8081;
+
+    private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
     private Gson gson = new Gson();
 
@@ -54,7 +60,28 @@ public class WSHelper {
      */
     private HttpResponse invoke(HttpRequest request) {
         request.addHeader("Content-Type", "application/json");
-        HttpHost host = new HttpHost(HOST, PORT);
+        HttpHost host = new HttpHost(HOST_PERSISTENCIA, PORT);
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse response = null;
+        try {
+            response = client.execute(host, request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * Realiza una invocacion HTTP y retorna la respuesta obtenida.
+     *
+     * @param request Peticion HTTP
+     * @return Respuesta obtenida o <code>null</code> si no se obtuvo ninguna
+     * respuesta
+     */
+    private HttpResponse invokePostConf(HttpRequest request) {
+        request.addHeader("Content-Type", "application/json");
+        HttpHost host = new HttpHost(HOST_CONF, PORT);
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;
         try {
@@ -156,11 +183,33 @@ public class WSHelper {
         Log.d(TAG, "POST Method: " + url);
         HttpPost request = new HttpPost(url);
         try {
-            request.setEntity(new StringEntity(datos));
+            request.setEntity(new StringEntity(datos,HTTP.UTF_8));
         } catch (UnsupportedEncodingException e1) {
             return null;
         }
         HttpResponse response = invoke(request);
+        return proccess(response);
+    }
+
+    /**
+     * Realiza una invocacion POST y retorna una cadena que contiene el cuerpo
+     * de la respuesta obtenida.
+     *
+     * @param url   URL a invocar
+     * @param datos Datos a enviar
+     * @return Texto de la respuesta o <code>null</code> si no se obtuvo ningua
+     * respuesta
+     */
+    private String postConf(String url, String datos) {
+        url = URL_CONFIG + url;
+        Log.d(TAG, "POST Method: " + url);
+        HttpPost request = new HttpPost(url);
+        try {
+            request.setEntity(new StringEntity(datos));
+        } catch (UnsupportedEncodingException e1) {
+            return null;
+        }
+        HttpResponse response = invokePostConf(request);
         return proccess(response);
     }
 
@@ -170,7 +219,7 @@ public class WSHelper {
      */
     public NetworkStat obtenerParametros(){
         String jsonParametros = "";
-        jsonParametros = post("parametros/", null);
+        jsonParametros = postConf("parametros/", "");
         Gson gson = new Gson();
         Type tipo = new TypeToken<NetworkStat>() {
         }.getType();
@@ -224,8 +273,8 @@ public class WSHelper {
             datosJSON.put("fecha", fecha);
             /* Hora
             datosJSON.put("hora", hora);*/
-
-            respuesta = post("prueba/", gson.toJson(prueba));
+            String jsonString = new Gson().toJson(prueba);
+            respuesta = post("prueba/", jsonString);
 
         } catch (Exception e) {
             e.printStackTrace();

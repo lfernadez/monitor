@@ -336,6 +336,8 @@ public class MonitoringService extends Service {
             commands.add(5, "CSM");
             commands.add(6, "-f");
             commands.add(7, "k");
+            commands.add(8, "-w");
+            commands.add(9, "300k");
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
@@ -344,12 +346,13 @@ public class MonitoringService extends Service {
                     process.getInputStream()));
             // Parseo del resultado de Iperf
             String line = reader.readLine();
+            line = reader.readLine();
             String valoresSec1 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
             line = reader.readLine();
             String valoresSec2 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
-            if(Integer.valueOf(valoresSec2[4]) > Integer.valueOf
+            if(Double.valueOf(valoresSec2[4]) > Double.valueOf
                     (valoresSec1[4])){
                 results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
                 results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
@@ -398,12 +401,12 @@ public class MonitoringService extends Service {
 
             reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
-
+            String line = "";
             for(int i= 0; i<3;i++){
-                reader.readLine();
+                line = reader.readLine();
             }
 
-            String line = reader.readLine();
+            line = reader.readLine();
             String valoresSec1 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
 
@@ -415,20 +418,43 @@ public class MonitoringService extends Service {
                 valoresSec2 = line.replaceAll("[^0-9.]+",
                         " ").trim().split(" ");
             }
-
-            if(Integer.valueOf(valoresSec1[4]) < Integer.valueOf
-                    (valoresSec2[4])){
-                results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
+            if(valoresSec2.length !=9 && valoresSec1.length == 9){
+                if(Double.valueOf(valoresSec1[4]) < 4000) {
+                    results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
+                }else{
+                    results.setBandwidthDown(0.0);
+                }
                 results.setJitter(Double.valueOf(valoresSec1[5]));
-                results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
+                results.setBandwidthUp(0.0);
                 results.setPacketLoss(Double.valueOf(valoresSec1[8]));
                 results.setFileSize(Double.valueOf(valoresSec1[3]));
-            }else{
-                results.setBandwidthUp(Double.valueOf(valoresSec1[4]));
+
+            }else if (valoresSec1.length !=9 && valoresSec2.length == 9){
+                if(Double.valueOf(valoresSec2[4]) < 4000) {
+                    results.setBandwidthDown(Double.valueOf(valoresSec2[4]));
+                }else{
+                    results.setBandwidthDown(0.0);
+                }
                 results.setJitter(Double.valueOf(valoresSec2[5]));
-                results.setBandwidthDown(Double.valueOf(valoresSec2[4]));
+                results.setBandwidthUp(0.0);
                 results.setPacketLoss(Double.valueOf(valoresSec2[8]));
                 results.setFileSize(Double.valueOf(valoresSec2[3]));
+
+            }else {
+                if (Integer.valueOf(valoresSec1[4]) < Integer.valueOf
+                        (valoresSec2[4])) {
+                    results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
+                    results.setJitter(Double.valueOf(valoresSec1[5]));
+                    results.setBandwidthUp(Double.valueOf(valoresSec2[4]));
+                    results.setPacketLoss(Double.valueOf(valoresSec1[8]));
+                    results.setFileSize(Double.valueOf(valoresSec1[3]));
+                } else {
+                    results.setBandwidthUp(Double.valueOf(valoresSec1[4]));
+                    results.setJitter(Double.valueOf(valoresSec2[5]));
+                    results.setBandwidthDown(Double.valueOf(valoresSec2[4]));
+                    results.setPacketLoss(Double.valueOf(valoresSec2[8]));
+                    results.setFileSize(Double.valueOf(valoresSec2[3]));
+                }
             }
 
             reader.close();

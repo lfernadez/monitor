@@ -21,6 +21,16 @@
         <item>Ocacionalmente</item>
         <item>Nunca</item>
     </string-array>
+    <string-array name="costo">
+        <item>Si</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="costoMas">
+        <item>Si</item>
+        <item>No</item>
+        <item>Tal vez</item>
+    </string-array>
     <string-array name="apps">
         <item>Redes Sociales (Facebook...)</item>
         <item>Mensajería Instantánea (Whastapp...)</item>
@@ -44,6 +54,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="action_cancel">Cancelar</string>
     <string name="test_text_fragment">Bienvenido al test de
         evaluación de calidad de la experiencia en el uso de redes</string>
     <string name="title_activity_pre_test_activty">Perfil de Usuario</string>
@@ -51,12 +62,16 @@
     <!-- Pre test -->
     <string name="datos_header_label">Datos</string>
     <string name="frecuencia_header_label">Datos de utilización</string>
+    <string name="costo_header_label">Costo</string>
     <string name="sexo_label">Sexo:</string>
     <string name="frecuencia_pregunta_text">¿Con que frecuencia utiliza
         internet con paquete de datos móviles?</string>
     <string name="frecuencia_pregunta_app_text">¿Qué aplicaciones utilizas con frecuencia?</string>
     <string name="edad_label">Edad:</string>
     <string name="profesion_label">Profesión:</string>
+    <string name="costo_pregunta_label">¿Está conforme con costo Gs. por cantidad de datos que le ofrece su operador de telefonía?</string>
+    <string name="costo_pregunta2_label">¿Estaría dispuesto a pagar más por un mejor servicio de datos?</string>
+
 
     <!-- Botones Atras y Siguiente -->
     <string name="atras_btn_label">Atras</string>
@@ -69,7 +84,7 @@
     <string name="web_test_text">Este test pretende evaluar la calidad
         de la experiencia de la redes celulares durante su uso en la
         navegación web</string>
-    <string name="title_activity_web_test">Test web 1/2</string>
+    <string name="title_activity_web_test">Test WEB</string>
     <string name="title_activity_web_test_dos">Test Web 2/2</string>
     <string name="title_activity_qo_eweb_test">Evaluación de la calidad</string>
 
@@ -92,6 +107,10 @@
         tranmisión multimedia a través de internet</string>
     <string name="title_activity_streaming_test">Streaming Test 1/2</string>
     <string name="title_activity_qo_estreaming_test">"Evaluación "</string>
+    <string name="detener_test_streaming_title">Detener Reproducción</string>
+    <string name="detener_test_streaming_msg">Ha tardado mucho la reproducción del vídeo, desea continuar con el siguiente test?</string>
+    <string name="afirmative_response">Aceptar</string>
+    <string name="negative_response">Cancelar</string>
 
     <!-- QoE Streaming Test -->
     <string name="pregunta_tiempo_carga_video">El tiempo de carga inicial del video le pareció:</string>

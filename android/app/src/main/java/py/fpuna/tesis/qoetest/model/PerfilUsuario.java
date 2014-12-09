@@ -1,33 +1,56 @@
 package py.fpuna.tesis.qoetest.model;
 
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.BaseColumns;
-
-import py.fpuna.tesis.qoetest.database.DatabaseContract;
 
 /**
  * Created by User on 19/09/2014.
  */
 public class PerfilUsuario implements Parcelable {
+    public static final Creator<PerfilUsuario> CREATOR = new Creator<PerfilUsuario>() {
+        @Override
+        public PerfilUsuario createFromParcel(Parcel in) {
+            return (new PerfilUsuario(in));
+        }
+
+        @Override
+        public PerfilUsuario[] newArray(int size) {
+            return (new PerfilUsuario[size]);
+        }
+    };
     private String sexo;
     private Integer edad;
     private String profesion;
     private String frecuenciaUso;
     private String aplicacionesFrecuentes;
     private String emociones;
+    private String respuestaCosto;
+    private String respuestaCostoMas;
 
     public PerfilUsuario() {
     }
 
-    public PerfilUsuario( String sexo, Integer edad,
-                         String profesion, String frecuenciaUso, String appFrecuentes) {
+    public PerfilUsuario(String sexo, Integer edad,
+                         String profesion, String frecuenciaUso, String appFrecuentes,
+                         String respuestaCosto, String respuestaCostoMas) {
         this.sexo = sexo;
         this.edad = edad;
         this.profesion = profesion;
         this.frecuenciaUso = frecuenciaUso;
         this.aplicacionesFrecuentes = appFrecuentes;
+        this.respuestaCosto = respuestaCosto;
+        this.respuestaCostoMas = respuestaCostoMas;
+    }
+
+    public PerfilUsuario(Parcel in) {
+        this.sexo = in.readString();
+        this.edad = in.readInt();
+        this.profesion = in.readString();
+        this.frecuenciaUso = in.readString();
+        this.aplicacionesFrecuentes = in.readString();
+        this.emociones = in.readString();
+        this.respuestaCosto = in.readString();
+        this.respuestaCostoMas = in.readString();
     }
 
     public String getAplicacionesFrecuentes() {
@@ -78,19 +101,22 @@ public class PerfilUsuario implements Parcelable {
         this.emociones = emociones;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getRespuestaCosto() {
+        return respuestaCosto;
     }
 
-    public PerfilUsuario(Parcel in) {
-        this.sexo = in.readString();
-        this.edad = in.readInt();
-        this.profesion = in.readString();
-        this.frecuenciaUso = in.readString();
-        this.aplicacionesFrecuentes = in.readString();
-        this.emociones = in.readString();
+    public void setRespuestaCosto(String respuestaCosto) {
+        this.respuestaCosto = respuestaCosto;
     }
+
+    public String getRespuestaCostoMas() {
+        return respuestaCostoMas;
+    }
+
+    public void setRespuestaCostoMas(String respuestaCostoMas) {
+        this.respuestaCostoMas = respuestaCostoMas;
+    }
+
     /*
     //TODO Base de datos para Perfiles...
     public Localizacion(Cursor cursor) {
@@ -104,6 +130,10 @@ public class PerfilUsuario implements Parcelable {
         this.setImei(cursor.getString(cursor.getColumnIndex(DatabaseContract.Localizacion.IMEI)));
     }*/
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -113,18 +143,8 @@ public class PerfilUsuario implements Parcelable {
         parcel.writeString(this.frecuenciaUso);
         parcel.writeString(this.aplicacionesFrecuentes);
         parcel.writeString(this.emociones);
+        parcel.writeString(this.respuestaCosto);
+        parcel.writeString(this.respuestaCostoMas);
 
     }
-
-    public static final Creator<PerfilUsuario> CREATOR = new Creator<PerfilUsuario>() {
-        @Override
-        public PerfilUsuario createFromParcel(Parcel in) {
-            return (new PerfilUsuario(in));
-        }
-
-        @Override
-        public PerfilUsuario[] newArray(int size) {
-            return (new PerfilUsuario[size]);
-        }
-    };
 }

@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-7728e9a4180e84207c95aae6817dd3144e537782.jar" />
+        <dex dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\classes-22d3efdf5d08ad64fefb672d8f58320e94158b06.jar" />
     </item>
     <item
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-93afc489c44d8a9e4e0dfc083e712e65ae41d889.jar" />
+    </item>
+    <item
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-d80982663589b6914056b81d526fda5a43cc1437.jar" />
+        <dex dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\classes-9b9250b64aeba38b9ec950fca96303b994068ddc.jar" />
     </item>
     <item
-        jar="C:\Users\User\Documents\monitor\android\app\libs\gson-2.3.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\libs\gson-2.3.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\gson-2.3-8c34eb72c49a1cd9ed05e9707c31a0b40fb46ca6.jar" />
+        <dex dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\gson-2.3-f55b892e3f270eb0afae2795c1ced377568d0ae6.jar" />
     </item>
     <item
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
+        jar="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\classes-f1c1e24b440df6540bde9e82b2c9e17c61ac326f.jar" />
+        <dex dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\classes-da5af68944c1a90d2aa8e9a4c0ab2e1ba49cded1.jar" />
     </item>
     <item
         jar="C:\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-3b0b6682386ef52c4d201005bc90e057d1ba4e51.jar" />
-    </item>
-    <item
-        jar="C:\Users\User\Documents\monitor\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
-        <dex dex="C:\Users\User\Documents\monitor\android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-00c0991aebb5cbf208209b9b03a950611bc20082.jar" />
+        <dex dex="C:\Users\LF\Documents\Tesis android\monitor\android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-3b0b6682386ef52c4d201005bc90e057d1ba4e51.jar" />
     </item>
 
 </items>

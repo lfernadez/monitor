@@ -14,32 +14,37 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import py.fpuna.tesis.qoetest.R;
+import py.fpuna.tesis.qoetest.model.QoSParam;
 import py.fpuna.tesis.qoetest.utils.Constants;
+import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 
 public class WebTestDosActivity extends ActionBarActivity {
     public static final String EXTRA_TCARGA_DOS = "EXTRA_TCARGA_DOS";
     private Button siguienteBtn;
     private Button atrasBtn;
     private ProgressBar mProgressBar;
+    private Boolean cargaFinalizada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_web_test_dos);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        cargaFinalizada = false;
+
         WebView webView = (WebView) this.findViewById(R.id.webViewdos);
         webView.clearCache(true);
         final WebClientTest webClient = new WebClientTest();
         webView.setWebViewClient(webClient);
-        webView.loadUrl(Constants.NINE_GAG_URL);
+        webView.loadUrl(Constants.CODING_LOVE_URL);
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -61,9 +66,35 @@ public class WebTestDosActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(),
                         QoEWebTestActivity.class);
-                intent.putExtras(getIntent().getExtras());
-                intent.putExtra(EXTRA_TCARGA_DOS,
-                        webClient.getLoadTime());
+
+                Bundle extras = getIntent().getExtras();
+                ArrayList<QoSParam> parametrosQoS = extras
+                        .getParcelableArrayList(Constants.EXTRA_PARAM_QOS);
+
+                /* Cancelado */
+                QoSParam canceladoWebParam = new QoSParam();
+                canceladoWebParam.setCodigoParametro(Constants.CANCELADO_ID);
+
+                /* Carga Inicial Video */
+                QoSParam cargaWebParam = new QoSParam();
+                cargaWebParam.setCodigoParametro(Constants.TIEMPO_CARGA_WEB);
+
+                if(!cargaFinalizada){
+                    Long endTime = System.currentTimeMillis();
+                    Long loadingTime = endTime - webClient.getLoadTime();
+                    cargaWebParam.setValor(DateHourUtils.toSeconds(loadingTime));
+                    canceladoWebParam.setValor(1.0);
+                }else {
+                    cargaWebParam.setValor(DateHourUtils.toSeconds(webClient.getLoadTime()));
+                    canceladoWebParam.setValor(0.0);
+                }
+
+                parametrosQoS.add(cargaWebParam);
+                parametrosQoS.add(canceladoWebParam);
+                extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
+                        parametrosQoS);
+                intent.putExtras(extras);
+
                 startActivity(intent);
             }
         });
@@ -124,6 +155,8 @@ public class WebTestDosActivity extends ActionBarActivity {
             // Convert milliseconds to date format
             String time = new SimpleDateFormat("mm:ss:SSS", Locale.getDefault())
                     .format(new Date(this.loadTime));
+
+            cargaFinalizada = true;
 
             // Show a toast
             Toast.makeText(getApplicationContext(),

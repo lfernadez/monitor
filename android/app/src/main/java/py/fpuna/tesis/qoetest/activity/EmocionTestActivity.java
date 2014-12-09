@@ -234,6 +234,8 @@ public class EmocionTestActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                // Se obtiene los parametros de la red
+                parametrosNet = wsHelper.obtenerParametros();
                 publishProgress(0);
                 currentLocation = locationUtils.getLastLocation();
                 publishProgress(1);
@@ -290,9 +292,6 @@ public class EmocionTestActivity extends ActionBarActivity {
 
                 //ID Celda
                 cellID = networkUtils.getCID();
-
-                // Se obtiene los parametros de la red
-                //parametrosNet = wsHelper.obtenerParametros();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -386,7 +385,7 @@ public class EmocionTestActivity extends ActionBarActivity {
 
             /* Enviados desde el servidor */
 
-            /*Delay
+            /** Delay */
             QoSParam delayServerParam = new QoSParam();
             delayServerParam.setCodigoParametro(Constants.DELAY_ID);
             delayServerParam.setValor(parametrosNet.getDelay());
@@ -408,7 +407,7 @@ public class EmocionTestActivity extends ActionBarActivity {
             QoSParam jitterServerParam = new QoSParam();
             jitterServerParam.setCodigoParametro(Constants.JITTER_ID);
             jitterServerParam.setValor(parametrosNet.getJitter());
-            jitterServerParam.setObtenido(Constants.OBT_ENV);*/
+            jitterServerParam.setObtenido(Constants.OBT_ENV);
 
 
             // Se agregan los parametros
@@ -416,10 +415,10 @@ public class EmocionTestActivity extends ActionBarActivity {
             parametrosQos.add(bandwidthParam);
             parametrosQos.add(packetLossParam);
             parametrosQos.add(jitterParam);
-            /*parametrosQos.add(delayServerParam);
+            parametrosQos.add(delayServerParam);
             parametrosQos.add(bandwidthServerParam);
             parametrosQos.add(packetLossServerParam);
-            parametrosQos.add(jitterServerParam);*/
+            parametrosQos.add(jitterServerParam);
             extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
             parametrosQos);
 

@@ -39,6 +39,9 @@ public class Constants {
     public static final String CODING_LOVE_URL = "http://" +
             IP_TRANSMITTER_SERVER + ":" + PORT_HTTP + "/html/coding.html";
 
+    public static final String A_PREF_URL = "http://" +
+            IP_TRANSMITTER_SERVER + ":" + PORT_HTTP + "/html/preferente.html";
+
     public static final String VIDEO_URL = "http://" + IP_TRANSMITTER_SERVER +
             ":" + PORT_HTTP + "/videos/videoStr.mp4";
 
@@ -52,12 +55,14 @@ public class Constants {
     public static final long MULTIPLI_KB_MB = 1024L;
     public static final long INTERVAL_UPDATE_LOCATION_MILIS = 5 * 60 * 1000;
     public static final int FAST_CEILING_IN_SECONDS = 1;
-    /* SharedPrefences */
+
+    /** SharedPrefences */
     public static final String SAHRED_PREFERENCES = "py.fpuna.tesis.qoetest" +
             ".SHARED_PREFERENCES";
     public static final String PERFIL_USUARIO_SHARED = "PERFIL_USUARIO";
     public static final String DEVICE_SHARED = "DEVICE_SHARED";
-    /* EXTRAS */
+
+    /** EXTRAS */
     public static final String EXTRA_LOCALIZACION = "EXTRA_LOCALIZACION";
     public static final String EXTRA_DEVICE_INFO = "EXTRA_DEVICE_INFO";
     public static final String EXTRA_PERFIL_USUARIO = "EXTRA_PERFIL_USUARIO";
@@ -71,7 +76,8 @@ public class Constants {
     public static final String EXTRA_TIEMPO_TOTAL_REP =
             "EXTRA_TIEMPO_TOTAL_REP";
     public static final String EXTRA_CANT_PAUSAS = "EXTRA_CANT_PAUSAS";
-    /* bandwidth Test */
+
+    /** Bandwidth Test */
     public static final String IMAGE_URL_DOWN = "http://carlook" +
             ".net/data/db_photos/porsche/911_carrera_gts/997/porsche_911_carrera_gts_997_coupe2d-4477.jpg";
     public static final long IMAGE_LENGTH = 1185228;
@@ -80,9 +86,9 @@ public class Constants {
      * Codigos de Test
      */
     public static final int TEST_WEB_UNO = 1;
-    public static final int TEST_WEB_DOS = 2;
     public static final int TEST_STREAMING_UNO = 2;
-    public static final int TEST_STREAMING_DOS = 3;
+    public static final int TEST_WEB_DOS = 3;
+    public static final int TEST_STREAMING_DOS = 4;
 
     public static final int DELAY_ID = 1;
     public static final int BANDWITDH_ID = 2;
@@ -90,10 +96,12 @@ public class Constants {
     public static final int JITTER_ID = 4;
 
     /*Streaming uno */
-    public static final int TIEMPO_CARGA_ID = 5;
+    public static final int TIEMPO_CARGA_WEB = 5;
     public static final int CARGA_INICIAL_VIDEO = 6;
     public static final int TIEMPO_BUFFERING = 7;
     public static final int CANT_BUFFERING = 8;
+
+    public static final int CANCELADO_ID = 9;
 
     /*Streaming dos */
     public static final int TIEMPO_CARGA_ID_DOS = 9;

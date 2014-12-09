@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by User on 06/10/2014.
  */
 public class NetworkStat implements Parcelable{
-    private long kbpsDown;
+    private long bandwidth;
     private long delay;
     private double packetLoss;
     private double jitter;
@@ -15,11 +15,11 @@ public class NetworkStat implements Parcelable{
     public NetworkStat(){}
 
     public long getkbpsDown() {
-        return kbpsDown;
+        return bandwidth;
     }
 
-    public void setKbpsDown(long bpsDown) {
-        this.kbpsDown = bpsDown;
+    public void setKbpsDown(long bandwidth) {
+        this.bandwidth = bandwidth;
     }
 
     public long getDelay() {
@@ -53,14 +53,14 @@ public class NetworkStat implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(this.kbpsDown);
+        parcel.writeLong(this.bandwidth);
         parcel.writeLong(this.delay);
         parcel.writeDouble(this.packetLoss);
         parcel.writeDouble(this.jitter);
     }
 
     public NetworkStat(Parcel in){
-        this.kbpsDown = in.readLong();
+        this.bandwidth = in.readLong();
         this.delay = in.readLong();
         this.packetLoss = in.readDouble();
         this.jitter = in.readDouble();
