@@ -14,11 +14,11 @@
     </string-array>
     <string-array name="prefesion">
         <item>Estudiante</item>
-        <item>Contratado</item>
+        <item>Funcionario</item>
     </string-array>
     <string-array name="frecuencia">
         <item>Frecuentemente</item>
-        <item>Ocacionalmente</item>
+        <item>Ocasionalmente</item>
         <item>Nunca</item>
     </string-array>
     <string-array name="costo">
@@ -33,7 +33,7 @@
     </string-array>
     <string-array name="apps">
         <item>Redes Sociales (Facebook...)</item>
-        <item>Mensajería Instantánea (Whastapp...)</item>
+        <item>Mensajería Instantánea (Whatsapp...)</item>
         <item>Video Streaming (Youtube...)</item>
         <item>Navegador Web</item>
     </string-array>
@@ -103,8 +103,8 @@
     <!-- Streaming Test -->
     <string name="streaming_test_label">Test 2: Multimedia Streaming</string>
     <string name="streaming_test_text">Este test pretende evaluar la calidad
-        de la experiencia de la redes celulares durante su uso en la
-        tranmisión multimedia a través de internet</string>
+        de la experiencia de las redes celulares durante su uso en la
+        transmisión multimedia a través de internet</string>
     <string name="title_activity_streaming_test">Streaming Test 1/2</string>
     <string name="title_activity_qo_estreaming_test">"Evaluación "</string>
     <string name="detener_test_streaming_title">Detener Reproducción</string>
@@ -127,6 +127,7 @@
     <!-- Test Finalizado -->
     <string name="title_activity_enviar_test">Test Finalizado</string>
     <string name="evalucion_finalizada">Evaluación Finalizada</string>
+    <string name="gracias">Gracias por su colaboración!</string>
     <string name="enviar_resultados_test">Enviar Resultados</string>
     <string name="title_activity_emocion_test">Pre-Test</string>
     <string name="title_activity_streaming_test_dos">Streaming Test 2/2</string>

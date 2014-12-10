@@ -21,7 +21,11 @@ public class CalcUtils {
         for(Long dato : data){
             total += dato;
         }
-        return Math.ceil(total/size);
+        if(size > 0) {
+            return Math.ceil(total / size);
+        }else{
+            return 0;
+        }
 
     }
 }

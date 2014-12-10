@@ -36,8 +36,9 @@ public class WebTestUnoActivity extends ActionBarActivity {
     private Button atrasBtn;
     private WebView webView;
     private ProgressBar progressBar;
-    private boolean cargaFinalizada;
-    private Long endTime;
+    private boolean cargaFinalizada = false;
+    private boolean cancelado = false;
+    private long endTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,6 @@ public class WebTestUnoActivity extends ActionBarActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
-
-        cargaFinalizada = false;
 
         webView = (WebView) this.findViewById(R.id.webView);
         webView.clearCache(true);
@@ -61,7 +60,7 @@ public class WebTestUnoActivity extends ActionBarActivity {
         settings.setDisplayZoomControls(false);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 
-        webView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 progressBar.setProgress(newProgress);
@@ -90,17 +89,24 @@ public class WebTestUnoActivity extends ActionBarActivity {
                 cargaWebParam.setObtenido(Constants.OBT_TEL);
                 cargaWebParam.setCodigoParametro(Constants.TIEMPO_CARGA_WEB);
 
-
-                if(!cargaFinalizada){
-                    // Se ha cancelado la carga de la página
-                    Long loadingTime = endTime - webClient.getLoadTime();
+                // Se ha cancelado la carga de la página
+                long loadingTime = 0;
+                if (cancelado) {
+                    loadingTime = webClient.getLoadTime();
                     cargaWebParam.setValor(DateHourUtils.toSeconds(loadingTime));
                     canceladoWebParam.setValor(1.0);
-                }else {
-                    // Finalización normal de la carga de la página
-                    webView.stopLoading();
-                    cargaWebParam.setValor(DateHourUtils.toSeconds(webClient.getLoadTime()));
-                    canceladoWebParam.setValor(0.0);
+                } else {
+                    if (!cargaFinalizada) {
+                        // Finalización de la pagina con siguiente
+                        webView.stopLoading();
+                        loadingTime = System.currentTimeMillis() - webClient.getLoadTime();
+                        cargaWebParam.setValor(DateHourUtils.toSeconds(loadingTime));
+                        canceladoWebParam.setValor(1.0);
+                    } else {
+                        cargaWebParam.setValor(DateHourUtils.toSeconds(webClient.getLoadTime()));
+                        canceladoWebParam.setValor(0.0);
+                    }
+
                 }
 
                 parametrosQoS.add(cargaWebParam);
@@ -136,13 +142,8 @@ public class WebTestUnoActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_cancel:
                 endTime = System.currentTimeMillis();
-                cargaFinalizada = false;
-                progressBar.setVisibility(View.GONE);
+                cancelado = true;
                 webView.stopLoading();
-                Toast.makeText(getApplicationContext(),
-                        "La carga de la página ha sido cancelada",
-                        Toast.LENGTH_SHORT)
-                        .show();
                 return true;
             default:
                 return true;
@@ -150,15 +151,24 @@ public class WebTestUnoActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        webView.pauseTimers();
+        webView.onPause();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        webView.resumeTimers();
+        webView.onResume();
     }
 
     /**
      *
      */
     private class WebClientTest extends WebViewClient {
-        private long loadTime; // Tiempo de carga de la pagina web
+        private long loadTime = 0; // Tiempo de carga de la pagina web
 
 
         /**
@@ -203,14 +213,6 @@ public class WebTestUnoActivity extends ActionBarActivity {
             String time = new SimpleDateFormat("mm:ss:SSS", Locale.getDefault())
                     .format(new Date(this.loadTime));
             cargaFinalizada = true;
-            //MenuItem item = (MenuItem) findViewById(R.id.action_cancel);
-            //item.setVisible(false);
-
-            // Show a toast
-            Toast.makeText(getApplicationContext(),
-                    "La carga de la página ha finalizado en " + time,
-                    Toast.LENGTH_SHORT)
-                    .show();
         }
     }
 }

@@ -222,7 +222,7 @@ public class MonitoringService extends Service {
     public PingResults executePing() throws IOException, InterruptedException {
         PingResults result = new PingResults();
         // Llamada al comando ping desde un proceso
-        Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 5 " +
+        Process p = Runtime.getRuntime().exec("/system/bin/ping -a -c 20 " +
                 Constants.IP_TRANSMITTER_SERVER);
         p.waitFor();
         reader = new BufferedReader(new InputStreamReader(
@@ -336,8 +336,10 @@ public class MonitoringService extends Service {
             commands.add(5, "CSM");
             commands.add(6, "-f");
             commands.add(7, "k");
-            commands.add(8, "-w");
-            commands.add(9, "300k");
+            commands.add(8, "-t");
+            commands.add(9, "10");
+            commands.add(10, "-P");
+            commands.add(11, "1");
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
@@ -393,7 +395,10 @@ public class MonitoringService extends Service {
             commands.add(7, "-f");
             commands.add(8, "k");
             commands.add(9, "-b");
-            commands.add(10, "4m");
+            commands.add(10, "2.0M");
+            commands.add(11, "-t");
+            commands.add(12, "10");
+
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
@@ -410,14 +415,21 @@ public class MonitoringService extends Service {
             String valoresSec1 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
 
+            while(valoresSec1.length != 9 && line != null){
+                line = reader.readLine();
+                valoresSec1 = line.replaceAll("[^0-9.]+",
+                        " ").trim().split(" ");
+            }
+
             line = reader.readLine();
             String valoresSec2 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
-            if(valoresSec2.length != 9){
+            while(valoresSec2.length != 9 && line != null){
                 line = reader.readLine();
                 valoresSec2 = line.replaceAll("[^0-9.]+",
                         " ").trim().split(" ");
             }
+
             if(valoresSec2.length !=9 && valoresSec1.length == 9){
                 if(Double.valueOf(valoresSec1[4]) < 4000) {
                     results.setBandwidthDown(Double.valueOf(valoresSec1[4]));

@@ -27,6 +27,17 @@
             android:gravity="top"
             android:padding="50dp"/>
 
+        <py.fpuna.tesis.qoetest.ui.LightTextView
+            style="@style/WelcomeTestFont"
+            android:id="@+id/header_gracias_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gracias"
+            android:padding="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
         <!--<py.fpuna.tesis.qoetest.ui.RegularTextView
             style="@style/TextStyle"
             android:layout_width="match_parent"
