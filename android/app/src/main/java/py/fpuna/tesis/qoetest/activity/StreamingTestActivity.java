@@ -31,7 +31,7 @@ import py.fpuna.tesis.qoetest.utils.VideoUtils;
 
 public class StreamingTestActivity extends Activity
         implements MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnErrorListener, SeekBar.OnSeekBarChangeListener,
+        MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener {
 
     public static final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View
@@ -133,21 +133,24 @@ public class StreamingTestActivity extends Activity
         });
         setContentView(R.layout.activity_streaming_test);
 
+        /* Video utils */
+        videoUtils = new VideoUtils();
+
         /* VideoView */
         videoView = (VideoView) findViewById(R.id.streamingView);
         videoView.setOnErrorListener(this);
         videoView.setOnPreparedListener(this);
         videoView.setOnCompletionListener(this);
-        videoView.setVideoURI(Uri.parse(Constants.VIDEO_URL));
+
+        // Se obtiene un video aleatoriamente
+        Integer videoID = videoUtils.getVideo();
+        String video = videoUtils.getVideo(videoID);
+        videoView.setVideoURI(Uri.parse(Constants.VIDEO_SERVER + video));
         inicioCargando = System.currentTimeMillis();
         videoView.start();
 
         /* SeekBar Video */
         videoProgressBar = (SeekBar) findViewById(R.id.videoProgressBar);
-        videoProgressBar.setOnSeekBarChangeListener(this);
-
-        /* Video utils */
-        videoUtils = new VideoUtils();
 
         /* Progress Buffering */
         bufferingProgressBar = (ProgressBar) findViewById(R.id
@@ -204,11 +207,23 @@ public class StreamingTestActivity extends Activity
                 Intent intent = new Intent(StreamingTestActivity.this,
                         QoEStreamingTestActivity
                                 .class);
+
                 /* Se agregan los extras anteriores */
                 Bundle extras = getIntent().getExtras();
                 ArrayList<QoSParam> parametrosQoS = extras
                         .getParcelableArrayList(Constants.EXTRA_PARAM_QOS);
 
+                /* Cancelado */
+                QoSParam canceladoVideoParam = new QoSParam();
+                canceladoVideoParam.setObtenido(Constants.OBT_TEL);
+                canceladoVideoParam.setCodigoParametro(Constants.CANCELADO_VIDEO_ID);
+
+                long duracionActual = videoView.getCurrentPosition();
+                if(duracionActual < videoView.getDuration()){
+                    canceladoVideoParam.setValor(1.0);
+                }else{
+                    canceladoVideoParam.setValor(0.0);
+                }
 
                 /* Carga Inicial Video */
                 QoSParam cargaInicialVideo = new QoSParam();
@@ -232,6 +247,8 @@ public class StreamingTestActivity extends Activity
                 cantBufferingParam.setCodigoParametro(Constants.CANT_BUFFERING);
                 cantBufferingParam.setValor(cantidadPausas);
                 parametrosQoS.add(cantBufferingParam);
+
+                parametrosQoS.add(canceladoVideoParam);
 
                 extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
                         parametrosQoS);
@@ -303,12 +320,10 @@ public class StreamingTestActivity extends Activity
                     cantidadPausas++;
                     startBuffering = System.currentTimeMillis();
                     bufferingProgressBar.setVisibility(View.VISIBLE);
-                    //mp.pause();
                 }
                 if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
                     bufferingProgressBar.setVisibility(View.GONE);
                     endBuffering = System.currentTimeMillis();
-                    //mp.start();
                     if (startBuffering != 0) {
                         bufferingTimeArray.add(endBuffering - startBuffering);
                     }
@@ -350,32 +365,6 @@ public class StreamingTestActivity extends Activity
         progressLayout.setVisibility(View.VISIBLE);
         mHandler.removeCallbacks(mUpdateTimeTask);
         mHandlerAutoHide.removeCallbacks(mAutoHideLayouts);
-    }
-
-    /**
-     * @param seekBar
-     * @param i
-     * @param b
-     */
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-    }
-
-    /**
-     * @param seekBar
-     */
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    /**
-     * @param seekBar
-     */
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
     public void mostrarSystemUI() {

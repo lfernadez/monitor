@@ -133,10 +133,8 @@ public class MonitoringService extends Service {
                     Log.d(TAG, "UP: " + String.valueOf(kbpsUP) +
                             "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
                             "Kbps");
-                /*updateNotification("UP: " + String.valueOf(kbpsUP) +
-                        "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
-                        "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                        + " MB CPU: " + String.valueOf(cpuLoad) + "%");*/
+                    /*updateNotification("UP: " + String.valueOf(kbpsUP) +
+                        "Kbps   DOWN: " + String.valueOf(kbpsDOWN));*/
                     // Tipo de Red WiFi
                 } else if (cm.getActiveNetworkInfo().getType() ==
                         ConnectivityManager.TYPE_WIFI) {
@@ -159,10 +157,7 @@ public class MonitoringService extends Service {
                             .valueOf(linkSpeed) + "Mbps UP: " + String
                             .valueOf
                                     (kbpsUPWiFi)
-                            + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
-                            + "Kbps Mem Free: " + String.valueOf(megaBytesDisponibles)
-                            + " MB CPU: " + String.valueOf(cpuLoad) +
-                            " %");*/
+                            + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi));*/
                     }
                 }
                 // No hay red disponible
@@ -170,9 +165,7 @@ public class MonitoringService extends Service {
                 bpsDown = 0;
                 bpsUP = 0;
                 Log.d(TAG, "Red no disponible");
-            /*updateNotification("Red no disponible, Mem Free: "
-                    + String.valueOf(megaBytesDisponibles) + " MB CPU: "
-                    + String.valueOf(cpuLoad) + " %");*/
+                //updateNotification("Red no disponible");
             }
             // Actualizacion de los valores anteriores
             timeAnterior = timeActual;

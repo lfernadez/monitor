@@ -42,6 +42,9 @@ public class Constants {
     public static final String A_PREF_URL = "http://" +
             IP_TRANSMITTER_SERVER + ":" + PORT_HTTP + "/html/preferente.html";
 
+    public static final String VIDEO_SERVER = "http://" + IP_TRANSMITTER_SERVER +
+            ":" + PORT_HTTP + "/videos/";
+
     public static final String VIDEO_URL = "http://" + IP_TRANSMITTER_SERVER +
             ":" + PORT_HTTP + "/videos/videoStr.mp4";
 
@@ -102,12 +105,11 @@ public class Constants {
     public static final int CANT_BUFFERING = 8;
 
     public static final int CANCELADO_ID = 9;
+    public static final int CANCELADO_VIDEO_ID = 10;
+    public static final int NUM_VIDEO_ID = 11;
 
-    /*Streaming dos */
-    public static final int TIEMPO_CARGA_ID_DOS = 9;
-    public static final int CARGA_INICIAL_VIDEO_DOS = 10;
-    public static final int TIEMPO_BUFFERING_DOS = 11;
-    public static final int CANT_BUFFERING_DOS = 12;
+
+
 
     public static final String OBT_TEL = "telefono";
     public static final String OBT_ENV = "enviado";

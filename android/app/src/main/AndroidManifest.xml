@@ -96,10 +96,6 @@
             android:label="@string/title_activity_qo_estreaming_test"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="py.fpuna.tesis.qoetest.activity.MusicStreamingTestIntro"
-            android:label="@string/title_activity_music_straming_test_intro" >
-        </activity>
 
         <service
             android:name="py.fpuna.tesis.qoetest.services.CPUMonitoringService"

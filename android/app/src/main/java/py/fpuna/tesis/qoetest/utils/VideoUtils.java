@@ -1,9 +1,15 @@
 package py.fpuna.tesis.qoetest.utils;
 
+import java.util.Random;
+
 /**
  * Created by User on 24/09/2014.
  */
 public class VideoUtils {
+
+    public static final String [] videos = {
+            "videoStr.mp4","frozen.mp4","fails.mp4"
+    };
     /**
      * Function to convert milliseconds time to
      * Timer Format
@@ -66,4 +72,15 @@ public class VideoUtils {
         // return current duration in milliseconds
         return currentDuration * 1000;
     }
+
+    public Integer getVideo(){
+        Random rand = new Random();
+        Integer pos = rand.nextInt() * videos.length + 1;
+        return pos;
+    }
+
+    public String getVideo(int pos){
+        return videos[pos];
+    }
+
 }

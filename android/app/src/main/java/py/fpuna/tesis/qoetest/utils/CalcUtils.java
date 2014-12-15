@@ -26,6 +26,5 @@ public class CalcUtils {
         }else{
             return 0;
         }
-
     }
 }
