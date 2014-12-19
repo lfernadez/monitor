@@ -2,7 +2,6 @@ package py.fpuna.tesis.qoetest.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -68,7 +68,7 @@ public class PrincipalActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
         preferenceUtils = new PreferenceUtils(this);
 
@@ -114,27 +114,24 @@ public class PrincipalActivity extends ActionBarActivity
         startService(intentNetworkService);
 
         initIperf();
-
-
-        //initTcpDump();
-
-        //probarTcpDump();
     }
 
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, TestFragment.newInstance(position + 1))
+                        .addToBackStack("Principal")
                         .commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, InfoFragment.newInstance(position + 1))
+                        .addToBackStack("Principal")
                         .commit();
                 break;
         }
@@ -334,4 +331,13 @@ public class PrincipalActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mNavigationDrawerFragment.isDrawerOpen()){
+            mNavigationDrawerFragment.closeDrawer();
+        }else{
+            super.onBackPressed();
+        }
+
+    }
 }

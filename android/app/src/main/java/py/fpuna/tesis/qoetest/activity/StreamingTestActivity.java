@@ -61,6 +61,8 @@ public class StreamingTestActivity extends Activity
     private ArrayList<Long> bufferingTimeArray;
     private ProgressBar bufferingProgressBar;
     private long duracionActual = 0;
+    private Integer videoPos;
+    private boolean finalizado = false;
 
     /**
      * Oculta la barra de navagacion y la barra del sistema
@@ -143,8 +145,8 @@ public class StreamingTestActivity extends Activity
         videoView.setOnCompletionListener(this);
 
         // Se obtiene un video aleatoriamente
-        Integer videoID = videoUtils.getVideo();
-        String video = videoUtils.getVideo(videoID);
+        videoPos = videoUtils.getVideo();
+        final String video = videoUtils.getVideo(videoPos);
         videoView.setVideoURI(Uri.parse(Constants.VIDEO_SERVER + video));
         inicioCargando = System.currentTimeMillis();
         videoView.start();
@@ -218,11 +220,11 @@ public class StreamingTestActivity extends Activity
                 canceladoVideoParam.setObtenido(Constants.OBT_TEL);
                 canceladoVideoParam.setCodigoParametro(Constants.CANCELADO_VIDEO_ID);
 
-                long duracionActual = videoView.getCurrentPosition();
-                if(duracionActual < videoView.getDuration()){
-                    canceladoVideoParam.setValor(1.0);
-                }else{
+                int duracionActual = videoView.getCurrentPosition();
+                if(finalizado){
                     canceladoVideoParam.setValor(0.0);
+                }else{
+                    canceladoVideoParam.setValor(1.0);
                 }
 
                 /* Carga Inicial Video */
@@ -248,7 +250,14 @@ public class StreamingTestActivity extends Activity
                 cantBufferingParam.setValor(cantidadPausas);
                 parametrosQoS.add(cantBufferingParam);
 
+                /*Video */
+                QoSParam videoID = new QoSParam();
+                videoID.setObtenido(Constants.OBT_TEL);
+                videoID.setCodigoParametro(Constants.NAME_VIDEO_ID);
+                videoID.setValor(videoPos.doubleValue());
+
                 parametrosQoS.add(canceladoVideoParam);
+                parametrosQoS.add(videoID);
 
                 extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
                         parametrosQoS);
@@ -361,6 +370,7 @@ public class StreamingTestActivity extends Activity
         duracionVideo = mediaPlayer.getDuration();
         finTotal = System.currentTimeMillis();
         siguienteBtn.setVisibility(View.VISIBLE);
+        finalizado = true;
         mostrarSystemUI();
         progressLayout.setVisibility(View.VISIBLE);
         mHandler.removeCallbacks(mUpdateTimeTask);

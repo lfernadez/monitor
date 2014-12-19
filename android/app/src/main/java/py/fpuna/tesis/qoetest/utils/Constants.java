@@ -106,7 +106,7 @@ public class Constants {
 
     public static final int CANCELADO_ID = 9;
     public static final int CANCELADO_VIDEO_ID = 10;
-    public static final int NUM_VIDEO_ID = 11;
+    public static final int NAME_VIDEO_ID = 11;
 
 
 

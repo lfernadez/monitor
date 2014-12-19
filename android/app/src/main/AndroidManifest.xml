@@ -122,11 +122,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="py.fpuna.tesis.qoetest.activity.StreamingTestDosActivity"
-            android:label="@string/title_activity_streaming_test_dos"
-            android:screenOrientation="landscape">
-        </activity>
-        <activity
             android:name="py.fpuna.tesis.qoetest.activity.QoEStreamingTestDosActivity"
             android:label="@string/title_activity_qo_estreaming_test_dos"
             android:screenOrientation="portrait">

@@ -75,7 +75,7 @@ public class VideoUtils {
 
     public Integer getVideo(){
         Random rand = new Random();
-        Integer pos = rand.nextInt() * videos.length + 1;
+        Integer pos = rand.nextInt(videos.length);
         return pos;
     }
 

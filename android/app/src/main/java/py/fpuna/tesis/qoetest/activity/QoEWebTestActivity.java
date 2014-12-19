@@ -62,14 +62,11 @@ public class QoEWebTestActivity extends ActionBarActivity {
                     ratingBarCalidadLabel.setText("Muy Bueno \n Pequeñas " +
                             "obstrucciones en la visualización del contenido");
                 } else if (v == 3) {
-                    ratingBarCalidadLabel.setText("Bueno \n Retardo en la " +
-                            "visualización de ciertos contenidos");
+                    ratingBarCalidadLabel.setText("Bueno \n Retardos aceptable en las animaciones");
                 } else if (v == 2) {
-                    ratingBarCalidadLabel.setText("Pobre \n Algunos contenidos " +
-                            "no se muestran");
+                    ratingBarCalidadLabel.setText("Pobre \n Mucho retardo en las animaciones, algunas no se muestran");
                 } else {
-                    ratingBarCalidadLabel.setText("Malo \n Varios contenidos no" +
-                            " se muestra");
+                    ratingBarCalidadLabel.setText("Malo \n Retardo inaceptable en las animaciones, varios contenidos no se muestran");
                 }
             }
         });

@@ -6,7 +6,7 @@
     <string-array name="nav_drawer_items">
         <item>Test</item>
         <item>Información del Teléfono</item>
-        <item>Acerda de</item>
+        <item>Acerca de</item>
     </string-array>
     <string-array name="sexo">
         <item>Masculino</item>
@@ -105,7 +105,7 @@
     <string name="streaming_test_text">Este test pretende evaluar la calidad
         de la experiencia de las redes celulares durante su uso en la
         transmisión multimedia a través de internet</string>
-    <string name="title_activity_streaming_test">Streaming Test 1/2</string>
+    <string name="title_activity_streaming_test">Streaming Test</string>
     <string name="title_activity_qo_estreaming_test">"Evaluación "</string>
     <string name="detener_test_streaming_title">Detener Reproducción</string>
     <string name="detener_test_streaming_msg">Ha tardado mucho la reproducción del vídeo, desea continuar con el siguiente test?</string>
