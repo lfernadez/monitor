@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -75,9 +76,11 @@ public class StreamingTestActivity extends Activity
                 progressLayout.setVisibility(View.GONE);
                 buttonBar.setVisibility(View.GONE);
             }
+            if(Build.VERSION.SDK_INT >= 11) {
 
-            if (decorView.getSystemUiVisibility() != uiOptions) {
-                decorView.setSystemUiVisibility(uiOptions);
+                if (decorView.getSystemUiVisibility() != uiOptions) {
+                    decorView.setSystemUiVisibility(uiOptions);
+                }
             }
         }
     };
@@ -122,17 +125,20 @@ public class StreamingTestActivity extends Activity
         bufferingTimeArray = new ArrayList<Long>();
 
         decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(uiOptions);
-        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                    progressLayout.setVisibility(View.VISIBLE);
-                    buttonBar.setVisibility(View.VISIBLE);
-                    mHandlerAutoHide.postDelayed(mAutoHideLayouts, 5 * 1000);
+
+        if(Build.VERSION.SDK_INT >= 11) {
+            decorView.setSystemUiVisibility(uiOptions);
+            decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+                @Override
+                public void onSystemUiVisibilityChange(int visibility) {
+                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                        progressLayout.setVisibility(View.VISIBLE);
+                        buttonBar.setVisibility(View.VISIBLE);
+                        mHandlerAutoHide.postDelayed(mAutoHideLayouts, 5 * 1000);
+                    }
                 }
-            }
-        });
+            });
+        }
         setContentView(R.layout.activity_streaming_test);
 
         /* Video utils */
@@ -181,6 +187,7 @@ public class StreamingTestActivity extends Activity
 
         /* Boton Siguiente */
         siguienteBtn = (Button) findViewById(R.id.rightButton);
+        siguienteBtn.setText(R.string.eval_btn_label);
         siguienteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -378,86 +385,9 @@ public class StreamingTestActivity extends Activity
     }
 
     public void mostrarSystemUI() {
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
-    }
-
-    public class DetenerRepDialogFragment extends DialogFragment{
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.detener_test_streaming_title);
-            builder.setMessage(R.string.detener_test_streaming_msg)
-                    .setPositiveButton(R.string.afirmative_response, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            long tiempoBuffering = (finTotal - inicioTotal) - duracionVideo;
-
-                            String tiempoCarga = videoUtils.milliSecondsToTimer(finCargando -
-                                    inicioCargando);
-                            String duracionVideoString = videoUtils.milliSecondsToTimer
-                                    (duracionVideo);
-                            String tiempoTotalRep = videoUtils.milliSecondsToTimer(finTotal -
-                                    inicioTotal);
-                            String tiempoBufferingString =
-                                    videoUtils.milliSecondsToTimer(tiempoBuffering);
-                            Log.d("StreamingTestActivity", "Tiempo de carga inicial: " +
-                                    tiempoCarga);
-                            Log.d("StreamingTestActivity", "Duracion video: " +
-                                    duracionVideoString);
-                            Log.d("StreamingTestActivity", "Tiempo reproducción total: " +
-                                    tiempoTotalRep);
-                            Log.d("StreamingTestActivity", "Tiempo Buffering: " +
-                                    tiempoBufferingString);
-
-                            Log.d("StreamingTestActivity", "Bufferin Time:" +
-                                    videoUtils.milliSecondsToTimer(bufferingTime));
-
-                            Intent intent = new Intent(StreamingTestActivity.this,
-                                    QoEStreamingTestActivity
-                                            .class);
-                            /* Se agregan los extras anteriores */
-                            Bundle extras = getIntent().getExtras();
-                            ArrayList<QoSParam> parametrosQoS = extras
-                                    .getParcelableArrayList(Constants.EXTRA_PARAM_QOS);
-
-
-                            /* Carga Inicial Video */
-                            QoSParam cargaInicialVideo = new QoSParam();
-                            cargaInicialVideo.setObtenido(Constants.OBT_TEL);
-                            cargaInicialVideo.setCodigoParametro(Constants.CARGA_INICIAL_VIDEO);
-                            cargaInicialVideo.setValor(DateHourUtils.toSeconds(finCargando - inicioCargando));
-                            parametrosQoS.add(cargaInicialVideo);
-
-                            /* Tiempo promedio Buffering */
-                            QoSParam tiempoBufferingParam = new QoSParam();
-                            tiempoBufferingParam.setObtenido(Constants.OBT_TEL);
-                            tiempoBufferingParam.setCodigoParametro(Constants.TIEMPO_BUFFERING);
-                            Double promedioBuffering = CalcUtils.getPromedio
-                                    (bufferingTimeArray);
-                            tiempoBufferingParam.setValor(DateHourUtils.toSeconds(promedioBuffering));
-                            parametrosQoS.add(tiempoBufferingParam);
-
-                            /* Cantidad Buffering */
-                            QoSParam cantBufferingParam = new QoSParam();
-                            cantBufferingParam.setObtenido(Constants.OBT_TEL);
-                            cantBufferingParam.setCodigoParametro(Constants.CANT_BUFFERING);
-                            cantBufferingParam.setValor(cantidadPausas);
-                            parametrosQoS.add(cantBufferingParam);
-
-                            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
-                                    parametrosQoS);
-                            intent.putExtras(extras);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.negative_response, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            videoView.start();
-                        }
-                    });
-            // Create the AlertDialog object and return it
-            return builder.create();
+        if(Build.VERSION.SDK_INT >= 11) {
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         }
+
     }
 }

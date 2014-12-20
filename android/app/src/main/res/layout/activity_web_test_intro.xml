@@ -61,6 +61,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="false"
             android:layout_marginRight="@dimen/margin_right_btn"
+            android:background="?attr/selectableItemBackground"
             android:layout_alignParentEnd="true"
             android:text="@string/start_label"
             android:layout_gravity="right"/>

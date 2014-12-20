@@ -236,77 +236,7 @@ public class PrincipalActivity extends ActionBarActivity
         return;
     }
 
-    public void probarTcpDump() {
-        List<String> commands = new ArrayList<String>();
-        try {
-            commands.add(0, Constants.TCPDUMP_BINARY_DIC);
-            //commands.add(1, "-w");
-            //commands.add(2,"/data/data/py.fpuna.tesis.qoetest/captura");
-            //commands.add(6, "-u");
-            Process process = new ProcessBuilder().command(commands)
-                    .redirectErrorStream(true).start();
-            process.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader
-                    (process.getInputStream()));
-            int read;
-            //The output text is accumulated into a string buffer and published to the GUI
-            char[] buffer = new char[4096];
-            StringBuffer output = new StringBuffer();
-            while ((read = reader.read(buffer)) > 0) {
-                output.append(buffer, 0, read);
-                //This is used to pass the output to the thread running the GUI, since this is separate thread.
-                Log.d("TCPDUMP", output.toString());
-                output.delete(0, output.length());
-            }
-            reader.close();
-            process.destroy();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-
-    }
-
-    public void initTcpDump() {
-        InputStream in;
-        try {
-            //The asset "iperf" (from assets folder) inside the activity is opened for reading.
-            in = getResources().getAssets().open(Constants.TCPDUMP_FILE_NAME);
-        } catch (IOException e2) {
-            return;
-        }
-        try {
-            //Checks if the file already exists, if not copies it.
-            new FileInputStream(Constants.TCPDUMP_BINARY_DIC);
-        } catch (FileNotFoundException e1) {
-            try {
-                //The file named "iperf" is created in a system designated folder for this application.
-                OutputStream out = new FileOutputStream(Constants.TCPDUMP_BINARY_DIC, false);
-                // Transfer bytes from "in" to "out"
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-                //After the copy operation is finished, we give execute permissions to the "iperf" executable using shell commands.
-                Process processChmod = Runtime.getRuntime().exec
-                        ("/system/bin/chmod 744 " + Constants.TCPDUMP_BINARY_DIC);
-                // Executes the command and waits untill it finishes.
-                processChmod.waitFor();
-            } catch (IOException e) {
-                return;
-            } catch (InterruptedException e) {
-                return;
-            }
-
-            return;
-        }
-        return;
-    }
 
     public class ConnectionErrorDialogFragment extends DialogFragment {
         @Override
@@ -336,7 +266,7 @@ public class PrincipalActivity extends ActionBarActivity
         if (mNavigationDrawerFragment.isDrawerOpen()){
             mNavigationDrawerFragment.closeDrawer();
         }else{
-            super.onBackPressed();
+            finish();
         }
 
     }

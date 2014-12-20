@@ -15,6 +15,7 @@
     <string-array name="prefesion">
         <item>Estudiante</item>
         <item>Funcionario</item>
+        <item>Docente</item>
     </string-array>
     <string-array name="frecuencia">
         <item>Frecuentemente</item>
@@ -44,9 +45,12 @@
         <item>@drawable/ic_action_about</item>
     </array>
 
+    <string name="eval_btn_label">Evaluar</string>
+
+    <string name="comezar_test_btn_label">Comenzar Test</string>
     <string name="device_info_title">Dispostivo</string>
     <string name="network_info_title">Red</string>
-    <string name="batery_info_title">Estado de bateria</string>
+    <string name="batery_info_title">Estado de batería</string>
     <string name="net_available_info_title">Redes disponibles</string>
     <string name="active_net_info_title">Redes activas</string>
     <string name="start_label">Comenzar Test</string>

@@ -63,8 +63,10 @@ public class TestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_test,
                 container, false);
-        Button comenzarTest = (Button) view.findViewById(R.id
-                .startBtn);
+        Button atras = (Button) view.findViewById(R.id.leftButton);
+        atras.setVisibility(View.INVISIBLE);
+        Button comenzarTest = (Button) view.findViewById(R.id.rightButton);
+        comenzarTest.setText(R.string.comezar_test_btn_label);
         comenzarTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

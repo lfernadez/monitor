@@ -2,6 +2,7 @@ package py.fpuna.tesis.qoetest.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -57,7 +58,9 @@ public class WebTestUnoActivity extends ActionBarActivity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);
-        settings.setDisplayZoomControls(false);
+        if (Build.VERSION.SDK_INT >= 11) {
+            settings.setDisplayZoomControls(false);
+        }
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 
         webView.setWebChromeClient(new WebChromeClient() {
@@ -69,6 +72,7 @@ public class WebTestUnoActivity extends ActionBarActivity {
 
         /* Boton siguiente */
         siguienteBtn = (Button) findViewById(R.id.rightButton);
+        siguienteBtn.setText(R.string.eval_btn_label);
         siguienteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,14 +158,18 @@ public class WebTestUnoActivity extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
         webView.pauseTimers();
-        webView.onPause();
+        if(Build.VERSION.SDK_INT >=11) {
+            webView.onPause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         webView.resumeTimers();
-        webView.onResume();
+        if(Build.VERSION.SDK_INT >= 11) {
+            webView.onResume();
+        }
     }
 
     /**

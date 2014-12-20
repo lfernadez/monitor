@@ -22,7 +22,7 @@ public class Constants {
     /**
      * Direccion IP del server de transmision
      */
-    public static final String IP_TRANSMITTER_SERVER = "10.90.1.2";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.0.19";
     public static final String VIDEO_URL_DOS = "rtsp://" +
             IP_TRANSMITTER_SERVER + "/videoStr.mp4";
     public static final String IMAGE_URL_DOWN_DOS = "http://" +
@@ -107,9 +107,6 @@ public class Constants {
     public static final int CANCELADO_ID = 9;
     public static final int CANCELADO_VIDEO_ID = 10;
     public static final int NAME_VIDEO_ID = 11;
-
-
-
 
     public static final String OBT_TEL = "telefono";
     public static final String OBT_ENV = "enviado";

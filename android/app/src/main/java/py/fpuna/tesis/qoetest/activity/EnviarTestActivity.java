@@ -90,6 +90,7 @@ public class EnviarTestActivity extends ActionBarActivity {
             Intent intent = new Intent(getApplicationContext(),
                     PrincipalActivity.class);
             startActivity(intent);
+            EnviarTestActivity.this.finish();
         }
     }
 }

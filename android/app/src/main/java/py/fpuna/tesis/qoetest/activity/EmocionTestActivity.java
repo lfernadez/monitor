@@ -126,7 +126,7 @@ public class EmocionTestActivity extends ActionBarActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.radio0:
                         estadoLabel.setText("Alegre");
                         estado = "Alegre";
@@ -162,9 +162,9 @@ public class EmocionTestActivity extends ActionBarActivity {
         siguienteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(verificar()) {
-                   new ObtenerParametrosTask().execute();
-                }else{
+                if (verificar()) {
+                    new ObtenerParametrosTask().execute();
+                } else {
                     Toast.makeText(getApplicationContext(),
                             "Seleccione un estado", Toast.LENGTH_SHORT).show();
                 }
@@ -221,10 +221,9 @@ public class EmocionTestActivity extends ActionBarActivity {
     }
 
     /**
-     *
      * @return
      */
-    public boolean verificar(){
+    public boolean verificar() {
         return radioGroup.getCheckedRadioButtonId() != -1;
     }
 
@@ -235,7 +234,7 @@ public class EmocionTestActivity extends ActionBarActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 // Se obtiene los parametros de la red
-                parametrosNet = wsHelper.obtenerParametros();
+                //parametrosNet = wsHelper.obtenerParametros();
                 publishProgress(0);
                 currentLocation = locationUtils.getLastLocation();
                 publishProgress(1);
@@ -251,7 +250,7 @@ public class EmocionTestActivity extends ActionBarActivity {
                 //Log.d("BANWIDTH", String.valueOf(bandwidth));
 
                 /* Se obtienen los datos del usuario del Preference Shared */
-                if(perfilUsuario == null){
+                if (perfilUsuario == null) {
                     perfilUsuario = preferenceUtils.getPerfilUsuario();
                 }
 
@@ -328,7 +327,7 @@ public class EmocionTestActivity extends ActionBarActivity {
                     WebTestIntroActivity.class);
 
             Bundle extras = getIntent().getExtras();
-            if(extras == null){
+            if (extras == null) {
                 extras = new Bundle();
             }
 
@@ -350,13 +349,18 @@ public class EmocionTestActivity extends ActionBarActivity {
 
             // Extra de la localizacion del usuario
             DeviceLocation loc = new DeviceLocation();
-            loc.setLatitud(currentLocation.getLatitude());
-            loc.setLongitud(currentLocation.getLongitude());
+            if (currentLocation == null) {
+                loc.setLatitud(0.0);
+                loc.setLongitud(0.0);
+            } else {
+                loc.setLatitud(currentLocation.getLatitude());
+                loc.setLongitud(currentLocation.getLongitude());
+            }
 
             loc.setIdCelda(cellID);
             extras.putParcelable(Constants.EXTRA_LOCALIZACION, loc);
 
-            // Extra de parametros QoS
+           // Extra de parametros QoS
             ArrayList<QoSParam> parametrosQos = new ArrayList<QoSParam>();
 
             //Delay
@@ -385,7 +389,7 @@ public class EmocionTestActivity extends ActionBarActivity {
 
             /* Enviados desde el servidor */
 
-            /** Delay */
+            /** Delay
             QoSParam delayServerParam = new QoSParam();
             delayServerParam.setCodigoParametro(Constants.DELAY_ID);
             delayServerParam.setValor(parametrosNet.getDelay());
@@ -407,7 +411,7 @@ public class EmocionTestActivity extends ActionBarActivity {
             QoSParam jitterServerParam = new QoSParam();
             jitterServerParam.setCodigoParametro(Constants.JITTER_ID);
             jitterServerParam.setValor(parametrosNet.getJitter());
-            jitterServerParam.setObtenido(Constants.OBT_ENV);
+            jitterServerParam.setObtenido(Constants.OBT_ENV);*/
 
 
             // Se agregan los parametros
@@ -415,12 +419,11 @@ public class EmocionTestActivity extends ActionBarActivity {
             parametrosQos.add(bandwidthParam);
             parametrosQos.add(packetLossParam);
             parametrosQos.add(jitterParam);
-            parametrosQos.add(delayServerParam);
+            /*parametrosQos.add(delayServerParam);
             parametrosQos.add(bandwidthServerParam);
             parametrosQos.add(packetLossServerParam);
-            parametrosQos.add(jitterServerParam);
-            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,
-            parametrosQos);
+            parametrosQos.add(jitterServerParam);*/
+            extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,parametrosQos);
 
             intent.putExtras(extras);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

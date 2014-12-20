@@ -13,6 +13,8 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 import py.fpuna.tesis.qoetest.model.PhoneInfo;
@@ -49,13 +51,39 @@ public class DeviceInfoUtils {
      * @return
      */
     public String getScreenSize(){
+        String displaySize = "";
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        display.getRealMetrics(dm);
-        String screenSize = String.valueOf(dm.heightPixels) + "x" + String
-                .valueOf(dm.widthPixels);
-        return screenSize;
+        if(Build.VERSION.SDK_INT >= 17){
+            DisplayMetrics dm = new DisplayMetrics();
+            display.getRealMetrics(dm);
+            displaySize = String.valueOf(dm.heightPixels) + "x" + String
+                    .valueOf(dm.widthPixels);
+        } else if (Build.VERSION.SDK_INT >= 14){
+            try {
+                Method mGetRawH = Display.class.getMethod("getRawHeight");
+                Method mGetRawW = Display.class.getMethod("getRawWidth");
+                Integer realWidth = (Integer) mGetRawW.invoke(display);
+                Integer realHeight = (Integer) mGetRawH.invoke(display);
+                displaySize = String.valueOf(realHeight) + "x" + String
+                        .valueOf(realWidth);
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            DisplayMetrics dm = new DisplayMetrics();
+            display.getMetrics(dm);
+            Integer realWidth = dm.widthPixels;
+            Integer realHeight = dm.heightPixels;
+            displaySize = String.valueOf(realHeight) + "x" + String
+                    .valueOf(realWidth);
+        }
+        return displaySize;
     }
 
     /**

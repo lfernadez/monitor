@@ -3,6 +3,7 @@ package py.fpuna.tesis.qoetest.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -242,7 +243,11 @@ public class PreTestActivty extends ActionBarActivity {
         }
         mEditor.putInt(SPIN_COSTO, spinnerCosto.getSelectedItemPosition());
         mEditor.putInt(SPIN_COSTO_MAS, spinnerCostoMas.getSelectedItemPosition());
-        mEditor.putStringSet(SPIN_FREC_APPS, apps);
+        if (Build.VERSION.SDK_INT >= 11) {
+            mEditor.putStringSet(SPIN_FREC_APPS, apps);
+        } else {
+            mEditor.putString(SPIN_FREC_APPS, spinnerApp.getSelectedItemsAsString());
+        }
         mEditor.commit();
     }
 
@@ -268,11 +273,17 @@ public class PreTestActivty extends ActionBarActivity {
             edadEditText.setText(mPrefs.getString(EDAD, "0"));
         }
         if (mPrefs.contains(SPIN_FREC_APPS)) {
-            Set<String> apps = mPrefs.getStringSet(SPIN_FREC_APPS,
-                    new HashSet<String>());
-            List<String> frecApps = new ArrayList<String>();
-            frecApps.addAll(apps);
-            spinnerApp.setSelection(frecApps);
+            if (Build.VERSION.SDK_INT >= 11) {
+                Set<String> apps = mPrefs.getStringSet(SPIN_FREC_APPS,
+                        new HashSet<String>());
+                List<String> frecApps = new ArrayList<String>();
+                frecApps.addAll(apps);
+                spinnerApp.setSelection(frecApps);
+            } else {
+                String apps = mPrefs.getString(SPIN_FREC_APPS, new String());
+                String[] frecApps = apps.split(", ");
+                spinnerApp.setSelection(frecApps);
+            }
         }
     }
 
@@ -280,54 +291,109 @@ public class PreTestActivty extends ActionBarActivity {
      * @return
      */
     private ArrayAdapter<String> getSpinnerAdapterSexo() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        String[] sexo = getResources().getStringArray(R.array.sexo);
-        adapter.addAll(sexo);
-        return adapter;
+        if (Build.VERSION.SDK_INT >= 11) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] sexo = getResources().getStringArray(R.array.sexo);
+            adapter.addAll(sexo);
+            return adapter;
+        } else {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] sexo = getResources().getStringArray(R.array.sexo);
+            for (String s : sexo) {
+                adapter.add(s);
+            }
+            return adapter;
+        }
     }
 
     /**
      * @return
      */
     private ArrayAdapter<String> getSpinnerAdapterProfesion() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        String[] profesion = getResources().getStringArray(R.array.prefesion);
-        adapter.addAll(profesion);
-        return adapter;
+        if (Build.VERSION.SDK_INT >= 11) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] profesion = getResources().getStringArray(R.array.prefesion);
+            adapter.addAll(profesion);
+            return adapter;
+        } else {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] profesion = getResources().getStringArray(R.array.prefesion);
+            for (String p : profesion) {
+                adapter.add(p);
+            }
+            return adapter;
+        }
     }
 
     /**
      * @return
      */
     private ArrayAdapter<String> getSpinnerAdapterFrecuencia() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        String[] frecuencia = getResources().getStringArray(R.array.frecuencia);
-        adapter.addAll(frecuencia);
-        return adapter;
+        if (Build.VERSION.SDK_INT >= 11) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] frecuencia = getResources().getStringArray(R.array.frecuencia);
+            adapter.addAll(frecuencia);
+            return adapter;
+        } else {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] frecuencia = getResources().getStringArray(R.array.frecuencia);
+            for (String f : frecuencia) {
+                adapter.add(f);
+            }
+            return adapter;
+        }
     }
 
     private ArrayAdapter<String> getSpinnerAdapterCosto() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        String[] costo = getResources().getStringArray(R.array.costo);
-        adapter.addAll(costo);
-        return adapter;
+        if (Build.VERSION.SDK_INT >= 11) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] costo = getResources().getStringArray(R.array.costo);
+            adapter.addAll(costo);
+            return adapter;
+        } else {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] costo = getResources().getStringArray(R.array.costo);
+            for (String c : costo) {
+                adapter.add(c);
+            }
+            return adapter;
+        }
     }
 
     private ArrayAdapter<String> getSpinnerAdapterCostoMas() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        String[] costo = getResources().getStringArray(R.array.costoMas);
-        adapter.addAll(costo);
-        return adapter;
+        if (Build.VERSION.SDK_INT >= 11) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] costo = getResources().getStringArray(R.array.costoMas);
+            adapter.addAll(costo);
+            return adapter;
+        } else {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] costo = getResources().getStringArray(R.array.costoMas);
+            for (String c : costo) {
+                adapter.add(c);
+            }
+            return adapter;
+        }
     }
 
     @Override
@@ -340,5 +406,21 @@ public class PreTestActivty extends ActionBarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getString(String[] array, String delimiter) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : array) {
+            if (sb.length() > 0) {
+                sb.append(delimiter);
+            }
+            sb.append(s);
+        }
+
+        return sb.toString();
+    }
+
+    private String[] getArray(String input, String delimiter) {
+        return input.split(delimiter);
     }
 }

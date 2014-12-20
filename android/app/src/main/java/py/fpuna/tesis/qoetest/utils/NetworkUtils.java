@@ -93,12 +93,18 @@ public class NetworkUtils {
      * @return
      */
     public int getCID(){
-        GsmCellLocation location = (GsmCellLocation)telManager.getCellLocation();
-        int locationCellid = location.getCid();
         int cellId = -1;  //-1, desconocido por defecto
-        if(cellId > 0) { // known location
-            cellId = locationCellid & 0xffff; // get only valuable bytes
+        GsmCellLocation location = (GsmCellLocation)telManager.getCellLocation();
+        if(location == null){
+            return cellId;
+        }else{
+            int locationCellid = location.getCid();
+
+            if(locationCellid > 0) { // known location
+                cellId = locationCellid & 0xffff; // get only valuable bytes
+            }
+            return cellId;
         }
-        return cellId;
+
     }
 }
