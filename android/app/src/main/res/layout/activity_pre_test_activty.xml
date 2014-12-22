@@ -117,7 +117,9 @@
                 android:id="@+id/spinner_frecuencia_app"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/layout_height"
-                android:layout_below="@id/frecuencia_app_label"/>
+                android:layout_below="@id/frecuencia_app_label"
+                android:button="@drawable/abc_btn_check_material"
+                android:buttonTint="@color/colorAccent"/>
 
             <View
                 android:id="@+id/view_separator2"

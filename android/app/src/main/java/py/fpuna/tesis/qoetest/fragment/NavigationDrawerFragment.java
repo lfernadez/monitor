@@ -1,7 +1,6 @@
 package py.fpuna.tesis.qoetest.fragment;
 
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;

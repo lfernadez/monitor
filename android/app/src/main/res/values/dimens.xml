@@ -17,6 +17,8 @@
     <dimen name="edit_text_padding_top">20dp</dimen>
     <dimen name="edit_text_padding_botton">20dp</dimen>
 
+    <dimen name="text_size_button">18sp</dimen>
+
 
     <!-- Dimensiones del button bar para Atras - Siguiente -->
     <dimen name="margin_btnbar">24dp</dimen>

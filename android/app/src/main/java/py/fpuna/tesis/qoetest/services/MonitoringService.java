@@ -331,8 +331,8 @@ public class MonitoringService extends Service {
             commands.add(7, "k");
             commands.add(8, "-t");
             commands.add(9, "10");
-            commands.add(10, "-P");
-            commands.add(11, "1");
+            commands.add(10, "-p");
+            commands.add(11, "10000");
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();
@@ -341,12 +341,22 @@ public class MonitoringService extends Service {
                     process.getInputStream()));
             // Parseo del resultado de Iperf
             String line = reader.readLine();
-            line = reader.readLine();
             String valoresSec1 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
+            while(valoresSec1.length != 5 && line != null) {
+                line = reader.readLine();
+                valoresSec1 = line.replaceAll("[^0-9.]+",
+                        " ").trim().split(" ");
+            }
+
             line = reader.readLine();
             String valoresSec2 [] = line.replaceAll("[^0-9.]+",
                     " ").trim().split(" ");
+            while(valoresSec1.length != 5 && line != null) {
+                line = reader.readLine();
+                valoresSec1 = line.replaceAll("[^0-9.]+",
+                        " ").trim().split(" ");
+            }
             if(Double.valueOf(valoresSec2[4]) > Double.valueOf
                     (valoresSec1[4])){
                 results.setBandwidthDown(Double.valueOf(valoresSec1[4]));
@@ -389,9 +399,10 @@ public class MonitoringService extends Service {
             commands.add(8, "k");
             commands.add(9, "-b");
             commands.add(10, "2.0M");
-            commands.add(11, "-t");
-            commands.add(12, "10");
-
+            commands.add(11, "-p");
+            commands.add(12, "10001");
+            commands.add(13, "-t");
+            commands.add(14, "10");
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();

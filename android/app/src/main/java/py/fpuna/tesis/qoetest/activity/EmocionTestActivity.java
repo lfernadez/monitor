@@ -1,5 +1,6 @@
 package py.fpuna.tesis.qoetest.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,7 +11,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -40,7 +40,7 @@ import py.fpuna.tesis.qoetest.utils.DeviceStatusUtils;
 import py.fpuna.tesis.qoetest.utils.NetworkUtils;
 import py.fpuna.tesis.qoetest.utils.PreferenceUtils;
 
-public class EmocionTestActivity extends ActionBarActivity {
+public class EmocionTestActivity extends Activity {
 
     private PerfilUsuario perfilUsuario;
     private RadioGroup radioGroup;
@@ -360,7 +360,7 @@ public class EmocionTestActivity extends ActionBarActivity {
             loc.setIdCelda(cellID);
             extras.putParcelable(Constants.EXTRA_LOCALIZACION, loc);
 
-           // Extra de parametros QoS
+            // Extra de parametros QoS
             ArrayList<QoSParam> parametrosQos = new ArrayList<QoSParam>();
 
             //Delay

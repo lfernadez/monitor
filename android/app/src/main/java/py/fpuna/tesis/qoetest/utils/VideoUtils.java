@@ -46,7 +46,7 @@ public class VideoUtils {
      * @param totalDuration
      * */
     public int getProgressPercentage(long currentDuration, long totalDuration){
-        Double percentage = (double) 0;
+        Double percentage = 0.0;
 
         long currentSeconds = (int) (currentDuration / 1000);
         long totalSeconds = (int) (totalDuration / 1000);

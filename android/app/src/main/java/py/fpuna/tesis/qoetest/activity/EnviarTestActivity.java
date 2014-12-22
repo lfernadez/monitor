@@ -1,5 +1,6 @@
 package py.fpuna.tesis.qoetest.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import py.fpuna.tesis.qoetest.rest.WSHelper;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 
-public class EnviarTestActivity extends ActionBarActivity {
+public class EnviarTestActivity extends Activity {
     private Button enviarTest;
     private WSHelper wsHelper;
     private PerfilUsuario perfilUsuario;

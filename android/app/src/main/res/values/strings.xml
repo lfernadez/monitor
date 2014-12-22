@@ -26,7 +26,6 @@
         <item>Si</item>
         <item>No</item>
     </string-array>
-
     <string-array name="costoMas">
         <item>Si</item>
         <item>No</item>
@@ -45,9 +44,8 @@
         <item>@drawable/ic_action_about</item>
     </array>
 
-    <string name="eval_btn_label">Evaluar</string>
-
-    <string name="comezar_test_btn_label">Comenzar Test</string>
+    <string name="eval_btn_label">EVALUAR</string>
+    <string name="comezar_test_btn_label">COMENZAR TEST</string>
     <string name="device_info_title">Dispostivo</string>
     <string name="network_info_title">Red</string>
     <string name="batery_info_title">Estado de batería</string>
@@ -76,10 +74,9 @@
     <string name="costo_pregunta_label">¿Está conforme con costo Gs. por cantidad de datos que le ofrece su operador de telefonía?</string>
     <string name="costo_pregunta2_label">¿Estaría dispuesto a pagar más por un mejor servicio de datos?</string>
 
-
     <!-- Botones Atras y Siguiente -->
-    <string name="atras_btn_label">Atras</string>
-    <string name="sig_btn_label">Siguiente</string>
+    <string name="atras_btn_label">ATRAS</string>
+    <string name="sig_btn_label">SIGUIENTE</string>
     <string name="title_activity_web_test_into">Test Web</string>
     <string name="hello_world">Hello world!</string>
 
@@ -88,6 +85,21 @@
     <string name="web_test_text">Este test pretende evaluar la calidad
         de la experiencia de la redes celulares durante su uso en la
         navegación web</string>
+
+    <string name="web_test_explanation">En este test deberá evaluar la calidad del contenido desplagado
+    en la pantalla, como así también que tan rápido se muestra el contenido. Para ello, observe
+    cuidadosamente las animaciones desplegadas.</string>
+
+    <string name="web_test_explanation_final">Al finalizar la observación, evalúe de acuerdo al
+        criterio indicado de acuerdo a esta escala de puntuación. Al seleccionar uno de ellos
+    aparecerá una descripción indicando el significado de la puntuación.</string>
+
+    <string name="excelente_label">Excelente</string>
+    <string name="muy_bueno_label">Muy Bueno</string>
+    <string name="bueno_label">Bueno</string>
+    <string name="pobre_label">Pobre</string>
+    <string name="malo_label">Malo</string>
+
     <string name="title_activity_web_test">Test WEB</string>
     <string name="title_activity_web_test_dos">Test Web 2/2</string>
     <string name="title_activity_qo_eweb_test">Evaluación de la calidad</string>
@@ -116,6 +128,9 @@
     <string name="afirmative_response">Aceptar</string>
     <string name="negative_response">Cancelar</string>
 
+    <string name="streaming_test_explanation">En este test deberá evaluar la calidad del contenido desplagado
+    en la pantalla, el retardo en reproducirse el video y observar la cantidad de pausas durante la reproducción</string>
+
     <!-- QoE Streaming Test -->
     <string name="pregunta_tiempo_carga_video">El tiempo de carga inicial del video le pareció:</string>
     <string name="pregunta_buffering_video">Evalué el tiempo/cantidad de veces que la reproducción del video se pausó:</string>
@@ -136,5 +151,6 @@
     <string name="title_activity_emocion_test">Pre-Test</string>
     <string name="title_activity_streaming_test_dos">Streaming Test 2/2</string>
     <string name="title_activity_qo_estreaming_test_dos">Evaluación</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

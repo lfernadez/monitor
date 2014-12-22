@@ -1,10 +1,6 @@
 package py.fpuna.tesis.qoetest.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -166,7 +162,9 @@ public class StreamingTestActivity extends Activity
         bufferingProgressBar.setVisibility(View.VISIBLE);
 
         buttonBar = (LinearLayout) findViewById(R.id.btLayout);
-        buttonBar.setVisibility(View.GONE);
+        if(Build.VERSION.SDK_INT < 11) {
+            buttonBar.setVisibility(View.GONE);
+        }
 
         /* Posicion Actual Label */
         posicionActualVideoLabel = (TextView) findViewById(R.id

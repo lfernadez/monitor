@@ -48,21 +48,13 @@
                 android:layout_below="@id/ratingBar_tiempo_carga_video"
                 android:layout_width="wrap_content"/>
 
-            <View
-                android:id="@+id/separator"
-                android:layout_below="@id/ratingBar_tiempo_carga_video_label"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="@dimen/standar_margin"
-                android:layout_marginBottom="@dimen/standar_margin"/>
 
             <!-- Campo Buffering -->
             <TextView
                 android:id="@+id/buffering_video_pregunta_label"
                 android:text="@string/pregunta_buffering_video"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/separator"
+                android:layout_below="@id/ratingBar_tiempo_carga_video_label"
                 android:layout_width="wrap_content"/>
 
             <RatingBar

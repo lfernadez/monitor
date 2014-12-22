@@ -22,7 +22,7 @@ public class Constants {
     /**
      * Direccion IP del server de transmision
      */
-    public static final String IP_TRANSMITTER_SERVER = "192.168.0.19";
+    public static final String IP_TRANSMITTER_SERVER = "192.168.1.11";
     public static final String VIDEO_URL_DOS = "rtsp://" +
             IP_TRANSMITTER_SERVER + "/videoStr.mp4";
     public static final String IMAGE_URL_DOWN_DOS = "http://" +
