@@ -399,10 +399,11 @@ public class MonitoringService extends Service {
             commands.add(8, "k");
             commands.add(9, "-b");
             commands.add(10, "2.0M");
-            commands.add(11, "-p");
-            commands.add(12, "10001");
-            commands.add(13, "-t");
-            commands.add(14, "10");
+            commands.add(11, "-t");
+            commands.add(12, "10");
+            commands.add(13, "-p");
+            commands.add(14, "10001");
+
 
             Process process = new ProcessBuilder().command(commands)
                     .redirectErrorStream(true).start();

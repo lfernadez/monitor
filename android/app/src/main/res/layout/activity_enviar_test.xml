@@ -43,35 +43,9 @@
     </RelativeLayout>
 
 
-    <FrameLayout
-        android:id="@+id/rel_layout2"
+    <include
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.01">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"/>
-
-        <Button
-            android:id="@+id/startWebTestBtn"
-            style="@style/StyleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_btn"
-            android:layout_marginBottom="@dimen/margin_bottom_btn"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="false"
-            android:layout_marginRight="@dimen/margin_right_btn"
-            android:background="?attr/selectableItemBackground"
-            android:layout_alignParentEnd="true"
-            android:text="@string/enviar_resultados_test"
-            android:layout_gravity="right"/>
-
-    </FrameLayout>
+        layout="@layout/button_bar" />
 
 </LinearLayout>

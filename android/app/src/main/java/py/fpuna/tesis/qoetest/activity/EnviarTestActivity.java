@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,6 +31,7 @@ public class EnviarTestActivity extends Activity {
     private List<QoSParam> qoSParams;
     private DeviceLocation deviceLocation;
     private DeviceStatus deviceStatus;
+    private Button atrasButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,10 @@ public class EnviarTestActivity extends Activity {
         /** Localizacion del dispositivo */
         deviceLocation = bundle.getParcelable(Constants.EXTRA_LOCALIZACION);
 
-        enviarTest = (Button) findViewById(R.id.startWebTestBtn);
+        atrasButton = (Button) findViewById(R.id.leftButton);
+        atrasButton.setVisibility(View.GONE);
+        enviarTest = (Button) findViewById(R.id.rightButton);
+        enviarTest.setText(getString(R.string.enviar_resultados_label));
         enviarTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +93,8 @@ public class EnviarTestActivity extends Activity {
                     Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(),
                     PrincipalActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             EnviarTestActivity.this.finish();
         }

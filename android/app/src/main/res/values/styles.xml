@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimario</item>
         <item name="colorPrimaryDark">@color/colorPrimarioDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
     </style>
 
     <style name="HeaderTextView" parent="android:Widget.TextView">

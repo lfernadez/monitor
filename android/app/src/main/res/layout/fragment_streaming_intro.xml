@@ -26,7 +26,7 @@
             android:padding="50dp"/>
 
         <android.support.v7.internal.widget.CompatTextView
-            style="@style/TextStyle"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"

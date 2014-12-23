@@ -91,7 +91,7 @@
     cuidadosamente las animaciones desplegadas.</string>
 
     <string name="web_test_explanation_final">Al finalizar la observación, evalúe de acuerdo al
-        criterio indicado de acuerdo a esta escala de puntuación. Al seleccionar uno de ellos
+        criterio indicado con respecto a esta escala de puntuación. Al seleccionar uno de ellos
     aparecerá una descripción indicando el significado de la puntuación.</string>
 
     <string name="excelente_label">Excelente</string>
@@ -152,5 +152,6 @@
     <string name="title_activity_streaming_test_dos">Streaming Test 2/2</string>
     <string name="title_activity_qo_estreaming_test_dos">Evaluación</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enviar_resultados_label">ENVIAR RESULTADOS</string>
 
 </resources>

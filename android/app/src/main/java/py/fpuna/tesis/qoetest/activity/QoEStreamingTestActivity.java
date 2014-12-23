@@ -129,6 +129,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
                     intent.putParcelableArrayListExtra(Constants.EXTRA_QOE_TEST, pruebas);
                     intent.putExtras(getIntent().getExtras());
                     startActivity(intent);
+                    finish();
                 }
             }
         });

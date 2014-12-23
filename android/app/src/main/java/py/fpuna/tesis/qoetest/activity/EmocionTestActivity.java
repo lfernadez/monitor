@@ -234,7 +234,7 @@ public class EmocionTestActivity extends Activity {
         protected Void doInBackground(Void... voids) {
             try {
                 // Se obtiene los parametros de la red
-                //parametrosNet = wsHelper.obtenerParametros();
+                parametrosNet = wsHelper.obtenerParametros();
                 publishProgress(0);
                 currentLocation = locationUtils.getLastLocation();
                 publishProgress(1);

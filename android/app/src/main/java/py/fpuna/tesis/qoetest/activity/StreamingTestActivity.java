@@ -8,7 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,11 +31,28 @@ import py.fpuna.tesis.qoetest.utils.VideoUtils;
 public class StreamingTestActivity extends Activity
         implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener,
-        MediaPlayer.OnCompletionListener {
+        MediaPlayer.OnCompletionListener,
+        VideoView.OnTouchListener {
 
     public static final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View
             .SYSTEM_UI_FLAG_FULLSCREEN;
-
+    /**
+     * Oculta la barra de navagacion y la barra del sistema
+     */
+    private Runnable mAutoHideLayouts = new Runnable() {
+        @Override
+        public void run() {
+            if (progressLayout.getVisibility() == View.VISIBLE) {
+                progressLayout.setVisibility(View.GONE);
+                buttonBar.setVisibility(View.GONE);
+            }
+            if (Build.VERSION.SDK_INT >= 11) {
+                if (decorView.getSystemUiVisibility() != uiOptions) {
+                    decorView.setSystemUiVisibility(uiOptions);
+                }
+            }
+        }
+    };
     View decorView;
     private SeekBar videoProgressBar;
     private VideoView videoView;
@@ -60,27 +79,6 @@ public class StreamingTestActivity extends Activity
     private long duracionActual = 0;
     private Integer videoPos;
     private boolean finalizado = false;
-
-    /**
-     * Oculta la barra de navagacion y la barra del sistema
-     */
-    private Runnable mAutoHideLayouts = new Runnable() {
-        @Override
-        public void run() {
-
-            if (progressLayout.getVisibility() == View.VISIBLE) {
-                progressLayout.setVisibility(View.GONE);
-                buttonBar.setVisibility(View.GONE);
-            }
-            if(Build.VERSION.SDK_INT >= 11) {
-
-                if (decorView.getSystemUiVisibility() != uiOptions) {
-                    decorView.setSystemUiVisibility(uiOptions);
-                }
-            }
-        }
-    };
-
     /**
      * Background Runnable thread
      */
@@ -122,7 +120,7 @@ public class StreamingTestActivity extends Activity
 
         decorView = getWindow().getDecorView();
 
-        if(Build.VERSION.SDK_INT >= 11) {
+        if (Build.VERSION.SDK_INT >= 11) {
             decorView.setSystemUiVisibility(uiOptions);
             decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
                 @Override
@@ -134,6 +132,9 @@ public class StreamingTestActivity extends Activity
                     }
                 }
             });
+        } else {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         setContentView(R.layout.activity_streaming_test);
 
@@ -145,6 +146,7 @@ public class StreamingTestActivity extends Activity
         videoView.setOnErrorListener(this);
         videoView.setOnPreparedListener(this);
         videoView.setOnCompletionListener(this);
+        videoView.setOnTouchListener((View.OnTouchListener) this);
 
         // Se obtiene un video aleatoriamente
         videoPos = videoUtils.getVideo();
@@ -162,9 +164,7 @@ public class StreamingTestActivity extends Activity
         bufferingProgressBar.setVisibility(View.VISIBLE);
 
         buttonBar = (LinearLayout) findViewById(R.id.btLayout);
-        if(Build.VERSION.SDK_INT < 11) {
-            buttonBar.setVisibility(View.GONE);
-        }
+        buttonBar.setVisibility(View.GONE);
 
         /* Posicion Actual Label */
         posicionActualVideoLabel = (TextView) findViewById(R.id
@@ -226,9 +226,9 @@ public class StreamingTestActivity extends Activity
                 canceladoVideoParam.setCodigoParametro(Constants.CANCELADO_VIDEO_ID);
 
                 int duracionActual = videoView.getCurrentPosition();
-                if(finalizado){
+                if (finalizado) {
                     canceladoVideoParam.setValor(0.0);
-                }else{
+                } else {
                     canceladoVideoParam.setValor(1.0);
                 }
 
@@ -383,9 +383,19 @@ public class StreamingTestActivity extends Activity
     }
 
     public void mostrarSystemUI() {
-        if(Build.VERSION.SDK_INT >= 11) {
+        if (Build.VERSION.SDK_INT >= 11) {
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         }
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (Build.VERSION.SDK_INT < 11) {
+            progressLayout.setVisibility(View.VISIBLE);
+            buttonBar.setVisibility(View.VISIBLE);
+            mHandlerAutoHide.postDelayed(mAutoHideLayouts, 5 * 1000);
+        }
+        return false;
     }
 }
