@@ -1,6 +1,7 @@
 package py.fpuna.tesis.qoetest.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class EnviarTestActivity extends Activity {
     private List<QoSParam> qoSParams;
     private DeviceLocation deviceLocation;
     private DeviceStatus deviceStatus;
+    private ProgressDialog progressDialog;
     private Button atrasButton;
 
     @Override
@@ -51,6 +53,11 @@ public class EnviarTestActivity extends Activity {
         deviceStatus = bundle.getParcelable(Constants.EXTRA_DEVICE_STATUS);
         /** Localizacion del dispositivo */
         deviceLocation = bundle.getParcelable(Constants.EXTRA_LOCALIZACION);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Enviando resultados...");
 
         atrasButton = (Button) findViewById(R.id.leftButton);
         atrasButton.setVisibility(View.GONE);
@@ -88,7 +95,14 @@ public class EnviarTestActivity extends Activity {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
+
+        @Override
         protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
             Toast.makeText(getBaseContext(), "Datos enviados",
                     Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(),

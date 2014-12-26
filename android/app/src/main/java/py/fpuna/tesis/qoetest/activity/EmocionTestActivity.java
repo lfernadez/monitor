@@ -389,7 +389,7 @@ public class EmocionTestActivity extends Activity {
 
             /* Enviados desde el servidor */
 
-            /** Delay
+            /** Delay */
             QoSParam delayServerParam = new QoSParam();
             delayServerParam.setCodigoParametro(Constants.DELAY_ID);
             delayServerParam.setValor(parametrosNet.getDelay());
@@ -411,7 +411,7 @@ public class EmocionTestActivity extends Activity {
             QoSParam jitterServerParam = new QoSParam();
             jitterServerParam.setCodigoParametro(Constants.JITTER_ID);
             jitterServerParam.setValor(parametrosNet.getJitter());
-            jitterServerParam.setObtenido(Constants.OBT_ENV);*/
+            jitterServerParam.setObtenido(Constants.OBT_ENV);
 
 
             // Se agregan los parametros
@@ -419,10 +419,10 @@ public class EmocionTestActivity extends Activity {
             parametrosQos.add(bandwidthParam);
             parametrosQos.add(packetLossParam);
             parametrosQos.add(jitterParam);
-            /*parametrosQos.add(delayServerParam);
+            parametrosQos.add(delayServerParam);
             parametrosQos.add(bandwidthServerParam);
             parametrosQos.add(packetLossServerParam);
-            parametrosQos.add(jitterServerParam);*/
+            parametrosQos.add(jitterServerParam);
             extras.putParcelableArrayList(Constants.EXTRA_PARAM_QOS,parametrosQos);
 
             intent.putExtras(extras);
