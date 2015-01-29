@@ -26,8 +26,8 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
     private Button siguienteBtn;
     private Button atrasBtn;
 
-    private RatingBar calidadRatingBar;
-    private TextView calidadRBLabel;
+    //private RatingBar calidadRatingBar;
+    //private TextView calidadRBLabel;
     private RatingBar globalRatingBar;
 
 
@@ -83,7 +83,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
             }
         });
 
-        calidadRatingBar = (RatingBar) findViewById(R.id.ratingBar_calidad_video);
+        /*calidadRatingBar = (RatingBar) findViewById(R.id.ratingBar_calidad_video);
         calidadRBLabel = (TextView) findViewById(R.id.ratingBar_calidad_label);
         calidadRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -100,7 +100,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
                     calidadRBLabel.setText(VideoTestMessages.BAD_QUALITY_QOE);
                 }
             }
-        });
+        });*/
 
 
         globalRatingBar = (RatingBar) findViewById(R.id.ratingBar_globla_video);
@@ -123,7 +123,7 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
                             CalcUtils.getPromedio(
                                     tiempoCargaInicialRatingBar.getRating(),
                                     bufferingRatingBar.getRating(),
-                                    calidadRatingBar.getRating(),
+                                    //calidadRatingBar.getRating(),
                                     globalRatingBar.getRating()));
                     pruebas.add(pruebaStreaming);
                     intent.putParcelableArrayListExtra(Constants.EXTRA_QOE_TEST, pruebas);
@@ -146,12 +146,12 @@ public class QoEStreamingTestActivity extends ActionBarActivity {
                     Toast.LENGTH_LONG).show();
             return false;
         }
-        if (calidadRatingBar.getRating() == 0) {
+        /*if (calidadRatingBar.getRating() == 0) {
             Toast.makeText(getBaseContext(), "Seleccione una de las " +
                             "estrellas de acuerdo a su evaluación ",
                     Toast.LENGTH_LONG).show();
             return false;
-        }
+        }*/
         if (bufferingRatingBar.getRating() == 0) {
             Toast.makeText(getBaseContext(), "Seleccione una de las " +
                             "estrellas de acuerdo a su evaluación ",

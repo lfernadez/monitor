@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"/>
 
             <!-- Campo Calidad Video -->
-            <TextView
+            <!--<TextView
                 android:id="@+id/calidad_video_pregunta_label"
                 android:text="@string/pregunta_calidad_video"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 style="@style/normal_label_style"
                 android:layout_below="@id/ratingBar_calidad_video"
-                android:layout_width="wrap_content"/>
+                android:layout_width="wrap_content"/> -->
 
 
             <!-- Campo Calidad Globar -->
@@ -101,7 +101,7 @@
                 android:id="@+id/global_pregunta_label"
                 android:text="@string/pregunta_global_video"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ratingBar_calidad_label"
+                android:layout_below="@id/ratingBar_buffering_label"
                 android:layout_width="wrap_content"/>
 
             <RatingBar

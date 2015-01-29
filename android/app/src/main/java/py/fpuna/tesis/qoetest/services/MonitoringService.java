@@ -394,10 +394,8 @@ public class MonitoringService extends Service {
             commands.add(8, "k");
             commands.add(9, "-b");
             commands.add(10, "2.0M");
-            commands.add(11, "-t");
-            commands.add(12, "10");
-            commands.add(13, "-p");
-            commands.add(14, "10001");
+            commands.add(11, "-p");
+            commands.add(12, "10001");
 
 
             Process process = new ProcessBuilder().command(commands)
@@ -407,9 +405,9 @@ public class MonitoringService extends Service {
             reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
             String line = "";
-            for(int i= 0; i<3;i++){
+            /*for(int i= 0; i<3;i++){
                 line = reader.readLine();
-            }
+            }*/
 
             line = reader.readLine();
             String valoresSec1 [] = line.replaceAll("[^0-9.]+",
@@ -417,8 +415,10 @@ public class MonitoringService extends Service {
 
             while(valoresSec1.length != 9 && line != null){
                 line = reader.readLine();
-                valoresSec1 = line.replaceAll("[^0-9.]+",
-                        " ").trim().split(" ");
+                if(line != null) {
+                    valoresSec1 = line.replaceAll("[^0-9.]+",
+                            " ").trim().split(" ");
+                }
             }
 
             line = reader.readLine();
@@ -426,8 +426,10 @@ public class MonitoringService extends Service {
                     " ").trim().split(" ");
             while(valoresSec2.length != 9 && line != null){
                 line = reader.readLine();
-                valoresSec2 = line.replaceAll("[^0-9.]+",
-                        " ").trim().split(" ");
+                if(line != null) {
+                    valoresSec2 = line.replaceAll("[^0-9.]+",
+                            " ").trim().split(" ");
+                }
             }
 
             if(valoresSec2.length !=9 && valoresSec1.length == 9){
