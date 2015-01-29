@@ -2,9 +2,13 @@ package py.fpuna.tesis.qoetest.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ import py.fpuna.tesis.qoetest.model.PhoneInfo;
 import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.model.QoSParam;
 import py.fpuna.tesis.qoetest.rest.WSHelper;
+import py.fpuna.tesis.qoetest.services.CPUMonitoringService;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 
@@ -34,6 +39,30 @@ public class EnviarTestActivity extends Activity {
     private DeviceStatus deviceStatus;
     private ProgressDialog progressDialog;
     private Button atrasButton;
+    CPUMonitoringService mService;
+
+    private boolean mBound;
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            CPUMonitoringService.LocalBinder binder = (CPUMonitoringService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, CPUMonitoringService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +115,9 @@ public class EnviarTestActivity extends Activity {
             String horaString = DateHourUtils.format(hora,
                     DateHourUtils.Format.TIME_STORE);
 
+            double cpuLoadAverage = mService.getLoadAverage();
+            deviceStatus.setUsoCpu(cpuLoadAverage);
+
             phoneInfo.setEstadoTelefono(deviceStatus);
             phoneInfo.setLocalizacion(deviceLocation);
 
@@ -103,6 +135,10 @@ public class EnviarTestActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
+            mService.removeThread();
+            mService.unbindService(mConnection);
+            Intent intentCPUService = new Intent(getApplicationContext(), CPUMonitoringService.class);
+            stopService(intentCPUService);
             Toast.makeText(getBaseContext(), "Datos enviados",
                     Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(),

@@ -107,4 +107,10 @@ public class NetworkUtils {
         }
 
     }
+
+    public static long calculateKbps(long bytesActual, long bytesAnterior, long timeActual,
+                                     long timeAnterior){
+        return (((bytesActual - bytesAnterior) *
+                8) / 1000) / (timeActual - timeAnterior);
+    }
 }

@@ -125,24 +125,23 @@ public class MonitoringService extends Service {
             if (cm.getActiveNetworkInfo() != null) {
                 // Tipo de Red Mobile (3G, HSPA, HSPA+,...)
                 if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
-                    long kbpsDOWN = (((bytesRXActual - bytesRXanterior) *
-                            8) / 1000) / (timeActual - timeAnterior);
+                    long kbpsDOWN = NetworkUtils.calculateKbps(bytesRXActual, bytesRXanterior,
+                            timeActual, timeAnterior);
                     bpsDown = kbpsDOWN;
-                    long kbpsUP = (((bytesTXActual - bytesTXanterior) * 8) / 1000) / (timeActual - timeAnterior);
+                    long kbpsUP = NetworkUtils.calculateKbps(bytesTXActual, bytesTXanterior,
+                            timeActual, timeAnterior);
                     bpsUP = kbpsUP;
                     Log.d(TAG, "UP: " + String.valueOf(kbpsUP) +
                             "Kbps   DOWN: " + String.valueOf(kbpsDOWN) +
                             "Kbps");
-                    /*updateNotification("UP: " + String.valueOf(kbpsUP) +
-                        "Kbps   DOWN: " + String.valueOf(kbpsDOWN));*/
-                    // Tipo de Red WiFi
+
                 } else if (cm.getActiveNetworkInfo().getType() ==
                         ConnectivityManager.TYPE_WIFI) {
-                    long kbpsDOWNWiFi = (((bytesWiFiRXActual -
-                            bytesWiFiRXAnterior) * 8) / 1000) / (timeActual - timeAnterior);
+                    long kbpsDOWNWiFi = NetworkUtils.calculateKbps(bytesWiFiTXActual,
+                            bytesWiFiTXAnterior, timeActual, timeAnterior);
                     bpsDown = kbpsDOWNWiFi;
-                    long kbpsUPWiFi = (((bytesWiFiTXActual -
-                            bytesWiFiTXAnterior) * 8) / 1000) / (timeActual - timeAnterior);
+                    long kbpsUPWiFi = NetworkUtils.calculateKbps(bytesWiFiTXActual,
+                            bytesWiFiTXAnterior, timeActual, timeAnterior);
                     bpsUP = kbpsUPWiFi;
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     if (wifiInfo != null) {
@@ -153,11 +152,7 @@ public class MonitoringService extends Service {
                                         (kbpsUPWiFi)
                                 + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi)
                                 + "Kbps");
-                    /*updateNotification("Link speed " + String
-                            .valueOf(linkSpeed) + "Mbps UP: " + String
-                            .valueOf
-                                    (kbpsUPWiFi)
-                            + "Kbps DOWN: " + String.valueOf(kbpsDOWNWiFi));*/
+
                     }
                 }
                 // No hay red disponible

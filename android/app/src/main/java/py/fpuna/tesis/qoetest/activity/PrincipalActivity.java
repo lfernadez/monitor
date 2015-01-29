@@ -31,6 +31,7 @@ import py.fpuna.tesis.qoetest.R;
 import py.fpuna.tesis.qoetest.fragment.InfoFragment;
 import py.fpuna.tesis.qoetest.fragment.NavigationDrawerFragment;
 import py.fpuna.tesis.qoetest.fragment.TestFragment;
+import py.fpuna.tesis.qoetest.services.CPUMonitoringService;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
 import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 import py.fpuna.tesis.qoetest.utils.Constants;
@@ -111,6 +112,9 @@ public class PrincipalActivity extends ActionBarActivity
         Intent intentNetworkService = new Intent(getApplicationContext(),
                 NetworkMonitoringService.class);
         startService(intentNetworkService);
+
+        Intent intentCPUService = new Intent(getApplicationContext(), CPUMonitoringService.class);
+        startService(intentCPUService);
 
         initIperf();
     }
