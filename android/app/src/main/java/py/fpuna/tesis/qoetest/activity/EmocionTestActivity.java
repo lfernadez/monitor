@@ -266,9 +266,9 @@ public class EmocionTestActivity extends Activity {
                 //cpuLoad = mService.getCpuLoad();
 
                 //Carga de Memoria
-                double memFree = mService.getMemFree();
+                /*double memFree = mService.getMemFree();
                 double totalram = deviceInfo.getRAMProc();
-                memLoad = ((totalram - memFree) / totalram) * 100;
+                memLoad = ((totalram - memFree) / totalram) * 100;*/
 
                 //Nivel de senal red celular
                 signalLevel3G = mNetworkService.getSignalLevel3G();

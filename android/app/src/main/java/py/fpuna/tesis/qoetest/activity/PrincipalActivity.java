@@ -1,7 +1,6 @@
 package py.fpuna.tesis.qoetest.activity;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,12 +11,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import java.io.FileInputStream;
@@ -32,6 +29,7 @@ import py.fpuna.tesis.qoetest.fragment.InfoFragment;
 import py.fpuna.tesis.qoetest.fragment.NavigationDrawerFragment;
 import py.fpuna.tesis.qoetest.fragment.TestFragment;
 import py.fpuna.tesis.qoetest.services.CPUMonitoringService;
+import py.fpuna.tesis.qoetest.services.MemoryMonitoringService;
 import py.fpuna.tesis.qoetest.services.MonitoringService;
 import py.fpuna.tesis.qoetest.services.NetworkMonitoringService;
 import py.fpuna.tesis.qoetest.utils.Constants;
@@ -115,6 +113,9 @@ public class PrincipalActivity extends ActionBarActivity
 
         Intent intentCPUService = new Intent(getApplicationContext(), CPUMonitoringService.class);
         startService(intentCPUService);
+
+        Intent intentMemoryService = new Intent(getApplicationContext(), MemoryMonitoringService.class);
+        startService(intentMemoryService);
 
         initIperf();
     }

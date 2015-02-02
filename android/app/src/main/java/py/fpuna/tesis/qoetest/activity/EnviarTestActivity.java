@@ -25,6 +25,7 @@ import py.fpuna.tesis.qoetest.model.PruebaTest;
 import py.fpuna.tesis.qoetest.model.QoSParam;
 import py.fpuna.tesis.qoetest.rest.WSHelper;
 import py.fpuna.tesis.qoetest.services.CPUMonitoringService;
+import py.fpuna.tesis.qoetest.services.MemoryMonitoringService;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
 
@@ -40,6 +41,7 @@ public class EnviarTestActivity extends Activity {
     private ProgressDialog progressDialog;
     private Button atrasButton;
     CPUMonitoringService mService;
+    MemoryMonitoringService mMemoryMonitoringService;
 
     private boolean mBound;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -57,11 +59,29 @@ public class EnviarTestActivity extends Activity {
         }
     };
 
+    private ServiceConnection mMemoryMonitoringConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            MemoryMonitoringService.LocalBinder binder = (MemoryMonitoringService.LocalBinder) service;
+            mMemoryMonitoringService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        }
+    };
+
     @Override
     protected void onStart() {
         super.onStart();
         Intent intent = new Intent(this, CPUMonitoringService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        Intent intentMemoryService = new Intent(this, MemoryMonitoringService.class);
+        bindService(intentMemoryService, mMemoryMonitoringConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -118,6 +138,9 @@ public class EnviarTestActivity extends Activity {
             double cpuLoadAverage = mService.getLoadAverage();
             deviceStatus.setUsoCpu(cpuLoadAverage);
 
+            double memoryLoadAverage = mMemoryMonitoringService.getLoadAverage();
+            deviceStatus.setUsoRam(memoryLoadAverage);
+
             phoneInfo.setEstadoTelefono(deviceStatus);
             phoneInfo.setLocalizacion(deviceLocation);
 
@@ -137,8 +160,12 @@ public class EnviarTestActivity extends Activity {
             progressDialog.dismiss();
             mService.removeThread();
             mService.unbindService(mConnection);
+            mMemoryMonitoringService.removeThread();
+            mMemoryMonitoringService.unbindService(mMemoryMonitoringConnection);
             Intent intentCPUService = new Intent(getApplicationContext(), CPUMonitoringService.class);
             stopService(intentCPUService);
+            Intent intentMemoryService = new Intent(getApplicationContext(), MemoryMonitoringService.class);
+            stopService(intentMemoryService);
             Toast.makeText(getBaseContext(), "Datos enviados",
                     Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(),

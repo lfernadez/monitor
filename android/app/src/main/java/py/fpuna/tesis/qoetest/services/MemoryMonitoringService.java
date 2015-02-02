@@ -1,69 +1,97 @@
 package py.fpuna.tesis.qoetest.services;
 
 import android.app.ActivityManager;
-import android.app.IntentService;
-import android.content.Context;
+import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.IBinder;
+import android.util.Log;
 
 import py.fpuna.tesis.qoetest.utils.Constants;
+import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
 
 /**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p/>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
+ *
  */
-public class MemoryMonitoringService extends IntentService {
-    // TODO: Rename actions, choose action names that describe tasks that this
-    // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-    private static final String ACTION_MEM_USAGE = "py.fpuna.tesis.qoetest" +
-            ".services.action.MEM_USAGE";
+public class MemoryMonitoringService extends Service {
+    HandlerThread mHandlerThread;
+    private Handler mHandler;
+    private float totalRAM;
+    private final IBinder mBinder = new LocalBinder();
+    private DeviceInfoUtils infoUtils;
+    private long ramUsage;
+    private double mCargaProm;
+    private double mCargaAnterior;
+    private int i;
+    private float availableMegs;
 
-    // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "py.fpuna.tesis.qoetest.services.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "py.fpuna.tesis.qoetest.services.extra.PARAM2";
+    private Runnable monitoring = new Runnable() {
+        @Override
+        public void run() {
+            ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+            ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            activityManager.getMemoryInfo(mi);
+            availableMegs = mi.availMem / Constants.MULTIPLO_MB;
+            ramUsage = Math.round(((totalRAM - availableMegs) / totalRAM) * 100);
+            i++;
+            if(i == 1){
+                mCargaProm = ramUsage;
+                mCargaAnterior = Math.log(mCargaProm);
+            }else{
+                mCargaProm = (((i -1) * mCargaAnterior) + Math.log(ramUsage))/i;
+                mCargaAnterior = mCargaProm;
+            }
 
-    /**
-     * Starts this service to perform action Foo with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
-     */
-    // TODO: Customize helper method
-    public static void startActionFoo(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, MemoryMonitoringService.class);
-        intent.setAction(ACTION_MEM_USAGE);
-        intent.putExtra(EXTRA_PARAM1, param1);
-        intent.putExtra(EXTRA_PARAM2, param2);
-        context.startService(intent);
+            Log.d("Memory Usage %:",String.valueOf(ramUsage));
+            Log.d("RAM Usage Average", String.valueOf(Math.exp(mCargaProm)));
+            mHandler.postDelayed(monitoring, Constants.TIEMPO_ACTUALIZACION);
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        i = 0;
+        infoUtils = new DeviceInfoUtils(getApplicationContext());
+        totalRAM = infoUtils.getRAMProc();
+        mHandlerThread = new HandlerThread("MemoryMonitoringThread",
+                android.os.Process.THREAD_PRIORITY_BACKGROUND);
+        mHandlerThread.start();
+        mHandler = new Handler(mHandlerThread.getLooper());
+        mHandler.postDelayed(monitoring, 15000);
     }
 
-    public MemoryMonitoringService() {
-        super("MemoryMonitoringService");
+    /**
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
+
+    public double getLoadAverage() {
+        return mCargaProm;
+    }
+
+    public void removeThread() {
+        mHandler.removeCallbacks(monitoring);
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            final String action = intent.getAction();
-            if (ACTION_MEM_USAGE.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final String param2 = intent.getStringExtra(EXTRA_PARAM2);
-                handleAction(param1, param2);
-            }
-        }
+    public IBinder onBind(Intent intent) {
+        return mBinder;
     }
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleAction(String param1, String param2) {
-        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        activityManager.getMemoryInfo(mi);
-        long availableMegs = mi.availMem / Constants.MULTIPLO_MB;
+    public class LocalBinder extends Binder {
+        public MemoryMonitoringService getService() {
+            return MemoryMonitoringService.this;
+        }
+
     }
+
 
 }

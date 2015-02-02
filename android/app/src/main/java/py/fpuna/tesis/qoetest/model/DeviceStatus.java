@@ -66,8 +66,12 @@ public class DeviceStatus implements Parcelable{
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(this.nivelBateria);
         parcel.writeString(this.tipoAccesoInternet);
-        parcel.writeDouble(this.usoCpu);
-        parcel.writeDouble(this.usoRam);
+        if(this.usoCpu != null) {
+            parcel.writeDouble(this.usoCpu);
+        }
+        if(this.usoRam != null) {
+            parcel.writeDouble(this.usoRam);
+        }
         parcel.writeString(this.intensidadSenhal);
     }
 
