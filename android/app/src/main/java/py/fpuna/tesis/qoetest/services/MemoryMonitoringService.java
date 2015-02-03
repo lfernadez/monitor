@@ -18,14 +18,15 @@ import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
 public class MemoryMonitoringService extends Service {
     HandlerThread mHandlerThread;
     private Handler mHandler;
-    private float totalRAM;
+    private long totalRAM;
     private final IBinder mBinder = new LocalBinder();
     private DeviceInfoUtils infoUtils;
+    private long ramUsagePorcentaje;
     private long ramUsage;
     private double mCargaProm;
     private double mCargaAnterior;
     private int i;
-    private float availableMegs;
+    private long availableMegs;
 
     private Runnable monitoring = new Runnable() {
         @Override
@@ -34,18 +35,19 @@ public class MemoryMonitoringService extends Service {
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             activityManager.getMemoryInfo(mi);
             availableMegs = mi.availMem / Constants.MULTIPLO_MB;
-            ramUsage = Math.round(((totalRAM - availableMegs) / totalRAM) * 100);
+            ramUsage = totalRAM - availableMegs;
+            ramUsagePorcentaje = Math.round(((totalRAM - availableMegs) / totalRAM) * 100);
             i++;
             if(i == 1){
                 mCargaProm = ramUsage;
-                mCargaAnterior = Math.log(mCargaProm);
+                mCargaAnterior = mCargaProm;
             }else{
-                mCargaProm = (((i -1) * mCargaAnterior) + Math.log(ramUsage))/i;
+                mCargaProm = (((i -1) * mCargaAnterior) + ramUsage)/i;
                 mCargaAnterior = mCargaProm;
             }
-
-            Log.d("Memory Usage %:",String.valueOf(ramUsage));
-            Log.d("RAM Usage Average", String.valueOf(Math.exp(mCargaProm)));
+            Log.d("Memory Usage", String.valueOf(ramUsage));
+            Log.d("Memory Usage %:",String.valueOf(ramUsagePorcentaje));
+            Log.d("RAM Usage Average", String.valueOf(mCargaProm));
             mHandler.postDelayed(monitoring, Constants.TIEMPO_ACTUALIZACION);
         }
     };

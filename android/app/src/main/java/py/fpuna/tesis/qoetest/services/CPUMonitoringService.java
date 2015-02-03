@@ -61,8 +61,12 @@ public class CPUMonitoringService extends Service {
                     mCargaProm = carga;
                     mCargaAnterior = Math.log(mCargaProm);
                 }else{
-                    mCargaProm = (((i -1) * mCargaAnterior) + Math.log(carga))/i;
+                    if(carga == 0) {
+                        carga = 1;
+                    }
+                    mCargaProm = (((i - 1) * mCargaAnterior) + Math.log(carga)) / i;
                     mCargaAnterior = mCargaProm;
+
                 }
                 Log.d("CPU Load", String.valueOf(carga));
                 Log.d("CPU Prom", String.valueOf(Math.exp(mCargaProm)));
@@ -84,18 +88,29 @@ public class CPUMonitoringService extends Service {
                 String load = reader.readLine();
 
                 String[] toks = load.split(" +");  // Split on one or more spaces
-
-                long idle2 = Long.parseLong(toks[4]);
-                long cpu2 = Long.parseLong(toks[1]) + Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[5])
+                i++;
+                long idle2 = Long.parseLong(toks[4]) + Long.parseLong(toks[5]);
+                long cpu2 = Long.parseLong(toks[1]) + Long.parseLong(toks[2]) + Long.parseLong(toks[3])
                         + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
                 if(idle1 != 0 && cpu1 != 0) {
                     tmp = (float) (cpu2 - cpu1) / ((cpu2 + idle2) - (cpu1 + idle1));
                     mCargaActual = Math.round(tmp * 100);
                 }
+                if(i == 2){
+                    mCargaProm = mCargaActual;
+                    mCargaAnterior = Math.log(mCargaProm);
+                }else if(i > 2){
+                    if(mCargaActual == 0){
+                        mCargaActual = 1;
+                    }
+                    mCargaProm = (((i - 1) * mCargaAnterior) + Math.log(mCargaActual)) / i;
+                    mCargaAnterior = mCargaProm;
+                }
                 idle1 = idle2;
                 cpu1 = cpu2;
 
                 Log.d("CPU Uso",String.valueOf(mCargaActual));
+                Log.d("CPU Prom", String.valueOf(Math.exp(mCargaProm)));
                 reader.close();
 
                 mHandler.postDelayed(cpuUsageMonitoring,

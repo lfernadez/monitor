@@ -28,6 +28,8 @@ import py.fpuna.tesis.qoetest.services.CPUMonitoringService;
 import py.fpuna.tesis.qoetest.services.MemoryMonitoringService;
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DateHourUtils;
+import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
+import py.fpuna.tesis.qoetest.utils.DeviceStatusUtils;
 
 public class EnviarTestActivity extends Activity {
     private Button enviarTest;
@@ -42,6 +44,8 @@ public class EnviarTestActivity extends Activity {
     private Button atrasButton;
     CPUMonitoringService mService;
     MemoryMonitoringService mMemoryMonitoringService;
+    DeviceInfoUtils infoUtils;
+    DeviceStatusUtils statusUtils;
 
     private boolean mBound;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -89,6 +93,8 @@ public class EnviarTestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enviar_test);
 
+        infoUtils = new DeviceInfoUtils(getApplicationContext());
+
         Bundle bundle = getIntent().getExtras();
         /** Valores de MOS de las pruebas */
         pruebaTest = bundle.getParcelableArrayList(Constants.EXTRA_QOE_TEST);
@@ -135,11 +141,12 @@ public class EnviarTestActivity extends Activity {
             String horaString = DateHourUtils.format(hora,
                     DateHourUtils.Format.TIME_STORE);
 
-            double cpuLoadAverage = mService.getLoadAverage();
-            deviceStatus.setUsoCpu(cpuLoadAverage);
+            double cpuLoadAverage = statusUtils.getLoadAvg();
+            deviceStatus.setUsoCpu(cpuLoadAverage - deviceStatus.getUsoCpu());
 
             double memoryLoadAverage = mMemoryMonitoringService.getLoadAverage();
-            deviceStatus.setUsoRam(memoryLoadAverage);
+            double memoryLoadAvgPorcentaje = memoryLoadAverage / infoUtils.getRAMProc();
+            deviceStatus.setUsoRam(memoryLoadAvgPorcentaje);
 
             phoneInfo.setEstadoTelefono(deviceStatus);
             phoneInfo.setLocalizacion(deviceLocation);

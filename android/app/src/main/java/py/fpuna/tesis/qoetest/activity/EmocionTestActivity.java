@@ -263,7 +263,7 @@ public class EmocionTestActivity extends Activity {
                     preferenceUtils.savePhoneInfo(info);
                 }
                 // Uso de CPU
-                //cpuLoad = mService.getCpuLoad();
+                cpuLoad = deviceStatsUtils.getLoadAvg();
 
                 //Carga de Memoria
                 /*double memFree = mService.getMemFree();
@@ -339,8 +339,8 @@ public class EmocionTestActivity extends Activity {
 
             // Extra del estado del dispositivo
             DeviceStatus status = new DeviceStatus();
-            //status.setUsoCpu(cpuLoad);
-            status.setUsoRam(memLoad);
+            status.setUsoCpu(cpuLoad);
+            //status.setUsoRam(memLoad);
             status.setTipoAccesoInternet(redActiva);
             status.setIntensidadSenhal(String.valueOf
                     (signalLevelActiveNetwork));
