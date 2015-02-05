@@ -2,11 +2,16 @@ package py.fpuna.tesis.qoetest.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -31,6 +36,9 @@ public class CPUMonitoringService extends Service {
     private long idle1;
     private long cpu1;
     private final IBinder mBinder = new LocalBinder();
+    WindowManager windowManager;
+    TextView text;
+    private boolean agregado;
 
 
     private Runnable monitoring = new Runnable() {
@@ -68,6 +76,7 @@ public class CPUMonitoringService extends Service {
                     mCargaAnterior = mCargaProm;
 
                 }
+
                 Log.d("CPU Load", String.valueOf(carga));
                 Log.d("CPU Prom", String.valueOf(Math.exp(mCargaProm)));
                 mHandler.postDelayed(monitoring,
@@ -108,7 +117,7 @@ public class CPUMonitoringService extends Service {
                 }
                 idle1 = idle2;
                 cpu1 = cpu2;
-
+                updateCpuLoad(mCargaActual);
                 Log.d("CPU Uso",String.valueOf(mCargaActual));
                 Log.d("CPU Prom", String.valueOf(Math.exp(mCargaProm)));
                 reader.close();
@@ -129,6 +138,11 @@ public class CPUMonitoringService extends Service {
         i = 0;
         mCargaProm = 0;
         mCargaAnterior = 0;
+        text = new TextView(this);
+        agregado = false;
+        text.setTextColor(Color.WHITE);
+        text.setShadowLayer(1, 0, 0, Color.BLACK);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mHandlerThread = new HandlerThread("CPUMonitoringThread",
                 android.os.Process.THREAD_PRIORITY_BACKGROUND);
         mHandlerThread.start();
@@ -168,5 +182,24 @@ public class CPUMonitoringService extends Service {
         public CPUMonitoringService getService() {
             return CPUMonitoringService.this;
         }
+    }
+
+    public void updateCpuLoad(int newValue){
+        text.setText("CPU: " + String.valueOf(newValue) + "%");
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.RIGHT | Gravity.TOP;
+        if(agregado){
+            windowManager.updateViewLayout(text, params);
+        }else{
+            windowManager.addView(text, params);
+            agregado = true;
+        }
+
+
     }
 }

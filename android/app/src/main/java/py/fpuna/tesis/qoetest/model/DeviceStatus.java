@@ -79,7 +79,7 @@ public class DeviceStatus implements Parcelable{
         this.nivelBateria = in.readInt();
         this.tipoAccesoInternet = in.readString();
         this.usoCpu = in.readDouble();
-        this.usoRam = in.readDouble();
+        //this.usoRam = in.readDouble();
         this.intensidadSenhal = in.readString();
 
     }

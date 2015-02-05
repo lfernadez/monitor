@@ -304,13 +304,13 @@ public class EmocionTestActivity extends Activity {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             if (values[0] == 1) {
-                progressDialog.setMessage("Realizando test Ping");
+                progressDialog.setMessage("Realizando Ping");
             }
             if (values[0] == 2) {
-                progressDialog.setMessage("Realizando Speed Test TCP");
+                progressDialog.setMessage("Realizando Iperf TCP");
             }
             if (values[0] == 3) {
-                progressDialog.setMessage("Realizando Speed Test UDP");
+                progressDialog.setMessage("Realizando Iperf UDP");
             }
         }
 

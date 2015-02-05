@@ -68,7 +68,7 @@ public class EnviarTestActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
-            MemoryMonitoringService.LocalBinder binder = (MemoryMonitoringService.LocalBinder) service;
+            MemoryMonitoringService.ServiceBinder binder = (MemoryMonitoringService.ServiceBinder) service;
             mMemoryMonitoringService = binder.getService();
             mBound = true;
         }
@@ -94,6 +94,7 @@ public class EnviarTestActivity extends Activity {
         setContentView(R.layout.activity_enviar_test);
 
         infoUtils = new DeviceInfoUtils(getApplicationContext());
+        statusUtils = new DeviceStatusUtils(getApplicationContext());
 
         Bundle bundle = getIntent().getExtras();
         /** Valores de MOS de las pruebas */
@@ -142,10 +143,10 @@ public class EnviarTestActivity extends Activity {
                     DateHourUtils.Format.TIME_STORE);
 
             double cpuLoadAverage = statusUtils.getLoadAvg();
-            deviceStatus.setUsoCpu(cpuLoadAverage - deviceStatus.getUsoCpu());
+            deviceStatus.setUsoCpu(cpuLoadAverage);
 
             double memoryLoadAverage = mMemoryMonitoringService.getLoadAverage();
-            double memoryLoadAvgPorcentaje = memoryLoadAverage / infoUtils.getRAMProc();
+            double memoryLoadAvgPorcentaje = Math.round((memoryLoadAverage / infoUtils.getRAMProc() * 100));
             deviceStatus.setUsoRam(memoryLoadAvgPorcentaje);
 
             phoneInfo.setEstadoTelefono(deviceStatus);
@@ -166,9 +167,9 @@ public class EnviarTestActivity extends Activity {
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
             mService.removeThread();
-            mService.unbindService(mConnection);
+            //mService.unbindService(mConnection);
             mMemoryMonitoringService.removeThread();
-            mMemoryMonitoringService.unbindService(mMemoryMonitoringConnection);
+            //mMemoryMonitoringService.unbindService(mMemoryMonitoringConnection);
             Intent intentCPUService = new Intent(getApplicationContext(), CPUMonitoringService.class);
             stopService(intentCPUService);
             Intent intentMemoryService = new Intent(getApplicationContext(), MemoryMonitoringService.class);

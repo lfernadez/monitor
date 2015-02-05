@@ -3,11 +3,16 @@ package py.fpuna.tesis.qoetest.services;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import py.fpuna.tesis.qoetest.utils.Constants;
 import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
@@ -18,15 +23,19 @@ import py.fpuna.tesis.qoetest.utils.DeviceInfoUtils;
 public class MemoryMonitoringService extends Service {
     HandlerThread mHandlerThread;
     private Handler mHandler;
-    private long totalRAM;
-    private final IBinder mBinder = new LocalBinder();
+    private float totalRAM;
+    private final IBinder mBinder = new ServiceBinder();
     private DeviceInfoUtils infoUtils;
     private long ramUsagePorcentaje;
-    private long ramUsage;
+    private float ramUsage;
     private double mCargaProm;
     private double mCargaAnterior;
     private int i;
     private long availableMegs;
+
+    WindowManager windowManager;
+    TextView text;
+    private boolean agregado;
 
     private Runnable monitoring = new Runnable() {
         @Override
@@ -36,7 +45,7 @@ public class MemoryMonitoringService extends Service {
             activityManager.getMemoryInfo(mi);
             availableMegs = mi.availMem / Constants.MULTIPLO_MB;
             ramUsage = totalRAM - availableMegs;
-            ramUsagePorcentaje = Math.round(((totalRAM - availableMegs) / totalRAM) * 100);
+            ramUsagePorcentaje = Math.round((ramUsage / totalRAM) * 100);
             i++;
             if(i == 1){
                 mCargaProm = ramUsage;
@@ -45,6 +54,7 @@ public class MemoryMonitoringService extends Service {
                 mCargaProm = (((i -1) * mCargaAnterior) + ramUsage)/i;
                 mCargaAnterior = mCargaProm;
             }
+            updateLoad(ramUsagePorcentaje);
             Log.d("Memory Usage", String.valueOf(ramUsage));
             Log.d("Memory Usage %:",String.valueOf(ramUsagePorcentaje));
             Log.d("RAM Usage Average", String.valueOf(mCargaProm));
@@ -57,6 +67,11 @@ public class MemoryMonitoringService extends Service {
         i = 0;
         infoUtils = new DeviceInfoUtils(getApplicationContext());
         totalRAM = infoUtils.getRAMProc();
+        text = new TextView(this);
+        agregado = false;
+        text.setTextColor(Color.WHITE);
+        text.setShadowLayer(1, 0, 0, Color.BLACK);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mHandlerThread = new HandlerThread("MemoryMonitoringThread",
                 android.os.Process.THREAD_PRIORITY_BACKGROUND);
         mHandlerThread.start();
@@ -88,12 +103,28 @@ public class MemoryMonitoringService extends Service {
         return mBinder;
     }
 
-    public class LocalBinder extends Binder {
+    public class ServiceBinder extends Binder {
         public MemoryMonitoringService getService() {
             return MemoryMonitoringService.this;
         }
 
     }
 
-
+    public void updateLoad(long newValue) {
+        text.setText("Mem: " + String.valueOf(newValue) + "%");
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.RIGHT | Gravity.TOP;
+        params.verticalMargin = 1;
+        if (agregado) {
+            windowManager.updateViewLayout(text, params);
+        } else {
+            windowManager.addView(text, params);
+            agregado = true;
+        }
+    }
 }

@@ -32,7 +32,7 @@ public class DeviceStatusUtils {
     public float getLoadAvg(){
         RandomAccessFile reader = null;
         try {
-            reader = new RandomAccessFile("/proc/stat", "r");
+            reader = new RandomAccessFile("/proc/loadavg", "r");
             String load = reader.readLine();
             String avgs [] = load.split(" ");
             return Float.valueOf(avgs[0]);

@@ -7,7 +7,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -18,6 +21,9 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.client.ClientProtocolException;
@@ -82,6 +88,10 @@ public class MonitoringService extends Service {
     private long timeActual;
     private BufferedReader reader;
     private Handler mHandler;
+
+    WindowManager windowManager;
+    TextView text;
+    private boolean agregado;
 
     public MonitoringService() {
     }
@@ -162,6 +172,7 @@ public class MonitoringService extends Service {
                 Log.d(TAG, "Red no disponible");
                 //updateNotification("Red no disponible");
             }
+            updateNetworkTraffic(cm.getActiveNetworkInfo(), bpsUP, bpsDown);
             // Actualizacion de los valores anteriores
             timeAnterior = timeActual;
             bytesRXanterior = bytesRXActual;
@@ -495,6 +506,11 @@ public class MonitoringService extends Service {
         telManager = (TelephonyManager)
                 getBaseContext().getSystemService(TELEPHONY_SERVICE);
         init();
+        text = new TextView(this);
+        agregado = false;
+        text.setTextColor(Color.WHITE);
+        text.setShadowLayer(1, 0, 0, Color.BLACK);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mHandlerThread = new HandlerThread("MonitoringThread",
                 android.os.Process.THREAD_PRIORITY_BACKGROUND);
         mHandlerThread.start();
@@ -590,6 +606,52 @@ public class MonitoringService extends Service {
             return MonitoringService.this;
         }
     }
+    public void updateNetworkTraffic(NetworkInfo networkInfo, long down, long up) {
+        if(networkInfo != null) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                switch (networkInfo.getSubtype()) {
+                    case TelephonyManager.NETWORK_TYPE_HSPAP:
+                        text.setText("HSPA+ D:" + String.valueOf(down)
+                                + " Kb/s U:" + String.valueOf(up) +"Kb/s");
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_HSPA:
+                        text.setText("HSPA D:" + String.valueOf(down)
+                                + " Kb/s U:" + String.valueOf(up) + "Kb/s");
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_EDGE:
+                        text.setText("EDGE D:" + String.valueOf(down)
+                                + " Kb/s U:" + String.valueOf(up) + "Kb/s");
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_HSDPA:
+                        text.setText("HSDPA D:" + String.valueOf(down)
+                                + " Kb/s U:" + String.valueOf(up) + "Kb/s");
+                        break;
+                }
+            } else {
+                text.setText("WiFi D:" + String.valueOf(down)
+                        + "Kb/s U:" + String.valueOf(up)+ "Kb/s");
+            }
+        }else {
+            text.setText("ND D:" + String.valueOf(down)
+                    + "Kb/s U:" + String.valueOf(up) + "Kb/s");
+
+        }
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.RIGHT | Gravity.TOP;
+        params.horizontalMargin = 1;
+        if (agregado) {
+            windowManager.updateViewLayout(text, params);
+        } else {
+            windowManager.addView(text, params);
+            agregado = true;
+        }
+    }
+
 
 
 }
