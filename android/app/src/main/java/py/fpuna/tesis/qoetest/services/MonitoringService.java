@@ -147,8 +147,8 @@ public class MonitoringService extends Service {
 
                 } else if (cm.getActiveNetworkInfo().getType() ==
                         ConnectivityManager.TYPE_WIFI) {
-                    long kbpsDOWNWiFi = NetworkUtils.calculateKbps(bytesWiFiTXActual,
-                            bytesWiFiTXAnterior, timeActual, timeAnterior);
+                    long kbpsDOWNWiFi = NetworkUtils.calculateKbps(bytesWiFiRXActual,
+                            bytesWiFiRXAnterior, timeActual, timeAnterior);
                     bpsDown = kbpsDOWNWiFi;
                     long kbpsUPWiFi = NetworkUtils.calculateKbps(bytesWiFiTXActual,
                             bytesWiFiTXAnterior, timeActual, timeAnterior);
@@ -172,7 +172,7 @@ public class MonitoringService extends Service {
                 Log.d(TAG, "Red no disponible");
                 //updateNotification("Red no disponible");
             }
-            updateNetworkTraffic(cm.getActiveNetworkInfo(), bpsUP, bpsDown);
+            updateNetworkTraffic(cm.getActiveNetworkInfo(), bpsDown, bpsUP);
             // Actualizacion de los valores anteriores
             timeAnterior = timeActual;
             bytesRXanterior = bytesRXActual;
